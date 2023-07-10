@@ -9,6 +9,15 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
+
+    implementation("io.ktor:ktor-client-core:2.3.2")
+    implementation("io.ktor:ktor-client-apache5:2.3.2")
+    implementation("io.ktor:ktor-client-logging:2.3.2")
+
+    implementation("ch.qos.logback:logback-classic:1.4.8")
+
+
     testImplementation(kotlin("test"))
 }
 
