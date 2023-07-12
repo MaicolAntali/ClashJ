@@ -21,7 +21,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.4.8")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.0")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.9.3")
 }
 
