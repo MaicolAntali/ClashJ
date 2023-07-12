@@ -1,15 +1,16 @@
 package com.clashj.http
 
+import com.clashj.exception.ClashJException
 import com.clashj.exception.HttpException
 import com.clashj.exception.InvalidCredentialException
-import com.clashj.http.response.KeyListResponse
 import com.clashj.http.response.CreateKeyResponse
+import com.clashj.http.response.KeyListResponse
 import com.clashj.http.response.base.Key
-import com.clashj.util.option.EngineOptions
+import com.clashj.util.API_BASE_URL
 import com.clashj.util.Credential
 import com.clashj.util.DEV_SITE_BASE_URL
-import com.clashj.util.API_BASE_URL
 import com.clashj.util.SafeSet
+import com.clashj.util.option.EngineOptions
 import com.clashj.util.option.KeyOptions
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -20,8 +21,6 @@ import io.ktor.client.engine.apache5.Apache5
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
-import io.ktor.client.plugins.logging.LogLevel
-import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
@@ -70,7 +69,6 @@ class RequestHandler(
             requestTimeoutMillis = engineOptions.requestTimeout
             connectTimeoutMillis = engineOptions.requestTimeout
         }
-        install(Logging) { level = LogLevel.INFO }
         install(ContentNegotiation) { gson() }
         defaultRequest {
             // Set for all requests the content type to: application/json
@@ -118,6 +116,7 @@ class RequestHandler(
      *
      * @param currentIp The current IP address.
      * @param cookies The cookies obtained during the login process.
+     * @throws ClashJException if no existing keys match the specified key name or the desired number of keys couldn't be generated.
      */
     private suspend fun retriveKeys(currentIp: String, cookies: String) = coroutineScope {
         val keyListResponse: KeyListResponse = httpClient.post("$DEV_SITE_BASE_URL/apikey/list") {
@@ -125,21 +124,24 @@ class RequestHandler(
         }.body()
 
         // Filter key for the specified key name,
-        val keys = keyListResponse.keys.filter { it.name == keyOptions.keyName }
+        val keys = keyListResponse.keys.toMutableList()
         log.info("${keys.size} valid keys retrieved from the developer site.")
 
         // Revoke keys that have not the current ip
-        keys.filter { !it.cidrRanges.contains(currentIp) }
+        keys.filter { it.name == keyOptions.keyName }
+            .filter { !it.cidrRanges.contains(currentIp) }
             .map { key ->
                 launch {
                     if (revokeKey(key, cookies)) {
                         keysSet.remove(key.id)
+                        keys.remove(key)
                     }
                 }
             }.joinAll()
 
         // Append keys that have the current ip
-        keys.filter { it.cidrRanges.contains(currentIp) }
+        keys.filter { it.name == keyOptions.keyName }
+            .filter { it.cidrRanges.contains(currentIp) }
             .takeWhile { keysSet.size() < keyOptions.keyCount }
             .map { key ->
                 launch {
@@ -148,9 +150,19 @@ class RequestHandler(
             }.joinAll()
 
         // Create new keys within limits of 10 keys per account
-        while (keysSet.size() < keyOptions.keyCount && keyListResponse.keys.size < MAX_KEY_COUNT) {
+        while (keysSet.size() < keyOptions.keyCount && keys.size < MAX_KEY_COUNT) {
             val newKey = createKey(currentIp, cookies)
             keysSet.add(newKey.key)
+            keys.add(newKey)
+        }
+
+        if (keysSet.size() < keyOptions.keyCount && keys.size == 10) {
+            log.warn("Required ${keyOptions.keyCount} keys, but maximum ${keysSet.size()} found/made (limit: 10/acc). Please delete keys or decrease `keyCount`.")
+        }
+
+        if (keysSet.size() == 0) {
+            log.error("${keys.size} existing API keys, none match keyName: ${keyOptions.keyName}. Specify another keyName or delete unused keys at 'https://developer.clashofclans.com'.")
+            throw ClashJException("${keys.size} existing API keys, none match keyName: ${keyOptions.keyName}. Specify another keyName or delete unused keys at 'https://developer.clashofclans.com'.")
         }
     }
 
