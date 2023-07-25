@@ -19,6 +19,8 @@ class SafeSet<T>(
     private val set: HashSet<T> = HashSet(c)
     private val mutex: Mutex = Mutex()
 
+    private var index: Int = 0
+
     /**
      * Adds an element to the set.
      *
@@ -53,6 +55,22 @@ class SafeSet<T>(
      */
     suspend fun contains(element: T): Boolean {
         mutex.withLock { return set.contains(element) }
+    }
+
+    /**
+     * Retrieves the next element in the set infinitely.
+     *
+     * This method retrieves the next element in the set in a thread-safe approach.
+     *
+     * @return The next element in the set, or `null` if the set is empty.
+     */
+    suspend fun next(): T {
+        mutex.withLock {
+            val element =  set.elementAt(index)
+            index = if ((index + 1) >= set.size) 0 else index + 1
+
+            return element
+        }
     }
 
     /**
