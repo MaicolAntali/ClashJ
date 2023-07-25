@@ -77,4 +77,16 @@ class SafeSetTest {
             assertThat(safeSet.size()).isEqualTo(2)
         }
     }
+
+    @Test
+    fun `should remove all elements from the set`() {
+        runBlocking {
+            val safeSet = SafeSet(setOf(1,2,3))
+            assertThat(safeSet.size()).isEqualTo(3)
+
+            safeSet.clear()
+            assertThat(safeSet.size()).isEqualTo(0)
+            assertThat(safeSet.isEmpty()).isTrue()
+        }
+    }
 }

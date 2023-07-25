@@ -66,11 +66,18 @@ class SafeSet<T>(
      */
     suspend fun next(): T {
         mutex.withLock {
-            val element =  set.elementAt(index)
+            val element = set.elementAt(index)
             index = if ((index + 1) >= set.size) 0 else index + 1
 
             return element
         }
+    }
+
+    /**
+     * Removes all the elements from this set.
+     */
+    suspend fun clear() {
+        mutex.withLock { set.clear() }
     }
 
     /**
