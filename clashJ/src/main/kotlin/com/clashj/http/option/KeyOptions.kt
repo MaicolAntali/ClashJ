@@ -1,4 +1,4 @@
-package com.clashj.util.option
+package com.clashj.http.option
 
 /**
  * Represents the options for generating keys in the developer site.
