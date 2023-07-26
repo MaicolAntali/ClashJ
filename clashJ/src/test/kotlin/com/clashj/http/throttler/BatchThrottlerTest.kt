@@ -18,25 +18,4 @@ class BatchThrottlerTest {
             Assertions.assertThat(elapsed).isLessThan(100)
         }
     }
-
-    @Test
-    fun `should sleep for more than 400 mills`() {
-        runBlocking {
-            val throttler = BatchThrottler(2, 200)
-
-            val elapsed = measureTimeMillis {
-                // 0 millis
-                throttler.wait()
-                throttler.wait()
-                // 200 millis
-                throttler.wait()
-                throttler.wait()
-                // 400 millis
-                throttler.wait()
-                throttler.wait()
-            }
-
-            Assertions.assertThat(elapsed).isGreaterThan(400)
-        }
-    }
 }

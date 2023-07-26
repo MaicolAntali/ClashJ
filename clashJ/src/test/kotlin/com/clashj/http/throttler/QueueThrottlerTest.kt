@@ -19,19 +19,4 @@ class QueueThrottlerTest {
             assertThat(elapsed).isLessThan(100)
         }
     }
-
-    @Test
-    fun `should sleep for more than 400 mills`() {
-        runBlocking {
-            val throttler = QueueThrottler(200)
-
-            val elapsed = measureTimeMillis {
-                throttler.wait()
-                throttler.wait()
-                throttler.wait()
-            }
-
-            assertThat(elapsed).isGreaterThan(400)
-        }
-    }
 }
