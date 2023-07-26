@@ -64,9 +64,9 @@ class SafeSet<T>(
      *
      * @return The next element in the set, or `null` if the set is empty.
      */
-    suspend fun next(): T {
+    suspend fun next(): T? {
         mutex.withLock {
-            val element = set.elementAt(index)
+            val element = set.elementAtOrNull(index)
             index = if ((index + 1) >= set.size) 0 else index + 1
 
             return element
