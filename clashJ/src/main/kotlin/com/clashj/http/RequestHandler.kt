@@ -1,27 +1,35 @@
 package com.clashj.http
 
+import com.clashj.exception.BadGatewayException
 import com.clashj.exception.ClashJException
 import com.clashj.exception.HttpException
 import com.clashj.exception.InvalidCredentialException
+import com.clashj.exception.MaintenanceException
+import com.clashj.exception.NotFoundException
+import com.clashj.http.option.EngineOptions
+import com.clashj.http.option.KeyOptions
+import com.clashj.http.option.RequestOptions
 import com.clashj.http.response.CreateKeyResponse
 import com.clashj.http.response.KeyListResponse
 import com.clashj.http.response.base.Key
+import com.clashj.http.throttler.BaseThrottler
+import com.clashj.http.throttler.BatchThrottler
 import com.clashj.util.API_BASE_URL
 import com.clashj.util.Credential
 import com.clashj.util.DEV_SITE_BASE_URL
 import com.clashj.util.SafeSet
-import com.clashj.util.option.EngineOptions
-import com.clashj.util.option.KeyOptions
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.apache5.Apache5
+import io.ktor.client.plugins.HttpRequestTimeoutException
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.post
+import io.ktor.client.request.request
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
@@ -31,6 +39,7 @@ import io.ktor.serialization.gson.gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -54,7 +63,9 @@ class RequestHandler(
     private val keyOptions: KeyOptions,
 
     private val engineOptions: EngineOptions,
-    private val engine: HttpClientEngine = Apache5.create()
+    private val engine: HttpClientEngine = Apache5.create(),
+
+    private val throttler: BaseThrottler = BatchThrottler()
 ) {
 
     companion object {
@@ -87,6 +98,8 @@ class RequestHandler(
     suspend fun login() = withContext(Dispatchers.IO) {
         log.info("Logging into the developer website.")
 
+        keysSet.clear()
+
         val loginResponse = httpClient.post("$DEV_SITE_BASE_URL/login") {
             setBody(credential)
         }
@@ -106,6 +119,115 @@ class RequestHandler(
 
         launch { retriveKeys(ip, loginResponse.headers["set-cookie"]!!) }
     }
+
+
+    /**
+     * Performs an HTTP request to the specified URL with the given [requestOptions].
+     *
+     * If `requestOptions.ignoreThrottler` is false (default behavior),
+     * the method waits for throttling based on the configured [throttler].
+     * If throttling is in effect,
+     * the method delays the execution of the request until the throttling interval is met.
+     *
+     * @param url The URL to which the HTTP request will be sent.
+     * @param requestOptions The options for customizing the HTTP request, such as method, body, and maximum retry attempts.
+     * @return The response body of the HTTP request, deserialized into the specified type [T].
+     *
+     * @throws HttpException if the HTTP response status is other than HttpStatusCode.OK, HttpStatusCode.Forbidden, HttpStatusCode.ServiceUnavailable, or HttpStatusCode.TooManyRequests.
+     * @throws MaintenanceException if the HTTP response status is HttpStatusCode.ServiceUnavailable, indicating the API is in maintenance.
+     * @throws NotFoundException if the HTTP response status is HttpStatusCode.NotFound.
+     * @throws BadGatewayException if the HTTP response status is HttpStatusCode.InternalServerError, HttpStatusCode.BadGateway, or HttpStatusCode.GatewayTimeout.
+     * @throws ClashJException if the response cannot be handled or if the maximum retry attempts are reached without a valid response.
+     */
+    internal suspend inline fun <reified T> request(url: String, requestOptions: RequestOptions): T {
+        if (!requestOptions.ignoreThrottler) {
+            throttler.wait()
+        }
+
+        return executeRequest<T>(url, requestOptions)
+    }
+
+
+    /**
+     * Executes an HTTP request with the given [url] and [requestOptions].
+     *
+     * The method will retry the request for `requestOptions.maxRetryAttempts` times in case of request timeouts.
+     * The delay between retries increases with each attempt,
+     * starting from 1 millisecond and increasing by 3 milliseconds for each subsequent retry.
+     *
+     * @param url The URL to which the HTTP request will be sent.
+     * @param requestOptions The options specifying the request parameters.
+     * @return The response body of the HTTP request, deserialized to the specified type [T].
+     *
+     * @throws HttpException If the HTTP request fails with a specific HTTP status code.
+     * @throws MaintenanceException If the API is in maintenance.
+     * @throws NotFoundException If the resource was not found (HTTP status code 404).
+     * @throws BadGatewayException If there was an issue with the API (HTTP status code 500, 502, 504).
+     * @throws ClashJException If there is an issue that cannot be handled specifically.
+     */
+    private suspend inline fun <reified T> executeRequest(url: String, requestOptions: RequestOptions): T =
+        withContext(Dispatchers.IO) {
+            for (tries in 0..requestOptions.maxRetryAttempts) {
+                try {
+                    val response = httpClient.request(url) {
+                        method = requestOptions.method
+                        setBody(requestOptions.body)
+                        headers.append(HttpHeaders.Authorization, "Bearer ${keysSet.next()}")
+                    }
+
+                    when (response.status) {
+                        HttpStatusCode.OK -> {
+                            return@withContext response.body<T>()
+                        }
+
+                        HttpStatusCode.Forbidden -> {
+                            val responseJson = response.body<JsonObject>()
+                            log.info("Forbidden, resp: $responseJson, reason: ${responseJson.get("reason")}")
+
+                            if (responseJson.get("reason").asString == "accessDenied.invalidIp") {
+                                async { login() }.await()
+                                continue
+                            }
+
+                            throw HttpException("Forbidden, resp: $responseJson, reason: ${responseJson.get("reason")}")
+                        }
+
+                        HttpStatusCode.ServiceUnavailable -> {
+                            throw MaintenanceException("The API is in maintenance.")
+                        }
+
+                        HttpStatusCode.TooManyRequests -> {
+                            log.error("Reached the maximum rate-limits by the API. Consider a new number of request allowed per second.")
+                            throw HttpException("Reached the maximum rate-limits by the API. Consider a new number of request allowed per second.")
+                        }
+
+                        HttpStatusCode.NotFound -> {
+                            throw NotFoundException("Not Found (404): ${response.body<String>()}")
+                        }
+
+                        HttpStatusCode.InternalServerError, HttpStatusCode.BadGateway, HttpStatusCode.GatewayTimeout -> {
+                            throw BadGatewayException("Error (${response.status}): ${response.body<String>()}")
+                        }
+
+                        else -> {
+                            throw ClashJException("Not able to handle this response: ${response.body<String>()}")
+                        }
+                    }
+                } catch (e: HttpRequestTimeoutException) {
+                    if (tries > 2) {
+                        throw BadGatewayException("The API timed out waiting for the request.")
+                    }
+
+                    log.debug("HttpRequestTimeoutException caught. Retry to execute the request: $url.")
+                    delay(tries * 3 + 1L)
+                    continue
+                }
+            }
+
+            log.error("Reached the maxRetryAttempts (${requestOptions.maxRetryAttempts}) without a valid responses.")
+            throw ClashJException("Reached the maxRetryAttempts (${requestOptions.maxRetryAttempts}) without a valid responses.")
+        }
+
 
     /**
      * Performs the retrieval of keys based on the current IP address.
