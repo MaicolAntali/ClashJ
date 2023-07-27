@@ -1,4 +1,4 @@
-package com.clashj.model
+package com.clashj.model.component.clan
 
 import com.clashj.model.component.league.League
 import com.clashj.model.component.PlayerHouse

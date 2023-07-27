@@ -7,6 +7,7 @@ import com.clashj.model.component.Location
 import com.clashj.model.component.clan.ClanType
 import com.clashj.model.component.league.SimpleLeague
 import com.clashj.model.component.clan.ClanCapital
+import com.clashj.model.component.clan.ClanMember
 import com.clashj.model.component.clan.WarFrequency
 
 /**
