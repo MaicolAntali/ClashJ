@@ -2,6 +2,7 @@ package com.clashj
 
 import com.clashj.http.RequestHandler
 import com.clashj.model.Clan
+import com.clashj.model.ClanWar
 import com.clashj.util.API_BASE_URL
 import com.clashj.util.encodeTag
 
@@ -15,5 +16,9 @@ class Client(
 
     suspend fun getClan(clanTag: String): Clan {
         return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}")
+    }
+
+    suspend fun getCurrentWar(clanTag: String): ClanWar {
+        return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/currentwar")
     }
 }
