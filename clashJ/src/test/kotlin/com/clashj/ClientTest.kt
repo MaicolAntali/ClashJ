@@ -66,7 +66,7 @@ class ClientTest {
                 )
             )
 
-            val clan = api.getCurrentWar("tag")
+            val clan = api.getClanCurrentWar("tag")
 
             assertThat(clan.attacksPerMember).isEqualTo(2)
             assertThat(clan.state).isEqualTo(WarState.IN_WAR)
@@ -74,6 +74,5 @@ class ClientTest {
             assertThat(clan.clan.members).hasSize(50)
             assertThat(clan.opponent.members).hasSize(50)
         }
-
     }
 }
