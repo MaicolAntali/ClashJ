@@ -1,4 +1,4 @@
-package com.clashj.model.component
+package com.clashj.model.common
 
 /**
  * Represents pagination information.

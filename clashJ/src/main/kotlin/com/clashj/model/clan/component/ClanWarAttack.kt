@@ -1,4 +1,4 @@
-package com.clashj.model.component.clan
+package com.clashj.model.clan.component
 
 
 /**

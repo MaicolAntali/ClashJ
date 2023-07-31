@@ -1,6 +1,6 @@
-package com.clashj.model.component.clan
+package com.clashj.model.clan.component
 
-import com.clashj.model.component.Badge
+import com.clashj.model.common.Badge
 
 /**
  * Represents a clan in a clan war.

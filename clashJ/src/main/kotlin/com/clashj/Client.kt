@@ -2,10 +2,10 @@ package com.clashj
 
 import com.clashj.http.RequestHandler
 import com.clashj.http.query.PaginationQuery
-import com.clashj.model.Clan
-import com.clashj.model.ClanMemberList
-import com.clashj.model.ClanWar
-import com.clashj.model.ClanWarLog
+import com.clashj.model.clan.Clan
+import com.clashj.model.clan.ClanMemberList
+import com.clashj.model.clan.ClanWar
+import com.clashj.model.clan.ClanWarLog
 import com.clashj.util.API_BASE_URL
 import com.clashj.util.encodeTag
 

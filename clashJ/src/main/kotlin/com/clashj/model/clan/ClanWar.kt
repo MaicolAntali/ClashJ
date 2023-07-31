@@ -1,7 +1,7 @@
-package com.clashj.model
+package com.clashj.model.clan
 
-import com.clashj.model.component.clan.WarClan
-import com.clashj.model.component.clan.WarState
+import com.clashj.model.clan.component.WarClan
+import com.clashj.model.clan.component.WarState
 
 /**
  * Represents a Clan War in the game.

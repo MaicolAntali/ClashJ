@@ -1,4 +1,4 @@
-package com.clashj.model.component.league
+package com.clashj.model.league
 
 /**
  * Represents a Clash of Clans API SimpleLeague.

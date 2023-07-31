@@ -3,8 +3,8 @@ package com.clashj
 import com.clashj.http.RequestHandler
 import com.clashj.http.option.EngineOptions
 import com.clashj.http.option.KeyOptions
-import com.clashj.model.component.clan.ClanType
-import com.clashj.model.component.clan.WarState
+import com.clashj.model.clan.component.ClanType
+import com.clashj.model.clan.component.WarState
 import com.clashj.util.Credential
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond

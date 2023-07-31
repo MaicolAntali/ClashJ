@@ -1,14 +1,14 @@
-package com.clashj.model
+package com.clashj.model.clan
 
-import com.clashj.model.component.Badge
-import com.clashj.model.component.Label
-import com.clashj.model.component.Language
-import com.clashj.model.component.Location
-import com.clashj.model.component.clan.ClanType
-import com.clashj.model.component.league.SimpleLeague
-import com.clashj.model.component.clan.ClanCapital
-import com.clashj.model.component.clan.ClanMember
-import com.clashj.model.component.clan.WarFrequency
+import com.clashj.model.common.Badge
+import com.clashj.model.common.Label
+import com.clashj.model.common.Language
+import com.clashj.model.common.Location
+import com.clashj.model.clan.component.ClanType
+import com.clashj.model.league.SimpleLeague
+import com.clashj.model.clan.component.ClanCapital
+import com.clashj.model.clan.component.ClanMember
+import com.clashj.model.clan.component.WarFrequency
 
 /**
  * Represents detailed information about a clan in a game.

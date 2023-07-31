@@ -1,6 +1,6 @@
-package com.clashj.model.component.league
+package com.clashj.model.league
 
-import com.clashj.model.component.Icon
+import com.clashj.model.common.Icon
 
 /**
  * Represents a Clash of Clans API League.

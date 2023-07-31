@@ -1,9 +1,8 @@
-package com.clashj.model.component.clan
+package com.clashj.model.clan.component
 
-import com.clashj.model.component.league.League
-import com.clashj.model.component.PlayerHouse
-import com.clashj.model.component.league.SimpleLeague
-import com.clashj.model.component.clan.ClanMemberRole
+import com.clashj.model.league.League
+import com.clashj.model.common.PlayerHouse
+import com.clashj.model.league.SimpleLeague
 
 /**
  * Represents a member of a clan in the game.

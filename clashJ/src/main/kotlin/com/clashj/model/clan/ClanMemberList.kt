@@ -1,7 +1,7 @@
-package com.clashj.model
+package com.clashj.model.clan
 
-import com.clashj.model.component.Paging
-import com.clashj.model.component.clan.ClanMember
+import com.clashj.model.common.Paging
+import com.clashj.model.clan.component.ClanMember
 
 /**
  * Represents the Clan War Log.
