@@ -3,6 +3,7 @@ package com.clashj
 import com.clashj.http.RequestHandler
 import com.clashj.http.query.PaginationQuery
 import com.clashj.model.clan.Clan
+import com.clashj.model.clan.ClanCapitalRaidSeasons
 import com.clashj.model.clan.ClanMemberList
 import com.clashj.model.clan.ClanWar
 import com.clashj.model.clan.ClanWarLog
@@ -35,6 +36,12 @@ class Client(
         val query = createPaginationQuery(pagination)
 
         return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/members" + query)
+    }
+
+    suspend fun getClanCapitalRaidSeasons(clanTag: String, pagination: PaginationQuery = PaginationQuery()): ClanCapitalRaidSeasons {
+        val query = createPaginationQuery(pagination)
+
+        return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/capitalraidseasons" + query)
     }
 
     private fun createPaginationQuery(pagination: PaginationQuery): String {
