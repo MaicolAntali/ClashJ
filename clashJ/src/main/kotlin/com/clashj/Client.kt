@@ -2,8 +2,10 @@ package com.clashj
 
 import com.clashj.http.RequestHandler
 import com.clashj.http.query.PaginationQuery
+import com.clashj.http.query.SearchClanQuery
 import com.clashj.model.clan.Clan
 import com.clashj.model.clan.ClanCapitalRaidSeasons
+import com.clashj.model.clan.ClanList
 import com.clashj.model.clan.ClanMemberList
 import com.clashj.model.clan.ClanWar
 import com.clashj.model.clan.ClanWarLog
@@ -18,10 +20,10 @@ class Client(
         requestHandler.login()
     }
 
-    suspend fun searchClan(pagination: PaginationQuery = PaginationQuery()): ClanWarLog {
-        val query = pagination.createQuery()
+    suspend fun searchClan(searchClanQuery: SearchClanQuery): ClanList{
+        val query = searchClanQuery.createQuery()
 
-        return requestHandler.request("$API_BASE_URL/clans$query")
+        return requestHandler.request("$API_BASE_URL/clans?$query")
     }
 
     suspend fun getClanWarLog(
@@ -30,7 +32,7 @@ class Client(
     ): ClanWarLog {
         val query = pagination.createQuery()
 
-        return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/warlog$query")
+        return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/warlog?$query")
     }
 
     suspend fun getClanCurrentWar(clanTag: String): ClanWar {
@@ -47,7 +49,7 @@ class Client(
     ): ClanMemberList {
         val query = pagination.createQuery()
 
-        return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/members$query")
+        return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/members?$query")
     }
 
     suspend fun getClanCapitalRaidSeasons(
@@ -56,6 +58,6 @@ class Client(
     ): ClanCapitalRaidSeasons {
         val query = pagination.createQuery()
 
-        return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/capitalraidseasons$query")
+        return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/capitalraidseasons?$query")
     }
 }

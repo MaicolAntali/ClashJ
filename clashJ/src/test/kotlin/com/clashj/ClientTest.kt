@@ -1,18 +1,23 @@
 package com.clashj
 
+import com.clashj.exception.ClashJException
 import com.clashj.http.RequestHandler
 import com.clashj.http.option.EngineOptions
 import com.clashj.http.option.KeyOptions
+import com.clashj.http.query.PaginationQuery
+import com.clashj.http.query.SearchClanQuery
 import com.clashj.model.clan.component.ClanType
 import com.clashj.model.clan.component.WarState
 import com.clashj.util.Credential
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
+import io.ktor.client.engine.mock.respondBadRequest
 import io.ktor.http.HttpHeaders
 import io.ktor.http.headers
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.io.File
 
 class ClientTest {
@@ -73,6 +78,27 @@ class ClientTest {
             assertThat(clan.teamSize).isEqualTo(50)
             assertThat(clan.clan.members).hasSize(50)
             assertThat(clan.opponent.members).hasSize(50)
+        }
+    }
+
+    @Test
+    fun `searchClan should throw ClashJException`() {
+        runBlocking {
+            val mockEngine = MockEngine { _ ->
+                respondBadRequest()
+            }
+
+            val api = Client(
+                RequestHandler(
+                    Credential("mail", "pwd"),
+                    KeyOptions("...", null, 1),
+                    EngineOptions(),
+                    mockEngine
+                )
+            )
+
+            val e = assertThrows<ClashJException> { api.searchClan(SearchClanQuery()) }
+            assertThat(e).hasMessageContaining("Not able to handle this response")
         }
     }
 }

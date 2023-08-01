@@ -21,7 +21,7 @@ class PaginationQuery(
 ) : Query {
 
     override fun createQuery(): String {
-        var query = "?"
+        var query = ""
         // Set the limit query
         if (this.limit != -1) {
             query += "limit=${this.limit}&"
