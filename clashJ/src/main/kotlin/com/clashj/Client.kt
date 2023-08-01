@@ -19,7 +19,7 @@ class Client(
     }
 
     suspend fun getClanWarLog(clanTag: String, pagination: PaginationQuery = PaginationQuery()): ClanWarLog {
-        val query = createPaginationQuery(pagination)
+        val query = pagination.createPaginationQuery()
 
         return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/warlog" + query)
     }
@@ -33,33 +33,14 @@ class Client(
     }
 
     suspend fun getClanMembers(clanTag: String, pagination: PaginationQuery = PaginationQuery()): ClanMemberList {
-        val query = createPaginationQuery(pagination)
+        val query = pagination.createPaginationQuery()
 
         return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/members" + query)
     }
 
     suspend fun getClanCapitalRaidSeasons(clanTag: String, pagination: PaginationQuery = PaginationQuery()): ClanCapitalRaidSeasons {
-        val query = createPaginationQuery(pagination)
+        val query = pagination.createPaginationQuery()
 
         return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/capitalraidseasons" + query)
-    }
-
-    private fun createPaginationQuery(pagination: PaginationQuery): String {
-        var query = "?"
-        // Set the limit query
-        if (pagination.limit != -1) {
-            query += "limit=${pagination.limit}&"
-        }
-
-        // Set the before query
-        if (pagination.before.isNotBlank()) {
-            query += "before=${pagination.before}&"
-        }
-
-        // Set the after query
-        if (pagination.before.isBlank() && pagination.after.isNotBlank()) {
-            query += "after=${pagination.after}&"
-        }
-        return query
     }
 }

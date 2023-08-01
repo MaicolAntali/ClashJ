@@ -14,8 +14,28 @@ package com.clashj.http.query
  * Return only items that occur after this marker. Before marker can be found from the response,
  * inside the 'paging' property. Note that only after or before can be specified for a request, not both.
  */
-data class PaginationQuery(
-    val limit: Int = -1,
-    val before: String = "",
-    val after: String = ""
-)
+class PaginationQuery(
+    private val limit: Int = -1,
+    private val before: String = "",
+    private val after: String = ""
+) {
+
+    fun createPaginationQuery(): String {
+        var query = "?"
+        // Set the limit query
+        if (this.limit != -1) {
+            query += "limit=${this.limit}&"
+        }
+
+        // Set the before query
+        if (this.before.isNotBlank()) {
+            query += "before=${this.before}&"
+        }
+
+        // Set the after query
+        if (this.before.isBlank() && this.after.isNotBlank()) {
+            query += "after=${this.after}&"
+        }
+        return query
+    }
+}
