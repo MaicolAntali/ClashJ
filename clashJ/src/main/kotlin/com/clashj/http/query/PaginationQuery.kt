@@ -18,9 +18,9 @@ class PaginationQuery(
     private val limit: Int = -1,
     private val before: String = "",
     private val after: String = ""
-) {
+) : Query {
 
-    fun createPaginationQuery(): String {
+    override fun createQuery(): String {
         var query = "?"
         // Set the limit query
         if (this.limit != -1) {
@@ -38,4 +38,5 @@ class PaginationQuery(
         }
         return query
     }
+
 }

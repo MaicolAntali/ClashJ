@@ -18,11 +18,17 @@ class Client(
         requestHandler.login()
     }
 
+    suspend fun searchClan(pagination: PaginationQuery = PaginationQuery()): ClanWarLog {
+        val query = pagination.createQuery()
+
+        return requestHandler.request("$API_BASE_URL/clans$query")
+    }
+
     suspend fun getClanWarLog(
         clanTag: String,
         pagination: PaginationQuery = PaginationQuery()
     ): ClanWarLog {
-        val query = pagination.createPaginationQuery()
+        val query = pagination.createQuery()
 
         return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/warlog$query")
     }
@@ -39,7 +45,7 @@ class Client(
         clanTag: String,
         pagination: PaginationQuery = PaginationQuery()
     ): ClanMemberList {
-        val query = pagination.createPaginationQuery()
+        val query = pagination.createQuery()
 
         return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/members$query")
     }
@@ -48,7 +54,7 @@ class Client(
         clanTag: String,
         pagination: PaginationQuery = PaginationQuery()
     ): ClanCapitalRaidSeasons {
-        val query = pagination.createPaginationQuery()
+        val query = pagination.createQuery()
 
         return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/capitalraidseasons$query")
     }
