@@ -8,6 +8,7 @@ import com.clashj.model.clan.ClanCapitalRaidSeasons
 import com.clashj.model.clan.ClanList
 import com.clashj.model.clan.ClanMemberList
 import com.clashj.model.clan.ClanWar
+import com.clashj.model.clan.ClanWarLeagueGroup
 import com.clashj.model.clan.ClanWarLog
 import com.clashj.util.API_BASE_URL
 import com.clashj.util.encodeTag
@@ -26,13 +27,12 @@ class Client(
         return requestHandler.request("$API_BASE_URL/clans?$query")
     }
 
-    suspend fun getClanWarLog(
-        clanTag: String,
-        pagination: PaginationQuery = PaginationQuery()
-    ): ClanWarLog {
-        val query = pagination.createQuery()
+    suspend fun getClanWarLeagueGroup(clanTag: String): ClanWarLeagueGroup {
+        return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/currentwar/leaguegroup")
+    }
 
-        return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/warlog?$query")
+    suspend fun getClanWarLeagueWar(warTag: String): ClanWar {
+        return requestHandler.request("$API_BASE_URL/clanwarleagues/wars/${encodeTag(warTag)}")
     }
 
     suspend fun getClanCurrentWar(clanTag: String): ClanWar {
@@ -41,6 +41,15 @@ class Client(
 
     suspend fun getClan(clanTag: String): Clan {
         return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}")
+    }
+
+    suspend fun getClanWarLog(
+        clanTag: String,
+        pagination: PaginationQuery = PaginationQuery()
+    ): ClanWarLog {
+        val query = pagination.createQuery()
+
+        return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/warlog?$query")
     }
 
     suspend fun getClanMembers(

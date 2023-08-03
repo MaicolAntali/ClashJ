@@ -4,7 +4,6 @@ import com.clashj.exception.ClashJException
 import com.clashj.http.RequestHandler
 import com.clashj.http.option.EngineOptions
 import com.clashj.http.option.KeyOptions
-import com.clashj.http.query.PaginationQuery
 import com.clashj.http.query.SearchClanQuery
 import com.clashj.model.clan.component.ClanType
 import com.clashj.model.clan.component.WarState
