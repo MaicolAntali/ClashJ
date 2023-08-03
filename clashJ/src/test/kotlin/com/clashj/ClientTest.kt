@@ -5,6 +5,7 @@ import com.clashj.http.RequestHandler
 import com.clashj.http.option.EngineOptions
 import com.clashj.http.option.KeyOptions
 import com.clashj.http.query.SearchClanQuery
+import com.clashj.model.clan.component.ClanMemberRole
 import com.clashj.model.clan.component.ClanType
 import com.clashj.model.clan.component.WarState
 import com.clashj.util.Credential
@@ -98,6 +99,35 @@ class ClientTest {
 
             val e = assertThrows<ClashJException> { api.searchClan(SearchClanQuery()) }
             assertThat(e).hasMessageContaining("Not able to handle this response")
+        }
+    }
+
+    @Test
+    fun `getPlayer should generate a Player obj`() {
+        runBlocking {
+            val mockEngine = MockEngine { _ ->
+                respond(
+                    File("src/test/resources/json/getPlayer.json").readText(),
+                    headers = headers { append(HttpHeaders.ContentType, "application/json") }
+                )
+            }
+
+            val api = Client(
+                RequestHandler(
+                    Credential("mail", "pwd"),
+                    KeyOptions("...", null, 1),
+                    EngineOptions(),
+                    mockEngine
+                )
+            )
+
+            val player = api.getPlayer("tag")
+
+            assertThat(player.name).isEqualTo("Maicol :)")
+            assertThat(player.clan.name).isEqualTo("Stelle Cadenti")
+            assertThat(player.heroes).hasSize(6)
+            assertThat(player.warStars).isGreaterThan(1500)
+            assertThat(player.role).isEqualTo(ClanMemberRole.CO_LEADER)
         }
     }
 }

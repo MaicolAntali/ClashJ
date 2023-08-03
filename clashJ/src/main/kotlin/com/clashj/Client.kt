@@ -10,6 +10,7 @@ import com.clashj.model.clan.ClanMemberList
 import com.clashj.model.clan.ClanWar
 import com.clashj.model.clan.ClanWarLeagueGroup
 import com.clashj.model.clan.ClanWarLog
+import com.clashj.model.player.Player
 import com.clashj.util.API_BASE_URL
 import com.clashj.util.encodeTag
 
@@ -21,7 +22,7 @@ class Client(
         requestHandler.login()
     }
 
-    suspend fun searchClan(searchClanQuery: SearchClanQuery): ClanList{
+    suspend fun searchClan(searchClanQuery: SearchClanQuery): ClanList {
         val query = searchClanQuery.createQuery()
 
         return requestHandler.request("$API_BASE_URL/clans?$query")
@@ -68,5 +69,9 @@ class Client(
         val query = pagination.createQuery()
 
         return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/capitalraidseasons?$query")
+    }
+
+    suspend fun getPlayer(playerTag: String): Player {
+        return requestHandler.request("$API_BASE_URL/players/${encodeTag(playerTag)}")
     }
 }
