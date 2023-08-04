@@ -133,13 +133,14 @@ class RequestHandler(
      * @param requestOptions The options for customizing the HTTP request, such as method, body, and maximum retry attempts.
      * @return The response body of the HTTP request, deserialized into the specified type [T].
      *
-     * @throws HttpException if the HTTP response status is other than HttpStatusCode.OK, HttpStatusCode.Forbidden, HttpStatusCode.ServiceUnavailable, or HttpStatusCode.TooManyRequests.
-     * @throws MaintenanceException if the HTTP response status is HttpStatusCode.ServiceUnavailable, indicating the API is in maintenance.
-     * @throws NotFoundException if the HTTP response status is HttpStatusCode.NotFound.
-     * @throws BadGatewayException if the HTTP response status is HttpStatusCode.InternalServerError, HttpStatusCode.BadGateway, or HttpStatusCode.GatewayTimeout.
-     * @throws ClashJException if the response cannot be handled or if the maximum retry attempts are reached without a valid response.
+     * @throws HttpException if the HTTP response status is other than [HttpStatusCode.OK], HttpStatusCode.Forbidden, HttpStatusCode.ServiceUnavailable, or HttpStatusCode.TooManyRequests.
+     * @throws MaintenanceException if the HTTP response status is [HttpStatusCode.ServiceUnavailable], indicating the API is in maintenance.
+     * @throws NotFoundException if the HTTP response status is [HttpStatusCode.NotFound].
+     * @throws BadGatewayException if the HTTP response status is [HttpStatusCode.InternalServerError],¬
+     * [HttpStatusCode.BadGateway], or [HttpStatusCode.GatewayTimeout].
+     * @throws ClashJException if the response cannot be handled, or if the maximum retry attempts are reached without a valid response.
      */
-    internal suspend inline fun <reified T> request(url: String, requestOptions: RequestOptions): T {
+    internal suspend inline fun <reified T> request(url: String, requestOptions: RequestOptions = RequestOptions()): T {
         if (!requestOptions.ignoreThrottler) {
             throttler.wait()
         }
