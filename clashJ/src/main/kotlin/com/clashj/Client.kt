@@ -13,6 +13,7 @@ import com.clashj.model.clan.ClanRankingList
 import com.clashj.model.clan.ClanWar
 import com.clashj.model.clan.ClanWarLeagueGroup
 import com.clashj.model.clan.ClanWarLog
+import com.clashj.model.goldpass.GoldPassSeason
 import com.clashj.model.league.SimpleLeagueList
 import com.clashj.model.league.League
 import com.clashj.model.league.LeagueList
@@ -207,5 +208,9 @@ class Client(
         val query = pagination.createQuery()
 
         return requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/capitals?$query")
+    }
+
+    suspend fun getCurrentGoldPass(): GoldPassSeason {
+        return requestHandler.request("$API_BASE_URL/goldpass/seasons/current")
     }
 }
