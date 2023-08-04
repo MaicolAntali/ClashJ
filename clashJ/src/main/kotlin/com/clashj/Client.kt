@@ -159,10 +159,8 @@ class Client(
         return requestHandler.request("$API_BASE_URL/locations?$query")
     }
 
-    suspend fun getLocation(locationId: String, pagination: PaginationQuery = PaginationQuery()): Location {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/locations/$locationId?$query")
+    suspend fun getLocation(locationId: String): Location {
+        return requestHandler.request("$API_BASE_URL/locations/$locationId")
     }
 
     suspend fun getLocationClanRanking(
