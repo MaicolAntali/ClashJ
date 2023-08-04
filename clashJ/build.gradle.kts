@@ -45,6 +45,10 @@ tasks.named<Test>("test") {
     useJUnitPlatform()
 }
 
+tasks.named("build") {
+    dependsOn("dokkaJavadocJar")
+}
+
 tasks.withType<DokkaTask>().configureEach {
     moduleName.set(project.name)
     moduleVersion.set(project.version.toString())
