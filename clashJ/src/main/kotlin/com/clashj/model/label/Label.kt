@@ -1,4 +1,6 @@
-package com.clashj.model.common
+package com.clashj.model.label
+
+import com.clashj.model.common.Icon
 
 /**
  * Represents a Clash of Clans API Icon.

@@ -14,6 +14,7 @@ import com.clashj.model.clan.ClanWar
 import com.clashj.model.clan.ClanWarLeagueGroup
 import com.clashj.model.clan.ClanWarLog
 import com.clashj.model.goldpass.GoldPassSeason
+import com.clashj.model.label.LabelList
 import com.clashj.model.league.SimpleLeagueList
 import com.clashj.model.league.League
 import com.clashj.model.league.LeagueList
@@ -210,5 +211,17 @@ class Client(
 
     suspend fun getCurrentGoldPass(): GoldPassSeason {
         return requestHandler.request("$API_BASE_URL/goldpass/seasons/current")
+    }
+
+    suspend fun getPlayerLabels(pagination: PaginationQuery = PaginationQuery()): LabelList {
+        val query = pagination.createQuery()
+
+        return requestHandler.request("$API_BASE_URL/labels/players?$query")
+    }
+
+    suspend fun getClanLabels(pagination: PaginationQuery = PaginationQuery()): LabelList {
+        val query = pagination.createQuery()
+
+        return requestHandler.request("$API_BASE_URL/labels/clans?$query")
     }
 }

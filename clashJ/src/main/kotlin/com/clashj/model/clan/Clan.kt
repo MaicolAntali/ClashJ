@@ -1,7 +1,7 @@
 package com.clashj.model.clan
 
 import com.clashj.model.common.Badge
-import com.clashj.model.common.Label
+import com.clashj.model.label.Label
 import com.clashj.model.common.Language
 import com.clashj.model.common.Location
 import com.clashj.model.clan.component.ClanType

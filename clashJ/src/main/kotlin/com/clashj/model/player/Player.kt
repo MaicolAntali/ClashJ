@@ -2,7 +2,7 @@ package com.clashj.model.player
 
 import com.clashj.model.clan.component.ClanMemberRole
 import com.clashj.model.common.Badge
-import com.clashj.model.common.Label
+import com.clashj.model.label.Label
 import com.clashj.model.common.PlayerHouse
 import com.clashj.model.league.League
 import com.clashj.model.league.SimpleLeague
