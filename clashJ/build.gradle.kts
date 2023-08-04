@@ -1,3 +1,5 @@
+import org.jetbrains.dokka.gradle.DokkaTask
+
 version = "0.1.0"
 
 plugins {
@@ -41,4 +43,22 @@ java {
 
 tasks.named<Test>("test") {
     useJUnitPlatform()
+}
+
+tasks.withType<DokkaTask>().configureEach {
+    moduleName.set(project.name)
+    moduleVersion.set(project.version.toString())
+    failOnWarning.set(true)
+
+    dokkaSourceSets {
+        configureEach {
+            reportUndocumented.set(true)
+        }
+    }
+}
+
+tasks.register<Jar>("dokkaJavadocJar") {
+    dependsOn(tasks.dokkaJavadoc)
+    from(tasks.dokkaJavadoc.flatMap { it.outputDirectory })
+    archiveClassifier.set("javadoc")
 }
