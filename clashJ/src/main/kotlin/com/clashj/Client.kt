@@ -10,7 +10,13 @@ import com.clashj.model.clan.ClanMemberList
 import com.clashj.model.clan.ClanWar
 import com.clashj.model.clan.ClanWarLeagueGroup
 import com.clashj.model.clan.ClanWarLog
+import com.clashj.model.league.SimpleLeagueList
+import com.clashj.model.league.League
+import com.clashj.model.league.LeagueList
+import com.clashj.model.league.LeagueSeasonList
+import com.clashj.model.league.SimpleLeague
 import com.clashj.model.player.Player
+import com.clashj.model.player.PlayerRankingList
 import com.clashj.util.API_BASE_URL
 import com.clashj.util.encodeTag
 
@@ -73,5 +79,70 @@ class Client(
 
     suspend fun getPlayer(playerTag: String): Player {
         return requestHandler.request("$API_BASE_URL/players/${encodeTag(playerTag)}")
+    }
+
+    suspend fun getCapitalLeagues(pagination: PaginationQuery = PaginationQuery()): SimpleLeagueList {
+        val query = pagination.createQuery()
+
+        return requestHandler.request("$API_BASE_URL/capitalleagues?$query")
+    }
+
+    suspend fun getCapitalLeague(leagueId: String, pagination: PaginationQuery = PaginationQuery()): SimpleLeague {
+        val query = pagination.createQuery()
+
+        return requestHandler.request("$API_BASE_URL/capitalleagues/$leagueId?$query")
+    }
+
+    suspend fun getLeagues(pagination: PaginationQuery = PaginationQuery()): LeagueList {
+        val query = pagination.createQuery()
+
+        return requestHandler.request("$API_BASE_URL/leagues?$query")
+    }
+
+    suspend fun getLeague(leagueId: String, pagination: PaginationQuery = PaginationQuery()): League {
+        val query = pagination.createQuery()
+
+        return requestHandler.request("$API_BASE_URL/leagues/$leagueId?$query")
+    }
+
+    suspend fun getLeagueSeasons(leagueId: String, pagination: PaginationQuery = PaginationQuery()): LeagueSeasonList {
+        val query = pagination.createQuery()
+
+        println("$API_BASE_URL/leagues/$leagueId/seasons?$query")
+        return requestHandler.request("$API_BASE_URL/leagues/$leagueId/seasons?$query")
+    }
+
+    suspend fun getLeagueSeasonRanking(
+        leagueId: String,
+        seasonId: String,
+        pagination: PaginationQuery = PaginationQuery()
+    ): PlayerRankingList {
+        val query = pagination.createQuery()
+
+        return requestHandler.request("$API_BASE_URL/leagues/$leagueId/seasons/$seasonId?$query")
+    }
+
+    suspend fun getBuilderBaseLeagues(pagination: PaginationQuery = PaginationQuery()): SimpleLeagueList {
+        val query = pagination.createQuery()
+
+        return requestHandler.request("$API_BASE_URL/builderbaseleagues?$query")
+    }
+
+    suspend fun getBuilderBaseLeague(leagueId: Int, pagination: PaginationQuery = PaginationQuery()): SimpleLeague {
+        val query = pagination.createQuery()
+
+        return requestHandler.request("$API_BASE_URL/builderbaseleagues/$leagueId?$query")
+    }
+
+    suspend fun getWarLeagues(pagination: PaginationQuery = PaginationQuery()): SimpleLeagueList {
+        val query = pagination.createQuery()
+
+        return requestHandler.request("$API_BASE_URL/warleagues?$query")
+    }
+
+    suspend fun getWarLeague(leagueId: Int, pagination: PaginationQuery = PaginationQuery()): SimpleLeague {
+        val query = pagination.createQuery()
+
+        return requestHandler.request("$API_BASE_URL/warleagues/$leagueId?$query")
     }
 }
