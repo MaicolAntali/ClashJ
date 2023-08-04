@@ -12,7 +12,7 @@ package com.clashj.util
  * ```
  *
  * @param tag The tag string to be adjusted.
- * @param prefix The optional prefix to be added to the adjusted tag. Default is "#".
+ * @param prefix The optional prefix to be added to the adjusted tag. Default is "#."
  * @return The adjusted tag with the prefix.
  */
 fun adjustTag(tag: String, prefix: String = "#"): String {

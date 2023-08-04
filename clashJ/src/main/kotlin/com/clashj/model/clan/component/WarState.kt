@@ -44,7 +44,7 @@ enum class WarState {
     MATCHED,
 
     /**
-     * In the preparation phase of war.
+     * In the preparation phase of the war.
      */
     @SerializedName("preparation")
     PREPARATION,

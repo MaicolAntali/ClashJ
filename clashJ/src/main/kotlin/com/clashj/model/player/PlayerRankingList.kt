@@ -2,7 +2,6 @@ package com.clashj.model.player
 
 import com.clashj.model.common.Badge
 import com.clashj.model.common.Paging
-import com.clashj.model.league.League
 
 data class PlayerRankingList(
     val items: List<PlayerRanking>,
