@@ -13,7 +13,6 @@ import com.clashj.http.response.CreateKeyResponse
 import com.clashj.http.response.KeyListResponse
 import com.clashj.http.response.base.Key
 import com.clashj.http.throttler.BaseThrottler
-import com.clashj.http.throttler.BatchThrottler
 import com.clashj.util.API_BASE_URL
 import com.clashj.util.Credential
 import com.clashj.util.DEV_SITE_BASE_URL
@@ -23,7 +22,6 @@ import com.google.gson.JsonParser
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.HttpClientEngine
-import io.ktor.client.engine.apache5.Apache5
 import io.ktor.client.plugins.HttpRequestTimeoutException
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -53,9 +51,8 @@ import java.util.Base64
  * @param credential The `Credential` object containing the email and password for authentication.
  * @param keyOptions The `KeyOptions` specifying the key name, optional description, and key count.
  * @param engineOptions The `EngineOptions` specifying the connection timeout and request timeout.
- * @param engine The `HttpClientEngine` to be used for HTTP requests. If not provided, it defaults to `Apache5.create()`.
+ * @param engine The `HttpClientEngine` to be used for HTTP requests.
  * @param throttler The `BaseThrottler` instance responsible for controlling the rate of API requests.
- * Defaults to [BatchThrottler].
  */
 class RequestHandler(
     private val credential: Credential,
@@ -63,9 +60,9 @@ class RequestHandler(
     private val keyOptions: KeyOptions,
 
     private val engineOptions: EngineOptions,
-    private val engine: HttpClientEngine = Apache5.create(),
+    private val engine: HttpClientEngine,
 
-    private val throttler: BaseThrottler = BatchThrottler()
+    private val throttler: BaseThrottler
 ) {
 
 
