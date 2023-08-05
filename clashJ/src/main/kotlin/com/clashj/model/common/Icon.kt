@@ -1,11 +1,11 @@
 package com.clashj.model.common
 
 /**
- * Represents a Clash of Clans API Icon.
+ * Represents the *Icon* model of the Clash of Clans API.
  *
- * @param tiny The URL to the tiny-sized badge image.
- * @param small The URL to the small-sized badge image.
- * @param medium The URL to the medium-sized badge image.
+ * @property tiny The URL of the tiny-sized image.
+ * @property small The URL of the small-sized image.
+ * @property medium The URL of the medium-sized image.
  */
 data class Icon(
     val tiny: String,

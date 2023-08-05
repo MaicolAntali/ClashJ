@@ -1,19 +1,20 @@
 package com.clashj.model.common
 
 /**
- * Represents a Clash of Clans API PlayerHouse.
+ * Represents the *PlayerHouse* model of the Clash of Clans API.
  *
- * @param elements The list of [HouseElement] objects representing elements that build the house.
+ * @property elements A list of [HouseElements][HouseElement] that make up the player's house.
  */
 data class PlayerHouse(
     val elements: List<HouseElement>
 )
 
 /**
- * Represents a Clash of Clans API HouseElement.
+ * Represents the *HouseElement* model of the Clash of Clans API.
+ * HouseElements are individual elements that make up a player's house in the capital.
  *
- * @param type The type of the house element.
- * @param id The ID of the house element.
+ * @property type The type of the house element.
+ * @property id The unique identifier for the house element.
  */
 data class HouseElement(
     val type: String,

@@ -1,11 +1,11 @@
 package com.clashj.model.common
 
 /**
- * Represents a Clash of Clans API Badge.
+ * Represents the *Badge* model of the Clash of Clans API.
  *
- * @param small The URL to the small-sized badge image.
- * @param medium The URL to the medium-sized badge image.
- * @param large The URL to the large-sized badge image.
+ * @property small The URL of the small-sized image.
+ * @property medium The URL of the medium-sized image.
+ * @property large The URL of the large-sized image.
  */
 data class Badge(
     val small: String,

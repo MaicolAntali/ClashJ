@@ -3,7 +3,7 @@ package com.clashj.model.clan.component
 import com.google.gson.annotations.SerializedName
 
 /**
- * Represents a Clash of Clans API ClanMemberRole.
+ * Represents the *ClanMemberRole* enum class of the Clash of Clans API.
  */
 enum class ClanMemberRole {
     /**
@@ -19,7 +19,7 @@ enum class ClanMemberRole {
     MEMBER,
 
     /**
-     * The player is an admin in the clan.
+     * The player is an admin in the clan (*elder*).
      */
     @SerializedName("admin")
     ADMIN,

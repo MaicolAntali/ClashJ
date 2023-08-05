@@ -3,7 +3,7 @@ package com.clashj.model.clan.component
 import com.google.gson.annotations.SerializedName
 
 /**
- * Represents the result of a clan war.
+ * Represents the *WarResult* enum class of the Clash of Clans API.
  */
 enum class WarResult {
 

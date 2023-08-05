@@ -3,11 +3,11 @@ package com.clashj.model.label
 import com.clashj.model.common.Icon
 
 /**
- * Represents a Clash of Clans API Icon.
+ * Represents the *Label* model of the Clash of Clans API.
  *
- * @param name The name of the label.
- * @param id The ID of the label.
- * @param iconUrls The [Icon] object containing icon URLs for different sizes.
+ * @property name The name of the label.
+ * @property id The unique identifier for the label.
+ * @property iconUrls The icon URLs representing the label's icon in different sizes.
  */
 data class Label(
     val name: String,
