@@ -3,11 +3,11 @@ package com.clashj.model.league
 import com.clashj.model.common.Icon
 
 /**
- * Represents a Clash of Clans API League.
+ * Represents the *League* model of the Clash of Clans API.
  *
- * @param name The name of the league.
- * @param id The ID of the league.
- * @param iconUrls The [Icon] object containing icon URLs for different sizes.
+ * @property name The name of the league.
+ * @property id The unique identifier for the league.
+ * @property iconUrls The [Icon] URLs representing the league's icon in different sizes.
  */
 data class League(
     val name: String,

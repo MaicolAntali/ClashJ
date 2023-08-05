@@ -3,17 +3,17 @@ package com.clashj.model.clan.component
 import com.clashj.model.common.Badge
 
 /**
- * Represents a clan in a clan war.
+ * Represents the *WarClan* model of the Clash of Clans API.
  *
- * @property destructionPercentage The percentage of destruction achieved by the clan in the war.
- * @property tag The tag of the clan.
- * @property name The name of the clan.
- * @property badgeUrls The badge URLs of the clan.
+ * @property destructionPercentage The overall destruction percentage achieved by the clan in the war.
+ * @property tag The tag of the clan in the war.
+ * @property name The name of the clan in the war.
+ * @property badgeUrls The badge URLs representing the clan's badge in different sizes.
  * @property clanLevel The level of the clan.
- * @property attacks The total number of attacks made by the clan in the war.
- * @property stars The total number of stars earned by the clan in the war.
- * @property expEarned The total number of experience points earned by the clan in the war.
- * @property members The list of clan members in the war. (It can be null)
+ * @property attacks The total number of attacks.
+ * @property stars The total number of stars earned.
+ * @property expEarned The total amount of experience earned.
+ * @property members A list of [ClanWarMember] objects containing information about individual member's participation.
  */
 data class WarClan(
     val destructionPercentage: Float,

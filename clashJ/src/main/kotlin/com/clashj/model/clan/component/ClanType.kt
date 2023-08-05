@@ -3,7 +3,7 @@ package com.clashj.model.clan.component
 import com.google.gson.annotations.SerializedName
 
 /**
- * Represents a Clash of Clans API ClanType.
+ * Represents the *ClanType* enum class of the Clash of Clans API.
  */
 enum class ClanType {
     /**

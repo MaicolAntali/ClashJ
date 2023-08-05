@@ -2,6 +2,33 @@ package com.clashj.http.query
 
 import java.net.URLEncoder
 
+/**
+ * Represents a query used to search for clans.
+ * This query allows filtering clans based on various criteria like name, war frequency,
+ * location, number of members, clan points, clan level, pagination settings, and label IDs.
+ *
+ * @property name The name of the clan to search for (optional).
+ * If provided, the search will be filtered based on this name.
+ * @property warFrequency The war frequency of the clan to search for (optional).
+ * If provided, the search will be filtered based on this war frequency.
+ * @property locationId The location ID of the clan to search for (optional).
+ * If provided, the search will be filtered based on this location ID.
+ * @property minMembers The minimum number of members in the clan to search for (optional).
+ * If provided, the search will be filtered based on this minimum member count.
+ * @property maxMembers The maximum number of members in the clan to search for (optional).
+ * If provided, the search will be filtered based on this maximum member count.
+ * @property minClanPoints The minimum clan points of the clan to search for (optional).
+ * If provided, the search will be filtered based on this minimum clan points value.
+ * @property minClanLevel The minimum clan level of the clan to search for (optional).
+ * If provided, the search will be filtered based on this minimum clan level value.
+ * @property paginationQuery An instance of [PaginationQuery] used for pagination settings.
+ * The pagination settings determine the number of results to retrieve and the starting point
+ * for the search (optional).
+ * @property labelIds A comma-separated string containing label IDs of the clan to search for (optional).
+ * If provided, the search will be filtered based on these label IDs.
+ *
+ * @constructor Creates a [SearchClanQuery] instance with the provided query parameters.
+ */
 class SearchClanQuery(
     private val name: String = "",
     private val warFrequency: String = "",
@@ -14,6 +41,11 @@ class SearchClanQuery(
     private val labelIds: String = ""
 ) : Query {
 
+    /**
+     * Generates a formatted query string based on the provided query parameters.
+     *
+     * @return The formatted query string representing the search parameters.
+     */
     override fun createQuery(): String {
         var query = ""
 

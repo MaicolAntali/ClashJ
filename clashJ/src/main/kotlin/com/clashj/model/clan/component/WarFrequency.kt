@@ -3,9 +3,9 @@ package com.clashj.model.clan.component
 import com.google.gson.annotations.SerializedName
 
 /**
- * Represents a Clash of Clans API WarFrequency.
+ * Represents the *WarFrequency* enum class of the Clash of Clans API.
  */
-enum class WarFrequency{
+enum class WarFrequency {
     /**
      * The war frequency is unknown or not specified.
      */
@@ -47,5 +47,4 @@ enum class WarFrequency{
      */
     @SerializedName("any")
     ANY
-
 }

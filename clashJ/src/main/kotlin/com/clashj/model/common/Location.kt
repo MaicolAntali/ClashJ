@@ -1,13 +1,13 @@
 package com.clashj.model.common
 
 /**
- * Represents a Clash of Clans API Location.
+ * Represents the *Location* model of the Clash of Clans API.
  *
- * @param id The unique identifier of the location.
- * @param name The name of the location.
- * @param isCountry Specifies whether the location represents a country. `true` if it's a country, `false` otherwise.
- * @param countryCode The country code associated with the location.
- * @param localizedName The localized name of the location.
+ * @property id The unique identifier for the location.
+ * @property name The name of the location.
+ * @property isCountry A flag indicating whether the location is a country (`true`) or a region (`false`).
+ * @property countryCode The country code corresponding to the location.
+ * @property localizedName The localized name of the location. (*Note: the use of this is unknown at present.*)
  */
 data class Location(
     val id: String,

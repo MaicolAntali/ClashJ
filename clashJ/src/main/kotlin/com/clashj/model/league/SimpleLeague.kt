@@ -1,10 +1,10 @@
 package com.clashj.model.league
 
 /**
- * Represents a Clash of Clans API SimpleLeague.
+ * Represents the *SimpleLeague* model of the Clash of Clans API.
  *
- * @param name The name of the league.
- * @param id The ID of the league.
+ * @property name The name of the league.
+ * @property id The unique identifier for the league.
  */
 data class SimpleLeague(
     val name: String,

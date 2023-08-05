@@ -3,66 +3,66 @@ package com.clashj.model.clan.component
 import com.google.gson.annotations.SerializedName
 
 /**
- * Represents the state of a ClanWar.
+ * Represents the *WarState* enum class of the Clash of Clans API.
  */
 enum class WarState {
 
     /**
-     * Clan isn't found in the war.
+     * The clan was not found in the war state.
      */
     @SerializedName("clanNotFound")
     CLAN_NOT_FOUND,
 
     /**
-     * Access to the war is denied.
+     * The access to the war state was denied (**Private war log**).
      */
     @SerializedName("accessDenied")
     ACCESS_DENIED,
 
     /**
-     * Not participating in the war.
+     * The clan is not currently in a war.
      */
     @SerializedName("notInWar")
     NOT_IN_WAR,
 
     /**
-     * In the matchmaking phase of war.
+     * The clan is in the matchmaking process, searching for an opponent.
      */
     @SerializedName("inMatchmaking")
     IN_MATCHMAKING,
 
     /**
-     * Entered the war.
+     * The clan is about to enter the war.
      */
     @SerializedName("enterWar")
     ENTER_WAR,
 
     /**
-     * Matched with an opponent in war.
+     * The clan has been matched with an opponent.
      */
     @SerializedName("matched")
     MATCHED,
 
     /**
-     * In the preparation phase of the war.
+     * The clan is in the preparation phase of the war.
      */
     @SerializedName("preparation")
     PREPARATION,
 
     /**
-     * In an active war.
+     * The clan is currently in the war phase.
      */
     @SerializedName("war")
     WAR,
 
     /**
-     * Currently participating in the war.
+     * The clan is participating in an ongoing war.
      */
     @SerializedName("inWar")
     IN_WAR,
 
     /**
-     * The war has ended.
+     * The war has ended for the clan.
      */
     @SerializedName("ended")
     ENDED

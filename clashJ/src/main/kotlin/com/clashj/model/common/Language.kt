@@ -1,11 +1,11 @@
 package com.clashj.model.common
 
 /**
- * Represents a Clash of Clans API Language.
+ * Represents the *Language* model of the Clash of Clans API.
  *
- * @param name The name of the language.
- * @param id The ID of the language.
- * @param languageCode The language code of the language.
+ * @property name The name of the language.
+ * @property id The unique identifier for the language.
+ * @property languageCode The language code corresponding to the language.
  */
 data class Language(
     val name: String,
