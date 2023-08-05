@@ -48,14 +48,14 @@ import java.time.LocalDateTime
 import java.util.Base64
 
 /**
- * Handles HTTP requests from/to [DEV_SITE_BASE_URL] and [API_BASE_URL].
+ * Handles HTTP requests to and from [DEV_SITE_BASE_URL] and [API_BASE_URL].
  *
- * @param credential The credential object containing the email and password for authentication.
- *
- * @param keyOptions The key options specifying the key name, optional description, and key count.
- *
- * @param engineOptions The engine options specifying the connection timeout and request timeout.
- * @param engine The HttpClientEngine to be used for HTTP requests. Defaults to Apache5.create() if not provided.
+ * @param credential The `Credential` object containing the email and password for authentication.
+ * @param keyOptions The `KeyOptions` specifying the key name, optional description, and key count.
+ * @param engineOptions The `EngineOptions` specifying the connection timeout and request timeout.
+ * @param engine The `HttpClientEngine` to be used for HTTP requests. If not provided, it defaults to `Apache5.create()`.
+ * @param throttler The `BaseThrottler` instance responsible for controlling the rate of API requests.
+ * Defaults to [BatchThrottler].
  */
 class RequestHandler(
     private val credential: Credential,
@@ -68,7 +68,8 @@ class RequestHandler(
     private val throttler: BaseThrottler = BatchThrottler()
 ) {
 
-    companion object {
+
+    private companion object {
         private const val MAX_KEY_COUNT = 10
         private val log = LoggerFactory.getLogger(RequestHandler::class.java)
     }
@@ -88,12 +89,13 @@ class RequestHandler(
     }
 
     /**
-     * Performs the login in to the developer site using the provided email and password.
+     * Performs the login to the developer site using the provided email and password.
      *
-     * Retrieves temporary API keys from the login response and filters the keys
-     * based on the current IP address. It also creates new keys within the limit of 10 keys per account.
+     * This function authenticates the user with the developer website, retrieves temporary API keys,
+     * and filters the keys based on the current IP address.
+     * It also creates new keys, if necessary, to ensure the desired number of API keys per account is met.
      *
-     * @throws InvalidCredentialException if invalid login credentials were used during the login process.
+     * @throws InvalidCredentialException if the provided login credentials are invalid or incorrect.
      */
     suspend fun login() = withContext(Dispatchers.IO) {
         log.info("Logging into the developer website.")
@@ -363,5 +365,8 @@ class RequestHandler(
         return cidrs.first().asString.split('/').first()
     }
 
+    /**
+     * Closes the HTTP client and releases any resources associated with it.
+     */
     private fun closeHttpClient() = httpClient.close()
 }
