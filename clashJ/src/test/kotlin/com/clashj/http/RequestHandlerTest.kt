@@ -8,6 +8,7 @@ import com.clashj.exception.MaintenanceException
 import com.clashj.http.option.EngineOptions
 import com.clashj.http.option.KeyOptions
 import com.clashj.http.option.RequestOptions
+import com.clashj.http.throttler.BatchThrottler
 import com.clashj.util.Credential
 import com.clashj.util.DEV_SITE_BASE_URL
 import io.ktor.client.engine.mock.MockEngine
@@ -39,7 +40,8 @@ class RequestHandlerTest {
                     Credential("email", "password"),
                     KeyOptions("name", null, 0),
                     EngineOptions(),
-                    mockEngine
+                    mockEngine,
+                    BatchThrottler()
                 )
 
                 assertThrows<InvalidCredentialException> { requestHandler.login() }
@@ -83,7 +85,8 @@ class RequestHandlerTest {
                     Credential("email", "password"),
                     KeyOptions("name", null, 0),
                     EngineOptions(),
-                    mockEngine
+                    mockEngine,
+                    BatchThrottler()
                 )
 
                 assertThrows<ClashJException> { requestHandler.login() }
@@ -105,7 +108,8 @@ class RequestHandlerTest {
                     Credential("email", "password"),
                     KeyOptions("name", null, 0),
                     EngineOptions(),
-                    mockEngine
+                    mockEngine,
+                    BatchThrottler()
                 )
 
                 val e = assertThrows<ClashJException> { requestHandler.request<String>("url", RequestOptions()) }
@@ -124,7 +128,8 @@ class RequestHandlerTest {
                     Credential("email", "password"),
                     KeyOptions("name", null, 0),
                     EngineOptions(requestTimeout = 1000),
-                    mockEngine
+                    mockEngine,
+                    BatchThrottler()
                 )
 
                 val e = assertThrows<BadGatewayException> { requestHandler.request<String>("url", RequestOptions()) }
@@ -143,7 +148,8 @@ class RequestHandlerTest {
                     Credential("email", "password"),
                     KeyOptions("name", null, 0),
                     EngineOptions(),
-                    mockEngine
+                    mockEngine,
+                    BatchThrottler()
                 )
 
                 val e = assertThrows<HttpException> { requestHandler.request<String>("url", RequestOptions()) }
@@ -162,7 +168,8 @@ class RequestHandlerTest {
                     Credential("email", "password"),
                     KeyOptions("name", null, 0),
                     EngineOptions(),
-                    mockEngine
+                    mockEngine,
+                    BatchThrottler()
                 )
 
                 val e = assertThrows<MaintenanceException> { requestHandler.request<String>("url", RequestOptions()) }

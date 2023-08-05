@@ -1,14 +1,10 @@
 package com.clashj
 
 import com.clashj.exception.ClashJException
-import com.clashj.http.RequestHandler
-import com.clashj.http.option.EngineOptions
-import com.clashj.http.option.KeyOptions
 import com.clashj.http.query.SearchClanQuery
 import com.clashj.model.clan.component.ClanMemberRole
 import com.clashj.model.clan.component.ClanType
 import com.clashj.model.clan.component.WarState
-import com.clashj.util.Credential
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.engine.mock.respondBadRequest
@@ -32,14 +28,7 @@ class ClientTest {
                 )
             }
 
-            val api = Client(
-                RequestHandler(
-                    Credential("mail", "pwd"),
-                    KeyOptions("...", null, 1),
-                    EngineOptions(),
-                    mockEngine
-                )
-            )
+            val api = ClientBuilder("email", "pwd").engine(mockEngine).build()
 
             val clan = api.getClan("tag")
 
@@ -62,14 +51,7 @@ class ClientTest {
                 )
             }
 
-            val api = Client(
-                RequestHandler(
-                    Credential("mail", "pwd"),
-                    KeyOptions("...", null, 1),
-                    EngineOptions(),
-                    mockEngine
-                )
-            )
+            val api = ClientBuilder("email", "pwd").engine(mockEngine).build()
 
             val clan = api.getClanCurrentWar("tag")
 
@@ -88,14 +70,7 @@ class ClientTest {
                 respondBadRequest()
             }
 
-            val api = Client(
-                RequestHandler(
-                    Credential("mail", "pwd"),
-                    KeyOptions("...", null, 1),
-                    EngineOptions(),
-                    mockEngine
-                )
-            )
+            val api = ClientBuilder("email", "pwd").engine(mockEngine).build()
 
             val e = assertThrows<ClashJException> { api.searchClan(SearchClanQuery()) }
             assertThat(e).hasMessageContaining("Not able to handle this response")
@@ -112,14 +87,7 @@ class ClientTest {
                 )
             }
 
-            val api = Client(
-                RequestHandler(
-                    Credential("mail", "pwd"),
-                    KeyOptions("...", null, 1),
-                    EngineOptions(),
-                    mockEngine
-                )
-            )
+            val api = ClientBuilder("email", "pwd").engine(mockEngine).build()
 
             val player = api.getPlayer("tag")
 
