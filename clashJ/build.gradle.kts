@@ -51,7 +51,7 @@ tasks.named("build") {
 tasks.withType<DokkaTask>().configureEach {
     moduleName.set(project.name)
     moduleVersion.set(project.version.toString())
-    // failOnWarning.set(true)
+    failOnWarning.set(true)
 
     dokkaSourceSets {
         configureEach {
