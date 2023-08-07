@@ -22,7 +22,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-gson:2.3.3")
     testImplementation("io.ktor:ktor-client-mock:2.3.3")
 
-    implementation("ch.qos.logback:logback-classic:1.4.8")
+    implementation("ch.qos.logback:logback-classic:1.4.9")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.0")
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
