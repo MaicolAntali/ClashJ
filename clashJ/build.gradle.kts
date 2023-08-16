@@ -3,8 +3,6 @@ import org.jetbrains.dokka.gradle.DokkaTask
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.9.0"
     id("org.jetbrains.dokka") version "1.8.20"
-
-    `java-library`
 }
 
 repositories {
@@ -33,9 +31,6 @@ java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(17))
     }
-
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
 
     withSourcesJar()
 }
