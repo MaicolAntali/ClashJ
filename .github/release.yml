@@ -9,6 +9,9 @@ changelog:
     - title: 🔄 Dependencies
       labels:
         - dependencies
+    - title: 🐘 Gradle
+      labels:
+        - gradle
     - title: 🤖 GitHub Actions
       labels:
         - action
