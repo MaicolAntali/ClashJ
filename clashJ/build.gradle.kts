@@ -1,15 +1,10 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 
-group = "io.github.maicolantali"
-version = "1.0.1"
-
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.9.0"
     id("org.jetbrains.dokka") version "1.8.20"
 
     `java-library`
-    `maven-publish`
-    signing
 }
 
 repositories {
@@ -67,16 +62,6 @@ tasks.register<Jar>("dokkaHtmlJar") {
     archiveClassifier.set("javadoc")
 }
 
-tasks.register<Jar>("dokkaJavadocJar") {
-    dependsOn(tasks.dokkaJavadoc)
-    from(tasks.dokkaJavadoc.flatMap { it.outputDirectory })
-    archiveClassifier.set("javadoc")
-}
-
-signing {
-    sign(publishing.publications)
-}
-
 publishing {
     publications {
         create<MavenPublication>("clashJ") {
@@ -93,31 +78,6 @@ publishing {
                         name.set("MIT License")
                         url.set("https://github.com/MaicolAntali/clashJ/blob/main/LICENSE.txt")
                     }
-                }
-
-                developers {
-                    developer {
-                        id.set("MaicolAntali")
-                        name.set("Maicol Antali")
-                        email.set("maicol.antali.ma@gmail.com")
-                    }
-                }
-
-                scm {
-                    url.set("https://github.com/MaicolAntali/clashJ")
-                    connection.set("scm:git:git://github.com/MaicolAntali/clashJ.git")
-                    developerConnection.set("scm:git:ssh://github.com/MaicolAntali/clashJ.git")
-                }
-            }
-        }
-
-        repositories {
-            maven {
-                url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-
-                credentials {
-                    username = findProperty("ossrhUsername").toString()
-                    password = findProperty("ossrhPassword").toString()
                 }
             }
         }

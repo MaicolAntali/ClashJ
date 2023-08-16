@@ -4,9 +4,6 @@
 # Ignore Gradle build output directory
 build
 
-# Ignore Gradle properties
-gradle.properties
-
 # Ignore IDEs directories
 .idea
 .vscode
