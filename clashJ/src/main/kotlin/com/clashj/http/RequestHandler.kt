@@ -34,13 +34,11 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.serialization.gson.gson
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.slf4j.LoggerFactory
 import java.time.LocalDateTime
 import java.util.Base64
@@ -94,7 +92,7 @@ class RequestHandler(
      *
      * @throws InvalidCredentialException if the provided login credentials are invalid or incorrect.
      */
-    suspend fun login() = withContext(Dispatchers.IO) {
+    suspend fun login() = coroutineScope {
         log.info("Logging into the developer website.")
 
         keysSet.clear()
@@ -166,7 +164,7 @@ class RequestHandler(
      * @throws ClashJException If there is an issue that cannot be handled specifically.
      */
     private suspend inline fun <reified T> executeRequest(url: String, requestOptions: RequestOptions): T =
-        withContext(Dispatchers.IO) {
+        coroutineScope {
             for (tries in 0..requestOptions.maxRetryAttempts) {
                 try {
                     val response = httpClient.request(url) {
@@ -177,7 +175,7 @@ class RequestHandler(
 
                     when (response.status) {
                         HttpStatusCode.OK -> {
-                            return@withContext response.body<T>()
+                            return@coroutineScope response.body<T>()
                         }
 
                         HttpStatusCode.Forbidden -> {
