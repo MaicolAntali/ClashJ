@@ -65,7 +65,7 @@ class Client(
      * Searches for clans based on the provided [searchClanQuery].
      *
      * @param searchClanQuery The [SearchClanQuery] object containing various search parameters.
-     * @return A [ClanList] object containing a list of clans that match the search criteria.
+     * @return A [Deferred] [ClanList] object containing a list of clans that match the search criteria.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
@@ -80,7 +80,7 @@ class Client(
      * Gets the Clan War League group for the clan specified by [clanTag].
      *
      * @param clanTag The tag of the clan for which to retrieve the Clan War League group.
-     * @return A [ClanWarLeagueGroup] object representing the Clan War League group for the specified clan.
+     * @return A [Deferred] [ClanWarLeagueGroup] object representing the Clan War League group for the specified clan.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested clan is not found.
@@ -96,7 +96,7 @@ class Client(
      * Gets the Clan War League war specified by [warTag].
      *
      * @param warTag The tag of the Clan War League war to retrieve.
-     * @return A [ClanWar] object representing the Clan War League war with the specified tag.
+     * @return A [Deferred] [ClanWar] object representing the Clan War League war with the specified tag.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested war is not found.
@@ -112,7 +112,7 @@ class Client(
      * Retrieves the current war of a clan based on the provided [clanTag].
      *
      * @param clanTag The tag of the clan for which to retrieve the current war status.
-     * @return A [ClanWar] object representing the current war status of the specified clan.
+     * @return A [Deferred] [ClanWar] object representing the current war status of the specified clan.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested clan is not found or does not have an ongoing war.
@@ -128,7 +128,7 @@ class Client(
      * Retrieves detailed information about a clan based on the provided [clanTag].
      *
      * @param clanTag The tag of the clan for which to retrieve the detailed information.
-     * @return A [Clan] object representing the detailed information of the specified clan.
+     * @return A [Deferred] [Clan] object representing the detailed information of the specified clan.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested clan is not found.
@@ -145,7 +145,7 @@ class Client(
      *
      * @param clanTag The tag of the clan for which to retrieve the war log.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [ClanWarLog] object representing the war log of the specified clan.
+     * @return A [Deferred] [ClanWarLog] object representing the war log of the specified clan.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested clan is not found or has no war log data available.
@@ -165,7 +165,7 @@ class Client(
      *
      * @param clanTag The tag of the clan for which to retrieve the member list.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [ClanMemberList] object representing the list of members in the specified clan.
+     * @return A [Deferred] [ClanMemberList] object representing the list of members in the specified clan.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested clan is not found or has no members.
@@ -185,7 +185,7 @@ class Client(
      *
      * @param clanTag The tag of the clan for which to retrieve the capital raid seasons.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [ClanCapitalRaidSeasons] object representing the capital raid seasons of the specified clan.
+     * @return A [Deferred] [ClanCapitalRaidSeasons] object representing the capital raid seasons of the specified clan.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested clan is not found or has no capital raid season data available.
@@ -204,7 +204,7 @@ class Client(
      * Retrieves detailed information about a player based on the provided [playerTag].
      *
      * @param playerTag The tag of the player for which to retrieve the information.
-     * @return A [Player] object representing detailed information about the specified player.
+     * @return A [Deferred] [Player] object representing detailed information about the specified player.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested player is not found or has no available information.
@@ -220,7 +220,7 @@ class Client(
      * Retrieves a list of capital leagues.
      *
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [SimpleLeagueList] object representing the list of capital leagues.
+     * @return A [Deferred] [SimpleLeagueList] object representing the list of capital leagues.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
@@ -236,7 +236,7 @@ class Client(
      *
      * @param leagueId The ID of the capital league for which to retrieve the information.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [SimpleLeague] object representing detailed information about the specified capital league.
+     * @return A [Deferred] [SimpleLeague] object representing detailed information about the specified capital league.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested capital league is not found or has no available information.
@@ -255,7 +255,7 @@ class Client(
      * Retrieves a list of leagues.
      *
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [LeagueList] object representing the list of leagues.
+     * @return A [Deferred] [LeagueList] object representing the list of leagues.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
@@ -271,7 +271,7 @@ class Client(
      *
      * @param leagueId The ID of the league for which to retrieve the information.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [League] object representing detailed information about the specified league.
+     * @return A [Deferred] [League] object representing detailed information about the specified league.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested league is not found.
@@ -288,7 +288,7 @@ class Client(
      *
      * @param leagueId The ID of the league for which to retrieve the list of seasons.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [LeagueSeasonList] object representing the list of seasons for the specified league.
+     * @return A [Deferred] [LeagueSeasonList] object representing the list of seasons for the specified league.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested league is not found.
@@ -309,7 +309,7 @@ class Client(
      * @param leagueId The ID of the league for which to retrieve the ranking.
      * @param seasonId The ID of the season for which to retrieve the ranking.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [PlayerRankingList] object representing the ranking of players for the specified league season.
+     * @return A [Deferred] [PlayerRankingList] object representing the ranking of players for the specified league season.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested league or season or its ranking is not found.
@@ -329,7 +329,7 @@ class Client(
      * Retrieves the list of Builder Base leagues.
      *
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [SimpleLeagueList] object representing the list of Builder Base leagues.
+     * @return A [Deferred] [SimpleLeagueList] object representing the list of Builder Base leagues.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
@@ -345,7 +345,7 @@ class Client(
      *
      * @param leagueId The ID of the Builder Base league to retrieve.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [SimpleLeague] object representing the specified Builder Base league.
+     * @return A [Deferred] [SimpleLeague] object representing the specified Builder Base league.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested league is not found.
@@ -364,7 +364,7 @@ class Client(
      * Retrieves the list of War Leagues.
      *
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [SimpleLeagueList] object representing the list of War Leagues.
+     * @return A [Deferred] [SimpleLeagueList] object representing the list of War Leagues.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
@@ -380,7 +380,7 @@ class Client(
      *
      * @param leagueId The ID of the War League to retrieve.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [SimpleLeague] object representing the specified War League.
+     * @return A [Deferred] [SimpleLeague] object representing the specified War League.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested league is not found.
@@ -396,7 +396,7 @@ class Client(
      * Retrieves the list of available locations.
      *
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [LocationList] object representing the list of available locations.
+     * @return A [Deferred] [LocationList] object representing the list of available locations.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
@@ -411,7 +411,7 @@ class Client(
      * Retrieves information about a specific location based on the provided [locationId].
      *
      * @param locationId The ID of the location to retrieve.
-     * @return A [Location] object representing the specified location.
+     * @return A [Deferred] [Location] object representing the specified location.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested location is not found.
@@ -428,7 +428,7 @@ class Client(
      *
      * @param locationId The ID of the location for which to retrieve the clan rankings.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [ClanRankingList] object representing the list of clans ranked in the specified location.
+     * @return A [Deferred] [ClanRankingList] object representing the list of clans ranked in the specified location.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested location is not found.
@@ -449,7 +449,7 @@ class Client(
      *
      * @param locationId The ID of the location for which to retrieve the player rankings.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [PlayerRankingList] object representing the list of players ranked in the specified location.
+     * @return A [Deferred] [PlayerRankingList] object representing the list of players ranked in the specified location.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested location is not found.
@@ -470,7 +470,7 @@ class Client(
      *
      * @param locationId The ID of the location for which to retrieve the Builder Base clan rankings.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [ClanBuilderBaseRankingList] object representing the list of clans ranked in the Builder Base
+     * @return A [Deferred] [ClanBuilderBaseRankingList] object representing the list of clans ranked in the Builder Base
      *         for the specified location.
      *
      * @throws MaintenanceException If the API is in maintenance.
@@ -492,7 +492,7 @@ class Client(
      *
      * @param locationId The ID of the location for which to retrieve the Builder Base player rankings.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [PlayerBuilderBaseRankingList] object representing the list of players ranked in the Builder Base
+     * @return A [Deferred] [PlayerBuilderBaseRankingList] object representing the list of players ranked in the Builder Base
      *         for the specified location.
      *
      * @throws MaintenanceException If the API is in maintenance.
@@ -514,7 +514,7 @@ class Client(
      *
      * @param locationId The ID of the location for which to retrieve the Capital clan rankings.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [ClanCapitalRankingList] object representing the list of clans ranked in the Capital
+     * @return A [Deferred] [ClanCapitalRankingList] object representing the list of clans ranked in the Capital
      *         for the specified location.
      *
      * @throws MaintenanceException If the API is in maintenance.
@@ -533,7 +533,7 @@ class Client(
     /**
      * Retrieves the current Gold Pass season information.
      *
-     * @return A [GoldPassSeason] object representing the current Gold Pass season information.
+     * @return A [Deferred] [GoldPassSeason] object representing the current Gold Pass season information.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
@@ -549,7 +549,7 @@ class Client(
      *
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
      *
-     * @return A [LabelList] containing the list of player labels.
+     * @return A [Deferred] [LabelList] containing the list of player labels.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
@@ -565,7 +565,7 @@ class Client(
      *
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
      *
-     * @return A [LabelList] containing the list of clan labels.
+     * @return A [Deferred] [LabelList] containing the list of clan labels.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
