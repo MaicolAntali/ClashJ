@@ -67,11 +67,11 @@ fun main() = runBlocking {
     val client = ClientBuilder("email", "password").build()
 
     // Retrive player info
-    val player = client.getPlayer("#tag")
+    val player = client.getPlayer("#tag").await()
     println("Name: ${player.name}, TH lvl: ${player.townHallLevel}")
 
     // Retrive clan info
-    val clan = client.getClan("#tag")
+    val clan = client.getClan("#tag").await()
     println("Name: ${clan.name}, Tag: ${clan.tag}")
 }
 ```
