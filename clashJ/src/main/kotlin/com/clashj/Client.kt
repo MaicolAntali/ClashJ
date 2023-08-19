@@ -1,8 +1,8 @@
 package com.clashj
 
+import com.clashj.exception.BadGatewayException
 import com.clashj.exception.InvalidCredentialException
 import com.clashj.exception.MaintenanceException
-import com.clashj.exception.BadGatewayException
 import com.clashj.exception.NotFoundException
 import com.clashj.http.RequestHandler
 import com.clashj.http.query.PaginationQuery
@@ -19,11 +19,11 @@ import com.clashj.model.clan.ClanWarLeagueGroup
 import com.clashj.model.clan.ClanWarLog
 import com.clashj.model.goldpass.GoldPassSeason
 import com.clashj.model.label.LabelList
-import com.clashj.model.league.SimpleLeagueList
 import com.clashj.model.league.League
 import com.clashj.model.league.LeagueList
 import com.clashj.model.league.LeagueSeasonList
 import com.clashj.model.league.SimpleLeague
+import com.clashj.model.league.SimpleLeagueList
 import com.clashj.model.location.Location
 import com.clashj.model.location.LocationList
 import com.clashj.model.player.Player
@@ -31,6 +31,10 @@ import com.clashj.model.player.PlayerBuilderBaseRankingList
 import com.clashj.model.player.PlayerRankingList
 import com.clashj.util.API_BASE_URL
 import com.clashj.util.encodeTag
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 
 /**
  * Client class is used to interact with the Clash of Clans API.
@@ -61,71 +65,79 @@ class Client(
      * Searches for clans based on the provided [searchClanQuery].
      *
      * @param searchClanQuery The [SearchClanQuery] object containing various search parameters.
-     * @return A [ClanList] object containing a list of clans that match the search criteria.
+     * @return A [Deferred] [ClanList] object containing a list of clans that match the search criteria.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun searchClan(searchClanQuery: SearchClanQuery): ClanList {
-        val query = searchClanQuery.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/clans?$query")
+    suspend fun searchClan(searchClanQuery: SearchClanQuery): Deferred<ClanList> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/clans?${searchClanQuery.createQuery()}")
+        }
     }
 
     /**
      * Gets the Clan War League group for the clan specified by [clanTag].
      *
      * @param clanTag The tag of the clan for which to retrieve the Clan War League group.
-     * @return A [ClanWarLeagueGroup] object representing the Clan War League group for the specified clan.
+     * @return A [Deferred] [ClanWarLeagueGroup] object representing the Clan War League group for the specified clan.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested clan is not found.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getClanWarLeagueGroup(clanTag: String): ClanWarLeagueGroup {
-        return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/currentwar/leaguegroup")
+    suspend fun getClanWarLeagueGroup(clanTag: String): Deferred<ClanWarLeagueGroup> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/currentwar/leaguegroup")
+        }
     }
 
     /**
      * Gets the Clan War League war specified by [warTag].
      *
      * @param warTag The tag of the Clan War League war to retrieve.
-     * @return A [ClanWar] object representing the Clan War League war with the specified tag.
+     * @return A [Deferred] [ClanWar] object representing the Clan War League war with the specified tag.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested war is not found.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getClanWarLeagueWar(warTag: String): ClanWar {
-        return requestHandler.request("$API_BASE_URL/clanwarleagues/wars/${encodeTag(warTag)}")
+    suspend fun getClanWarLeagueWar(warTag: String): Deferred<ClanWar> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/clanwarleagues/wars/${encodeTag(warTag)}")
+        }
     }
 
     /**
      * Retrieves the current war of a clan based on the provided [clanTag].
      *
      * @param clanTag The tag of the clan for which to retrieve the current war status.
-     * @return A [ClanWar] object representing the current war status of the specified clan.
+     * @return A [Deferred] [ClanWar] object representing the current war status of the specified clan.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested clan is not found or does not have an ongoing war.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getClanCurrentWar(clanTag: String): ClanWar {
-        return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/currentwar")
+    suspend fun getClanCurrentWar(clanTag: String): Deferred<ClanWar> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/currentwar")
+        }
     }
 
     /**
      * Retrieves detailed information about a clan based on the provided [clanTag].
      *
      * @param clanTag The tag of the clan for which to retrieve the detailed information.
-     * @return A [Clan] object representing the detailed information of the specified clan.
+     * @return A [Deferred] [Clan] object representing the detailed information of the specified clan.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested clan is not found.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getClan(clanTag: String): Clan {
-        return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}")
+    suspend fun getClan(clanTag: String): Deferred<Clan> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}")
+        }
     }
 
     /**
@@ -133,7 +145,7 @@ class Client(
      *
      * @param clanTag The tag of the clan for which to retrieve the war log.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [ClanWarLog] object representing the war log of the specified clan.
+     * @return A [Deferred] [ClanWarLog] object representing the war log of the specified clan.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested clan is not found or has no war log data available.
@@ -142,10 +154,10 @@ class Client(
     suspend fun getClanWarLog(
         clanTag: String,
         pagination: PaginationQuery = PaginationQuery()
-    ): ClanWarLog {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/warlog?$query")
+    ): Deferred<ClanWarLog> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/warlog?${pagination.createQuery()}")
+        }
     }
 
     /**
@@ -153,7 +165,7 @@ class Client(
      *
      * @param clanTag The tag of the clan for which to retrieve the member list.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [ClanMemberList] object representing the list of members in the specified clan.
+     * @return A [Deferred] [ClanMemberList] object representing the list of members in the specified clan.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested clan is not found or has no members.
@@ -162,10 +174,10 @@ class Client(
     suspend fun getClanMembers(
         clanTag: String,
         pagination: PaginationQuery = PaginationQuery()
-    ): ClanMemberList {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/members?$query")
+    ): Deferred<ClanMemberList> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/members?${pagination.createQuery()}")
+        }
     }
 
     /**
@@ -173,7 +185,7 @@ class Client(
      *
      * @param clanTag The tag of the clan for which to retrieve the capital raid seasons.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [ClanCapitalRaidSeasons] object representing the capital raid seasons of the specified clan.
+     * @return A [Deferred] [ClanCapitalRaidSeasons] object representing the capital raid seasons of the specified clan.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested clan is not found or has no capital raid season data available.
@@ -182,39 +194,41 @@ class Client(
     suspend fun getClanCapitalRaidSeasons(
         clanTag: String,
         pagination: PaginationQuery = PaginationQuery()
-    ): ClanCapitalRaidSeasons {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/capitalraidseasons?$query")
+    ): Deferred<ClanCapitalRaidSeasons> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/capitalraidseasons?${pagination.createQuery()}")
+        }
     }
 
     /**
      * Retrieves detailed information about a player based on the provided [playerTag].
      *
      * @param playerTag The tag of the player for which to retrieve the information.
-     * @return A [Player] object representing detailed information about the specified player.
+     * @return A [Deferred] [Player] object representing detailed information about the specified player.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested player is not found or has no available information.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getPlayer(playerTag: String): Player {
-        return requestHandler.request("$API_BASE_URL/players/${encodeTag(playerTag)}")
+    suspend fun getPlayer(playerTag: String): Deferred<Player> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/players/${encodeTag(playerTag)}")
+        }
     }
 
     /**
      * Retrieves a list of capital leagues.
      *
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [SimpleLeagueList] object representing the list of capital leagues.
+     * @return A [Deferred] [SimpleLeagueList] object representing the list of capital leagues.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getCapitalLeagues(pagination: PaginationQuery = PaginationQuery()): SimpleLeagueList {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/capitalleagues?$query")
+    suspend fun getCapitalLeagues(pagination: PaginationQuery = PaginationQuery()): Deferred<SimpleLeagueList> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/capitalleagues?${pagination.createQuery()}")
+        }
     }
 
     /**
@@ -222,31 +236,34 @@ class Client(
      *
      * @param leagueId The ID of the capital league for which to retrieve the information.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [SimpleLeague] object representing detailed information about the specified capital league.
+     * @return A [Deferred] [SimpleLeague] object representing detailed information about the specified capital league.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested capital league is not found or has no available information.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getCapitalLeague(leagueId: String, pagination: PaginationQuery = PaginationQuery()): SimpleLeague {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/capitalleagues/$leagueId?$query")
+    suspend fun getCapitalLeague(
+        leagueId: String,
+        pagination: PaginationQuery = PaginationQuery()
+    ): Deferred<SimpleLeague> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/capitalleagues/$leagueId?${pagination.createQuery()}")
+        }
     }
 
     /**
      * Retrieves a list of leagues.
      *
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [LeagueList] object representing the list of leagues.
+     * @return A [Deferred] [LeagueList] object representing the list of leagues.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getLeagues(pagination: PaginationQuery = PaginationQuery()): LeagueList {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/leagues?$query")
+    suspend fun getLeagues(pagination: PaginationQuery = PaginationQuery()): Deferred<LeagueList> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/leagues?${pagination.createQuery()}")
+        }
     }
 
     /**
@@ -254,16 +271,16 @@ class Client(
      *
      * @param leagueId The ID of the league for which to retrieve the information.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [League] object representing detailed information about the specified league.
+     * @return A [Deferred] [League] object representing detailed information about the specified league.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested league is not found.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getLeague(leagueId: String, pagination: PaginationQuery = PaginationQuery()): League {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/leagues/$leagueId?$query")
+    suspend fun getLeague(leagueId: String, pagination: PaginationQuery = PaginationQuery()): Deferred<League> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/leagues/$leagueId?${pagination.createQuery()}")
+        }
     }
 
     /**
@@ -271,16 +288,19 @@ class Client(
      *
      * @param leagueId The ID of the league for which to retrieve the list of seasons.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [LeagueSeasonList] object representing the list of seasons for the specified league.
+     * @return A [Deferred] [LeagueSeasonList] object representing the list of seasons for the specified league.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested league is not found.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getLeagueSeasons(leagueId: String, pagination: PaginationQuery = PaginationQuery()): LeagueSeasonList {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/leagues/$leagueId/seasons?$query")
+    suspend fun getLeagueSeasons(
+        leagueId: String,
+        pagination: PaginationQuery = PaginationQuery()
+    ): Deferred<LeagueSeasonList> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/leagues/$leagueId/seasons?${pagination.createQuery()}")
+        }
     }
 
     /**
@@ -289,7 +309,7 @@ class Client(
      * @param leagueId The ID of the league for which to retrieve the ranking.
      * @param seasonId The ID of the season for which to retrieve the ranking.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [PlayerRankingList] object representing the ranking of players for the specified league season.
+     * @return A [Deferred] [PlayerRankingList] object representing the ranking of players for the specified league season.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested league or season or its ranking is not found.
@@ -299,25 +319,25 @@ class Client(
         leagueId: String,
         seasonId: String,
         pagination: PaginationQuery = PaginationQuery()
-    ): PlayerRankingList {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/leagues/$leagueId/seasons/$seasonId?$query")
+    ): Deferred<PlayerRankingList> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/leagues/$leagueId/seasons/$seasonId?${pagination.createQuery()}")
+        }
     }
 
     /**
      * Retrieves the list of Builder Base leagues.
      *
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [SimpleLeagueList] object representing the list of Builder Base leagues.
+     * @return A [Deferred] [SimpleLeagueList] object representing the list of Builder Base leagues.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getBuilderBaseLeagues(pagination: PaginationQuery = PaginationQuery()): SimpleLeagueList {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/builderbaseleagues?$query")
+    suspend fun getBuilderBaseLeagues(pagination: PaginationQuery = PaginationQuery()): Deferred<SimpleLeagueList> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/builderbaseleagues?${pagination.createQuery()}")
+        }
     }
 
     /**
@@ -325,31 +345,34 @@ class Client(
      *
      * @param leagueId The ID of the Builder Base league to retrieve.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [SimpleLeague] object representing the specified Builder Base league.
+     * @return A [Deferred] [SimpleLeague] object representing the specified Builder Base league.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested league is not found.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getBuilderBaseLeague(leagueId: Int, pagination: PaginationQuery = PaginationQuery()): SimpleLeague {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/builderbaseleagues/$leagueId?$query")
+    suspend fun getBuilderBaseLeague(
+        leagueId: Int,
+        pagination: PaginationQuery = PaginationQuery()
+    ): Deferred<SimpleLeague> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/builderbaseleagues/$leagueId?${pagination.createQuery()}")
+        }
     }
 
     /**
      * Retrieves the list of War Leagues.
      *
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [SimpleLeagueList] object representing the list of War Leagues.
+     * @return A [Deferred] [SimpleLeagueList] object representing the list of War Leagues.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getWarLeagues(pagination: PaginationQuery = PaginationQuery()): SimpleLeagueList {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/warleagues?$query")
+    suspend fun getWarLeagues(pagination: PaginationQuery = PaginationQuery()): Deferred<SimpleLeagueList> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/warleagues?${pagination.createQuery()}")
+        }
     }
 
     /**
@@ -357,45 +380,47 @@ class Client(
      *
      * @param leagueId The ID of the War League to retrieve.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [SimpleLeague] object representing the specified War League.
+     * @return A [Deferred] [SimpleLeague] object representing the specified War League.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested league is not found.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getWarLeague(leagueId: Int, pagination: PaginationQuery = PaginationQuery()): SimpleLeague {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/warleagues/$leagueId?$query")
+    suspend fun getWarLeague(leagueId: Int, pagination: PaginationQuery = PaginationQuery()): Deferred<SimpleLeague> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/warleagues/$leagueId?${pagination.createQuery()}")
+        }
     }
 
     /**
      * Retrieves the list of available locations.
      *
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [LocationList] object representing the list of available locations.
+     * @return A [Deferred] [LocationList] object representing the list of available locations.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getLocations(pagination: PaginationQuery = PaginationQuery()): LocationList {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/locations?$query")
+    suspend fun getLocations(pagination: PaginationQuery = PaginationQuery()): Deferred<LocationList> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/locations?${pagination.createQuery()}")
+        }
     }
 
     /**
      * Retrieves information about a specific location based on the provided [locationId].
      *
      * @param locationId The ID of the location to retrieve.
-     * @return A [Location] object representing the specified location.
+     * @return A [Deferred] [Location] object representing the specified location.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested location is not found.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getLocation(locationId: String): Location {
-        return requestHandler.request("$API_BASE_URL/locations/$locationId")
+    suspend fun getLocation(locationId: String): Deferred<Location> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/locations/$locationId")
+        }
     }
 
     /**
@@ -403,7 +428,7 @@ class Client(
      *
      * @param locationId The ID of the location for which to retrieve the clan rankings.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [ClanRankingList] object representing the list of clans ranked in the specified location.
+     * @return A [Deferred] [ClanRankingList] object representing the list of clans ranked in the specified location.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested location is not found.
@@ -412,10 +437,11 @@ class Client(
     suspend fun getLocationClanRanking(
         locationId: String,
         pagination: PaginationQuery = PaginationQuery()
-    ): ClanRankingList {
-        val query = pagination.createQuery()
+    ): Deferred<ClanRankingList> {
 
-        return requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/clans?$query")
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/clans?${pagination.createQuery()}")
+        }
     }
 
     /**
@@ -423,7 +449,7 @@ class Client(
      *
      * @param locationId The ID of the location for which to retrieve the player rankings.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [PlayerRankingList] object representing the list of players ranked in the specified location.
+     * @return A [Deferred] [PlayerRankingList] object representing the list of players ranked in the specified location.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws NotFoundException If the requested location is not found.
@@ -432,10 +458,10 @@ class Client(
     suspend fun getLocationPlayerRanking(
         locationId: String,
         pagination: PaginationQuery = PaginationQuery()
-    ): PlayerRankingList {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/players?$query")
+    ): Deferred<PlayerRankingList> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/players?${pagination.createQuery()}")
+        }
     }
 
     /**
@@ -444,7 +470,7 @@ class Client(
      *
      * @param locationId The ID of the location for which to retrieve the Builder Base clan rankings.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [ClanBuilderBaseRankingList] object representing the list of clans ranked in the Builder Base
+     * @return A [Deferred] [ClanBuilderBaseRankingList] object representing the list of clans ranked in the Builder Base
      *         for the specified location.
      *
      * @throws MaintenanceException If the API is in maintenance.
@@ -454,10 +480,10 @@ class Client(
     suspend fun getLocationClanBuilderBaseRanking(
         locationId: String,
         pagination: PaginationQuery = PaginationQuery()
-    ): ClanBuilderBaseRankingList {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/clans-builder-base?$query")
+    ): Deferred<ClanBuilderBaseRankingList> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/clans-builder-base?${pagination.createQuery()}")
+        }
     }
 
     /**
@@ -466,7 +492,7 @@ class Client(
      *
      * @param locationId The ID of the location for which to retrieve the Builder Base player rankings.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [PlayerBuilderBaseRankingList] object representing the list of players ranked in the Builder Base
+     * @return A [Deferred] [PlayerBuilderBaseRankingList] object representing the list of players ranked in the Builder Base
      *         for the specified location.
      *
      * @throws MaintenanceException If the API is in maintenance.
@@ -477,10 +503,10 @@ class Client(
     suspend fun getLocationPlayerBuilderBaseRanking(
         locationId: String,
         pagination: PaginationQuery = PaginationQuery()
-    ): PlayerBuilderBaseRankingList {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/players-builder-base?$query")
+    ): Deferred<PlayerBuilderBaseRankingList> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/players-builder-base?${pagination.createQuery()}")
+        }
     }
 
     /**
@@ -488,7 +514,7 @@ class Client(
      *
      * @param locationId The ID of the location for which to retrieve the Capital clan rankings.
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
-     * @return A [ClanCapitalRankingList] object representing the list of clans ranked in the Capital
+     * @return A [Deferred] [ClanCapitalRankingList] object representing the list of clans ranked in the Capital
      *         for the specified location.
      *
      * @throws MaintenanceException If the API is in maintenance.
@@ -498,22 +524,24 @@ class Client(
     suspend fun getLocationCapitalRanking(
         locationId: String,
         pagination: PaginationQuery = PaginationQuery()
-    ): ClanCapitalRankingList {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/capitals?$query")
+    ): Deferred<ClanCapitalRankingList> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/capitals?${pagination.createQuery()}")
+        }
     }
 
     /**
      * Retrieves the current Gold Pass season information.
      *
-     * @return A [GoldPassSeason] object representing the current Gold Pass season information.
+     * @return A [Deferred] [GoldPassSeason] object representing the current Gold Pass season information.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getCurrentGoldPass(): GoldPassSeason {
-        return requestHandler.request("$API_BASE_URL/goldpass/seasons/current")
+    suspend fun getCurrentGoldPass(): Deferred<GoldPassSeason> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/goldpass/seasons/current")
+        }
     }
 
     /**
@@ -521,15 +549,15 @@ class Client(
      *
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
      *
-     * @return A [LabelList] containing the list of player labels.
+     * @return A [Deferred] [LabelList] containing the list of player labels.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getPlayerLabels(pagination: PaginationQuery = PaginationQuery()): LabelList {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/labels/players?$query")
+    suspend fun getPlayerLabels(pagination: PaginationQuery = PaginationQuery()): Deferred<LabelList> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/labels/players?$pagination.createQuery()")
+        }
     }
 
     /**
@@ -537,14 +565,14 @@ class Client(
      *
      * @param pagination An optional [PaginationQuery] object for customizing the pagination of the results.
      *
-     * @return A [LabelList] containing the list of clan labels.
+     * @return A [Deferred] [LabelList] containing the list of clan labels.
      *
      * @throws MaintenanceException If the API is in maintenance.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getClanLabels(pagination: PaginationQuery = PaginationQuery()): LabelList {
-        val query = pagination.createQuery()
-
-        return requestHandler.request("$API_BASE_URL/labels/clans?$query")
+    suspend fun getClanLabels(pagination: PaginationQuery = PaginationQuery()): Deferred<LabelList> {
+        return CoroutineScope(Dispatchers.IO).async {
+            requestHandler.request("$API_BASE_URL/labels/clans?${pagination.createQuery()}")
+        }
     }
 }

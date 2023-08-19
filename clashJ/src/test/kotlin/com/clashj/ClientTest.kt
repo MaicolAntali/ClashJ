@@ -30,7 +30,7 @@ class ClientTest {
 
             val api = ClientBuilder("email", "pwd").engine(mockEngine).build()
 
-            val clan = api.getClan("tag")
+            val clan = api.getClan("tag").await()
 
             assertThat(clan.tag).isEqualTo("#CVC0QUG0")
             assertThat(clan.location.countryCode).isEqualTo("LS")
@@ -53,7 +53,7 @@ class ClientTest {
 
             val api = ClientBuilder("email", "pwd").engine(mockEngine).build()
 
-            val clan = api.getClanCurrentWar("tag")
+            val clan = api.getClanCurrentWar("tag").await()
 
             assertThat(clan.attacksPerMember).isEqualTo(2)
             assertThat(clan.state).isEqualTo(WarState.IN_WAR)
@@ -72,7 +72,7 @@ class ClientTest {
 
             val api = ClientBuilder("email", "pwd").engine(mockEngine).build()
 
-            val e = assertThrows<ClashJException> { api.searchClan(SearchClanQuery()) }
+            val e = assertThrows<ClashJException> { api.searchClan(SearchClanQuery()).await() }
             assertThat(e).hasMessageContaining("Not able to handle this response")
         }
     }
@@ -89,7 +89,7 @@ class ClientTest {
 
             val api = ClientBuilder("email", "pwd").engine(mockEngine).build()
 
-            val player = api.getPlayer("tag")
+            val player = api.getPlayer("tag").await()
 
             assertThat(player.name).isEqualTo("Maicol :)")
             assertThat(player.clan.name).isEqualTo("Stelle Cadenti")
