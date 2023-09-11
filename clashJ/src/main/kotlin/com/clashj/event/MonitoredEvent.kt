@@ -11,5 +11,11 @@ sealed class MonitoredEvent<T> {
                 return cached.donations < current.donations
             }
         }
+
+        data object DonationsReceive : PlayerEvents() {
+            override fun hasChanged(cached: Player, current: Player): Boolean {
+                return cached.donationsReceived < current.donationsReceived
+            }
+        }
     }
 }
