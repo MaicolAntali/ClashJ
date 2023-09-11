@@ -1,0 +1,120 @@
+package com.clashj
+
+import com.clashj.event.EventCallback
+import com.clashj.event.MonitoredEvent
+import com.clashj.event.cache.CacheManager
+import com.clashj.exception.MaintenanceException
+import com.clashj.http.RequestHandler
+import com.clashj.model.player.Player
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import org.slf4j.LoggerFactory
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.Executors
+
+/**
+ * Client for managing and monitoring events related to players and clans.
+ *
+ * This class allows you to register callbacks for specific events and periodically
+ * update player data to detect changes. It uses a coroutine-based approach for asynchronous
+ * event handling.
+ *
+ * @param requestHandler The request handler used to make API requests.
+ * @param nThread The number of threads for the internal coroutine dispatcher.
+ */
+class EventClient(
+    requestHandler: RequestHandler,
+    nThread: Int
+) : Client(requestHandler) {
+    private val dispatcher = Executors.newFixedThreadPool(nThread).asCoroutineDispatcher()
+    private var job: Job? = null
+
+    private val eventCallbacks = ConcurrentHashMap<MonitoredEvent<*>, MutableList<EventCallback>>()
+
+    private val cache = CacheManager()
+    private val players: MutableList<String> = mutableListOf("#2P2RG0ULV", "#9V8G29CUQ")
+
+    private companion object {
+        private val log = LoggerFactory.getLogger(RequestHandler::class.java)
+    }
+
+    /**
+     * Starts polling for events and updating player data.
+     *
+     * Cancels any previous polling job and launches a new coroutine to periodically
+     * update player data and trigger-registered callbacks.
+     */
+    fun startPolling() {
+        job?.cancel()
+        job = CoroutineScope(dispatcher).launch {
+            launch { updaterRunner { playerUpdater() } }
+        }
+    }
+
+    /**
+     * Registers a callback for player-related events.
+     *
+     * @param event The monitored event for which the callback is registered.
+     * @param callback The callback function to be invoked when the event occurs.
+     */
+    fun registerPlayerCallback(event: MonitoredEvent<Player>, callback: (Player, Player) -> Unit) {
+        registerCallback(event, EventCallback.PlayerCallback(callback))
+    }
+
+    private fun registerCallback(event: MonitoredEvent<Player>, eventCallback: EventCallback) {
+        log.info("Adding a new callback for the $event event.")
+        eventCallbacks.computeIfAbsent(event) { mutableListOf() }.add(eventCallback)
+    }
+
+    private suspend fun updaterRunner(updaterFun: suspend () -> Unit) = coroutineScope {
+        while (true) {
+            updaterFun.invoke()
+            delay(10_000)
+        }
+    }
+
+    private suspend fun playerUpdater() = coroutineScope {
+        players.mapIndexed { index, playerTag ->
+            async {
+                delay(2L * index)
+                val currentPlayer: Player = try {
+                    getPlayer(playerTag).await()
+                } catch (e: MaintenanceException) {
+                    println("ERROR: MaintenanceException, $e")
+                    return@async
+                }
+
+                if (cache.containsKey(playerTag)) {
+                    val cachedPlayer = cache.getFromCache(playerTag, Player::class.java)!!
+
+                    eventCallbacks.forEach { (event, callbacks) ->
+                        if (event is MonitoredEvent.PlayerEvents && event.hasChanged(cachedPlayer, currentPlayer)) {
+                            fireCallback(callbacks, cachedPlayer, currentPlayer)
+                        }
+                    }
+                }
+                cache.updateCache(playerTag, currentPlayer)
+            }
+        }.awaitAll()
+    }
+
+    private suspend fun <T> fireCallback(callbacks: List<EventCallback>, cached: T, current: T) {
+        callbacks.forEach { callback ->
+            when (callback) {
+                is EventCallback.PlayerCallback -> {
+                    if (cached is Player && current is Player) {
+                        callback.callback.invoke(cached, current)
+                    }
+                }
+
+                is EventCallback.ClanCallback -> TODO()
+            }
+        }
+    }
+}
