@@ -6,5 +6,10 @@ sealed class MonitoredEvent<T> {
     abstract fun hasChanged(cached: T, current: T): Boolean
 
     sealed class PlayerEvents : MonitoredEvent<Player>() {
+        data object Donations : PlayerEvents() {
+            override fun hasChanged(cached: Player, current: Player): Boolean {
+                return cached.donations < current.donations
+            }
+        }
     }
 }
