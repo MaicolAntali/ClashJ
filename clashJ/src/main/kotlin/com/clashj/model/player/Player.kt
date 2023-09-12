@@ -48,7 +48,7 @@ data class Player(
     val clan: PlayerClan?,
     val league: League?,
     val builderBaseLeague: SimpleLeague,
-    val role: ClanMemberRole,
+    val role: ClanMemberRole?,
     val warPreference: PlayerWarPreference?,
     val attackWins: Int,
     val defenseWins: Int,
