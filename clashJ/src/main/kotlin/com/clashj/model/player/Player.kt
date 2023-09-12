@@ -49,7 +49,7 @@ data class Player(
     val league: League?,
     val builderBaseLeague: SimpleLeague,
     val role: ClanMemberRole,
-    val warPreference: PlayerWarPreference,
+    val warPreference: PlayerWarPreference?,
     val attackWins: Int,
     val defenseWins: Int,
     val versusTrophies: Int,
