@@ -92,7 +92,7 @@ class ClientTest {
             val player = api.getPlayer("tag").await()
 
             assertThat(player.name).isEqualTo("Maicol :)")
-            assertThat(player.clan.name).isEqualTo("Stelle Cadenti")
+            assertThat(player.clan?.name).isEqualTo("Stelle Cadenti")
             assertThat(player.heroes).hasSize(6)
             assertThat(player.warStars).isGreaterThan(1500)
             assertThat(player.role).isEqualTo(ClanMemberRole.CO_LEADER)
