@@ -46,7 +46,7 @@ import com.google.gson.annotations.SerializedName
  */
 data class Player(
     val clan: PlayerClan?,
-    val league: League,
+    val league: League?,
     val builderBaseLeague: SimpleLeague,
     val role: ClanMemberRole,
     val warPreference: PlayerWarPreference,
