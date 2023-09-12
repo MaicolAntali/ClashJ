@@ -6,6 +6,7 @@ import com.clashj.event.cache.CacheManager
 import com.clashj.exception.MaintenanceException
 import com.clashj.http.RequestHandler
 import com.clashj.model.player.Player
+import com.clashj.util.adjustTag
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.asCoroutineDispatcher
@@ -38,7 +39,7 @@ class EventClient(
     private val eventCallbacks = ConcurrentHashMap<MonitoredEvent<*>, MutableList<EventCallback>>()
 
     private val cache = CacheManager()
-    private val players: MutableList<String> = mutableListOf("#2P2RG0ULV", "#9V8G29CUQ")
+    private val players: MutableList<String> = mutableListOf()
 
     private companion object {
         private val log = LoggerFactory.getLogger(RequestHandler::class.java)
@@ -55,6 +56,28 @@ class EventClient(
         job = CoroutineScope(dispatcher).launch {
             launch { updaterRunner { playerUpdater() } }
         }
+    }
+
+    /**
+     * Adds the player tag to the update queue.
+     * Once the player tag is added to the queue, the client starts to monitor it.
+     *
+     * @param playerTag The player tag that will be monitored.
+     */
+    fun addPlayerToMonitoredEvent(playerTag: String) {
+        log.info("Adding a the player tag: $playerTag in the update queue.")
+        players.add(adjustTag(playerTag))
+    }
+
+    /**
+     * Removes the player tag from the update queue.
+     * Once the player tag is removed from the queue, the client stops to monitor it.
+     *
+     * @param playerTag The player tag that will be no longer monitored.
+     */
+    fun removePlayerToMonitoredEvent(playerTag: String) {
+        log.info("Removing a the player tag: $playerTag from the update queue.")
+        players.remove(adjustTag(playerTag))
     }
 
     /**
