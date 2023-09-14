@@ -57,7 +57,7 @@ data class Player(
     val townHallLevel: Int,
     val townHallWeaponLevel: Int,
     val versusBattleWins: Int,
-    val legendStatistics: PlayerLegendStatistics,
+    val legendStatistics: PlayerLegendStatistics?,
     val troops: List<PlayerItemLevel>,
     val heroes: List<PlayerItemLevel>,
     val spells: List<PlayerItemLevel>,
