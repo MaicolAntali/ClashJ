@@ -36,7 +36,7 @@ class EventClient(
     private val dispatcher = Executors.newFixedThreadPool(nThread).asCoroutineDispatcher()
     private var job: Job? = null
 
-    private val eventCallbacks = ConcurrentHashMap<MonitoredEvent<*>, MutableList<EventCallback>>()
+    private val eventCallbacks = ConcurrentHashMap<MonitoredEvent<*, *>, MutableList<EventCallback>>()
 
     private val cache = CacheManager()
     private val players: MutableList<String> = mutableListOf()
@@ -86,11 +86,28 @@ class EventClient(
      * @param event The monitored event for which the callback is registered.
      * @param callback The callback function to be invoked when the event occurs.
      */
-    fun registerPlayerCallback(event: MonitoredEvent<Player>, callback: (Player, Player) -> Unit) {
-        registerCallback(event, EventCallback.PlayerCallback(callback))
+    fun registerPlayerCallback(
+        event: MonitoredEvent<Player, EventCallback.PlayerCallback>,
+        callback: (Player, Player) -> Unit
+    ) {
+        registerCallback(event, EventCallback.PlayerCallback.PlayerSimpleCallback(callback))
     }
 
-    private fun registerCallback(event: MonitoredEvent<Player>, eventCallback: EventCallback) {
+    /**
+     * Registers a callback for player-related events with an iterable callback function.
+     *
+     * @param event The monitored event for which the callback is registered.
+     * @param callback The callback function to be invoked when the event occurs, taking two [Player] objects
+     * and an additional [String] identifier as parameters.
+     */
+    fun registerPlayerCallback(
+        event: MonitoredEvent<Player, EventCallback.PlayerCallback>,
+        callback: (Player, Player, String) -> Unit
+    ) {
+        registerCallback(event, EventCallback.PlayerCallback.PlayerIterableCallback(callback))
+    }
+
+    private fun registerCallback(event: MonitoredEvent<*, *>, eventCallback: EventCallback) {
         log.info("Adding a new callback for the $event event.")
         eventCallbacks.computeIfAbsent(event) { mutableListOf() }.add(eventCallback)
     }
@@ -115,28 +132,23 @@ class EventClient(
 
                 if (cache.containsKey(playerTag)) {
                     val cachedPlayer = cache.getFromCache(playerTag, Player::class.java)!!
-
-                    eventCallbacks.forEach { (event, callbacks) ->
-                        if (event is MonitoredEvent.PlayerEvents && event.hasChanged(cachedPlayer, currentPlayer)) {
-                            fireCallback(callbacks, cachedPlayer, currentPlayer)
-                        }
-                    }
+                    processPlayerEvents(cachedPlayer, currentPlayer)
                 }
                 cache.updateCache(playerTag, currentPlayer)
             }
         }.awaitAll()
     }
 
-    private suspend fun <T> fireCallback(callbacks: List<EventCallback>, cached: T, current: T) {
-        callbacks.forEach { callback ->
-            when (callback) {
-                is EventCallback.PlayerCallback -> {
-                    if (cached is Player && current is Player) {
-                        callback.callback.invoke(cached, current)
-                    }
+    private suspend fun processPlayerEvents(cachedPlayer: Player, currentPlayer: Player) = coroutineScope {
+        eventCallbacks.forEach { (event, callbacks) ->
+            if (event is MonitoredEvent.PlayerEvents) {
+                launch {
+                    callbacks
+                        .filterIsInstance<EventCallback.PlayerCallback>()
+                        .forEach { callback ->
+                            event.fireCallback(cachedPlayer, currentPlayer, callback)
+                        }
                 }
-
-                is EventCallback.ClanCallback -> TODO()
             }
         }
     }
