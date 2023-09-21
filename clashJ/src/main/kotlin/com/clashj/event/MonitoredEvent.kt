@@ -22,7 +22,7 @@ sealed class MonitoredEvent<T, C : EventCallback> {
      */
     internal abstract suspend fun fireCallback(cached: T, current: T, callback: C)
 
-    internal suspend fun <T> executeCallback(cached: T, current: T, callback: C, vararg args: String) {
+    internal suspend fun executeCallback(cached: T, current: T, callback: C, vararg args: String) {
         when (callback) {
             is EventCallback.PlayerCallback.PlayerSimpleCallback -> {
                 if (cached is Player && current is Player) {
