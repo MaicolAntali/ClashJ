@@ -20,7 +20,7 @@ sealed class MonitoredEvent<T, C : EventCallback> {
      * @param current The current data of type [T].
      * @param callback The callback of type [C] to be invoked when the event occurs.
      */
-    abstract suspend fun fireCallback(cached: T, current: T, callback: C)
+    internal abstract suspend fun fireCallback(cached: T, current: T, callback: C)
 
     internal suspend fun <T> executeCallback(cached: T, current: T, callback: C, vararg args: String) {
         when (callback) {
@@ -38,36 +38,6 @@ sealed class MonitoredEvent<T, C : EventCallback> {
 
             is EventCallback.ClanCallback -> TODO()
 
-        }
-    }
-
-    /**
-     * Sealed class representing specific player-related monitored events.
-     */
-    sealed class PlayerEvents : MonitoredEvent<Player>() {
-
-        /**
-         * Represents a player event related to [donations][Player.donations].
-         *
-         * This event is fired when there is a change in the number of donations made by a player.
-         */
-        data object Donations : PlayerEvents() {
-            override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-                if (cached.donations < current.donations) {
-                    executeCallback(cached, current, callback)
-                }
-            }
-        }
-
-        /**
-         * Event fired when a player receives troops
-         */
-        data object DonationsReceive : PlayerEvents() {
-            override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-                if (cached.donationsReceived < current.donationsReceived) {
-                    executeCallback(cached, current, callback)
-                }
-            }
         }
     }
 }

@@ -2,6 +2,7 @@ package com.clashj
 
 import com.clashj.event.EventCallback
 import com.clashj.event.MonitoredEvent
+import com.clashj.event.PlayerEvents
 import com.clashj.event.cache.CacheManager
 import com.clashj.exception.MaintenanceException
 import com.clashj.http.RequestHandler
@@ -141,7 +142,7 @@ class EventClient(
 
     private suspend fun processPlayerEvents(cachedPlayer: Player, currentPlayer: Player) = coroutineScope {
         eventCallbacks.forEach { (event, callbacks) ->
-            if (event is MonitoredEvent.PlayerEvents) {
+            if (event is PlayerEvents) {
                 launch {
                     callbacks
                         .filterIsInstance<EventCallback.PlayerCallback>()
