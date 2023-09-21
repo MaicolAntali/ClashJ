@@ -4,21 +4,34 @@ import com.clashj.model.clan.Clan
 import com.clashj.model.player.Player
 
 /**
- * A sealed class representing callback functions for events with different types.
+ * A callback interface for handling events of different types.
  *
- * This sealed class is used to define callback functions for events, each with a specific type.
- * It has two data subclasses: [PlayerCallback] and [ClanCallback], each representing a callback
- * for a specific event type.
+ * This interface defines callback functions for various event types.
+ * It includes two nested interfaces:
+ *  - [PlayerCallback] for player-related events.
+ *  - [ClanCallback] for clan-related events.
  */
-sealed class EventCallback {
+interface EventCallback {
 
     /**
-     * Represents a callback for events involving player objects.
-     *
-     * @property callback A suspend function taking two [Player] objects as parameters.
-     * It is invoked when a player-related event occurs.
+     * Nested interface for player-related event callbacks.
      */
-    data class PlayerCallback(val callback: suspend (Player, Player) -> Unit) : EventCallback()
+    interface PlayerCallback : EventCallback {
+        /**
+         * Represents a callback for events involving player objects.
+         *
+         * @property callback A suspend function taking two [Player] objects as parameters.
+         */
+        data class PlayerSimpleCallback(val callback: suspend (Player, Player) -> Unit) : PlayerCallback
+
+        /**
+         * Represents a callback for player-related events with an additional identifier.
+         *
+         * @property callback A suspend function taking two [Player] objects and an additional [String] identifier as parameters.
+         */
+        data class PlayerIterableCallback(val callback: suspend (Player, Player, String) -> Unit) : PlayerCallback
+    }
+
 
     /**
      * Represents a callback for events involving clan objects.
@@ -26,5 +39,5 @@ sealed class EventCallback {
      * @property callback A suspend function taking two [Clan] objects as parameters.
      * It is invoked when a clan-related event occurs.
      */
-    data class ClanCallback(val callback: suspend (Clan, Clan) -> Unit) : EventCallback()
+    data class ClanCallback(val callback: suspend (Clan, Clan) -> Unit) : EventCallback
 }
