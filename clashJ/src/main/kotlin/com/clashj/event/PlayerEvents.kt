@@ -5,24 +5,28 @@ import com.clashj.model.player.Player
 /**
  * Sealed class representing specific player-related monitored events.
  */
-sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>() {
+sealed class PlayerEvents : Event<Player, String>() {
 
     /**
      * Event fires when a player joins a clan.
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.JoinClan) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.JoinClan) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object JoinClan : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.clan == null && current.clan != null) {
-                executeCallback(cached, current, callback)
-            } else if (cached.clan != null && current.clan != null && cached.clan != current.clan) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
+            if (cachedData.clan == null && currentData.clan != null) {
+                callback.simple?.invoke(cachedData, currentData)
+            } else if (cachedData.clan != null && currentData.clan != null && cachedData.clan != currentData.clan) {
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -32,17 +36,17 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.LeftClan) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.LeftClan) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object LeftClan : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.clan != null && current.clan == null) {
-                executeCallback(cached, current, callback)
-            } else if (cached.clan != null && cached.clan != current.clan) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.clan != null && currentData.clan == null) {
+                 callback.simple?.invoke(cachedData, currentData)
+            } else if (cachedData.clan != null && cachedData.clan != currentData.clan) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -52,15 +56,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.League) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.League) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object League : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.league != current.league) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.league != currentData.league) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -70,15 +74,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.BuilderBaseLeague) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.BuilderBaseLeague) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object BuilderBaseLeague : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.builderBaseLeague != current.builderBaseLeague) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.builderBaseLeague != currentData.builderBaseLeague) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -88,15 +92,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.ClanMemberRole) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.ClanMemberRole) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object ClanMemberRole : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.role != current.role) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.role != currentData.role) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -106,15 +110,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.WarPreference) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.WarPreference) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object WarPreference : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.warPreference != current.warPreference) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.warPreference != currentData.warPreference) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -124,15 +128,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.AttackWins) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.AttackWins) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object AttackWins : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.attackWins != current.attackWins) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.attackWins != currentData.attackWins) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -142,15 +146,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.AttackWins) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.AttackWins) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object DefenseWins : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.defenseWins != current.defenseWins) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.defenseWins != currentData.defenseWins) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -160,15 +164,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.AttackWins) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.AttackWins) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object VersusTrophies : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.versusTrophies != current.versusTrophies) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.versusTrophies != currentData.versusTrophies) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -178,15 +182,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.AttackWins) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.AttackWins) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object BestVersusTrophies : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.bestVersusTrophies != current.bestVersusTrophies) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.bestVersusTrophies != currentData.bestVersusTrophies) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -196,15 +200,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.TownHallLevel) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.TownHallLevel) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object TownHallLevel : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.townHallLevel != current.townHallLevel) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.townHallLevel != currentData.townHallLevel) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -214,15 +218,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.TownHallWeaponLevel) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.TownHallWeaponLevel) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object TownHallWeaponLevel : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.townHallWeaponLevel != current.townHallWeaponLevel) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.townHallWeaponLevel != currentData.townHallWeaponLevel) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -232,15 +236,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.VersusBattleWins) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.VersusBattleWins) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object VersusBattleWins : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.versusBattleWins != current.versusBattleWins) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.versusBattleWins != currentData.versusBattleWins) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -250,15 +254,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.LegendStatistics) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.LegendStatistics) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object LegendStatistics : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.legendStatistics != current.legendStatistics) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.legendStatistics != currentData.legendStatistics) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -270,16 +274,16 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.Troops) { cached, current, troopName ->
+     * eventClient.registerPlayerCallback(PlayerEvents.Troops) { cachedData, currentData, troopName ->
      *     // ...
      * }
      * ```
      */
     data object Troops : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            current.troops
-                .filter { it !in cached.troops }
-                .forEach { executeCallback(cached, current, callback, it.name) }
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            currentData.troops
+                .filter { it !in cachedData.troops }
+                .forEach { callback.withArg?.invoke(cachedData, currentData, it.name) }
         }
     }
 
@@ -290,16 +294,16 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.Heroes) { cached, current, heroName ->
+     * eventClient.registerPlayerCallback(PlayerEvents.Heroes) { cachedData, currentData, heroName ->
      *     // ...
      * }
      * ```
      */
     data object Heroes : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            current.heroes
-                .filter { it !in cached.heroes }
-                .forEach { executeCallback(cached, current, callback, it.name) }
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            currentData.heroes
+                .filter { it !in cachedData.heroes }
+                .forEach { callback.withArg?.invoke(cachedData, currentData, it.name) }
         }
     }
 
@@ -310,16 +314,16 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.Spells) { cached, current, spellName ->
+     * eventClient.registerPlayerCallback(PlayerEvents.Spells) { cachedData, currentData, spellName ->
      *     // ...
      * }
      * ```
      */
     data object Spells : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            current.spells
-                .filter { it !in cached.spells }
-                .forEach { executeCallback(cached, current, callback, it.name) }
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            currentData.spells
+                .filter { it !in cachedData.spells }
+                .forEach { callback.withArg?.invoke(cachedData, currentData, it.name) }
         }
     }
 
@@ -328,15 +332,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.Labels) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.Labels) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object Labels : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.labels != current.labels) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.labels != currentData.labels) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -346,15 +350,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.Name) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.Name) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object Name : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.name != current.name) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.name != currentData.name) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -364,15 +368,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.ExpLevel) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.ExpLevel) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object ExpLevel : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.expLevel != current.expLevel) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.expLevel != currentData.expLevel) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -382,15 +386,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.Trophies) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.Trophies) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object Trophies : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.trophies != current.trophies) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.trophies != currentData.trophies) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -400,15 +404,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.BestTrophies) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.BestTrophies) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object BestTrophies : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.bestTrophies != current.bestTrophies) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.bestTrophies != currentData.bestTrophies) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -418,15 +422,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Example usage:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.Donations) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.Donations) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object Donations : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.donations < current.donations) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.donations < currentData.donations) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -436,15 +440,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.DonationsReceive) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.DonationsReceive) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object DonationsReceive : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.donationsReceived < current.donationsReceived) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.donationsReceived < currentData.donationsReceived) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -454,15 +458,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.BuilderHallLevel) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.BuilderHallLevel) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object BuilderHallLevel : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.builderHallLevel != current.builderHallLevel) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.builderHallLevel != currentData.builderHallLevel) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -472,15 +476,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.BuilderBaseTrophies) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.BuilderBaseTrophies) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object BuilderBaseTrophies : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.builderBaseTrophies != current.builderBaseTrophies) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.builderBaseTrophies != currentData.builderBaseTrophies) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -490,15 +494,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.BestBuilderBaseTrophies) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.BestBuilderBaseTrophies) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object BestBuilderBaseTrophies : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.bestBuilderBaseTrophies != current.bestBuilderBaseTrophies) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.bestBuilderBaseTrophies != currentData.bestBuilderBaseTrophies) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -508,15 +512,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.WarStarts) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.WarStarts) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object WarStarts : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.warStars != current.warStars) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.warStars != currentData.warStars) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -528,16 +532,16 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.Achievements) { cached, current, achievementsName ->
+     * eventClient.registerPlayerCallback(PlayerEvents.Achievements) { cachedData, currentData, achievementsName ->
      *     // ...
      * }
      * ```
      */
     data object Achievements : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            current.achievements
-                .filter { it !in cached.achievements }
-                .forEach { executeCallback(cached, current, callback, it.name) }
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            currentData.achievements
+                .filter { it !in cachedData.achievements }
+                .forEach { callback.withArg?.invoke(cachedData, currentData, it.name) }
         }
     }
 
@@ -546,15 +550,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.ClanCapitalContributions) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.ClanCapitalContributions) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object ClanCapitalContributions : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.clanCapitalContributions != current.clanCapitalContributions) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.clanCapitalContributions != currentData.clanCapitalContributions) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -564,15 +568,15 @@ sealed class PlayerEvents : MonitoredEvent<Player, EventCallback.PlayerCallback>
      *
      * Usage Example:
      * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.PlayerHouse) { cached, current ->
+     * eventClient.registerPlayerCallback(PlayerEvents.PlayerHouse) { cachedData, currentData ->
      *     // ...
      * }
      * ```
      */
     data object PlayerHouse : PlayerEvents() {
-        override suspend fun fireCallback(cached: Player, current: Player, callback: EventCallback.PlayerCallback) {
-            if (cached.playerHouse != current.playerHouse) {
-                executeCallback(cached, current, callback)
+        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+            if (cachedData.playerHouse != currentData.playerHouse) {
+                 callback.simple?.invoke(cachedData, currentData)
             }
         }
     }

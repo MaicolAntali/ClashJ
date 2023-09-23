@@ -1,14 +1,18 @@
 package com.clashj
 
-import com.clashj.event.EventCallback
-import com.clashj.event.MonitoredEvent
+import com.clashj.event.Callback
+import com.clashj.event.ClanEvents
+import com.clashj.event.Event
 import com.clashj.event.PlayerEvents
 import com.clashj.event.cache.CacheManager
 import com.clashj.exception.MaintenanceException
 import com.clashj.http.RequestHandler
+import com.clashj.model.clan.Clan
+import com.clashj.model.clan.component.ClanMember
 import com.clashj.model.player.Player
 import com.clashj.util.adjustTag
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.async
@@ -17,7 +21,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.slf4j.LoggerFactory
-import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.Executors
 
 /**
@@ -40,7 +43,7 @@ class EventClient(
     private var job: Job? = null
     private var isApiInMaintenance = false
 
-    private val eventCallbacks = ConcurrentHashMap<MonitoredEvent<*, *>, MutableList<EventCallback>>()
+    private val eventCallbacks = HashMap<Class<*>, HashMap<Event<*, *>, MutableList<Callback<*, *, *>>>>()
 
     private val cache = CacheManager()
     private val players: MutableList<String> = mutableListOf()
@@ -58,7 +61,8 @@ class EventClient(
     fun startPolling() {
         job?.cancel()
         job = CoroutineScope(dispatcher).launch {
-            launch { updaterRunner { playerUpdater() } }
+            launch { maintenanceCheckRunner() }
+            launch { updaterRunner(players, ::getPlayer, Player::class.java, PlayerEvents::class.java) }
         }
     }
 
@@ -91,10 +95,10 @@ class EventClient(
      * @param callback The callback function to be invoked when the event occurs.
      */
     fun registerPlayerCallback(
-        event: MonitoredEvent<Player, EventCallback.PlayerCallback>,
+        event: PlayerEvents,
         callback: (Player, Player) -> Unit
     ) {
-        registerCallback(event, EventCallback.PlayerCallback.PlayerSimpleCallback(callback))
+        registerCallback(PlayerEvents::class.java, event, Callback<Player, Player, Nothing>(simple = callback))
     }
 
     /**
@@ -105,15 +109,30 @@ class EventClient(
      * and an additional [String] identifier as parameters.
      */
     fun registerPlayerCallback(
-        event: MonitoredEvent<Player, EventCallback.PlayerCallback>,
+        event: PlayerEvents,
         callback: (Player, Player, String) -> Unit
     ) {
-        registerCallback(event, EventCallback.PlayerCallback.PlayerIterableCallback(callback))
+        registerCallback(PlayerEvents::class.java, event, Callback(withArg = callback))
     }
 
-    private fun registerCallback(event: MonitoredEvent<*, *>, eventCallback: EventCallback) {
+    /**
+     * Registers a callback for clan-related events with an iterable callback function.
+     *
+     * @param event The monitored event for which the callback is registered.
+     * @param callback The callback function to be invoked when the event occurs, taking two [Clan] objects
+     * and an additional [ClanMember] as parameters.
+     */
+    fun registerClanCallback(event: ClanEvents, callback: (Clan, Clan, ClanMember) -> Unit) {
+        registerCallback(ClanEvents::class.java, event, Callback(withArg = callback))
+    }
+
+
+    private fun registerCallback(eventType: Class<*>, event: Event<*, *>, callback: Callback<*, *, *>) {
         log.info("Adding a new callback for the $event event.")
-        eventCallbacks.computeIfAbsent(event) { mutableListOf() }.add(eventCallback)
+
+        eventCallbacks
+            .computeIfAbsent(eventType) { HashMap() }
+            .computeIfAbsent(event) { mutableListOf(callback) }
     }
 
     private suspend fun maintenanceCheckRunner() = coroutineScope {
@@ -139,11 +158,11 @@ class EventClient(
         }
     }
 
-
     private suspend fun <T> updaterRunner(
         tags: List<String>,
         apiCall: suspend (String) -> Deferred<T>,
-        type: Class<T>
+        type: Class<T>,
+        eventType: Class<*>
     ) = coroutineScope {
         while (true) {
             if (!isApiInMaintenance) {
@@ -155,7 +174,7 @@ class EventClient(
 
                             if (cache.containsKey(tag)) {
                                 val cachedData = cache.getFromCache(tag, type)!!
-                                processEvents(cachedData, currentData)
+                                triggerEvent(cachedData, currentData, eventType)
                             }
                             cache.updateCache(tag, currentData)
 
@@ -175,17 +194,24 @@ class EventClient(
         }
     }
 
-    private suspend fun processPlayerEvents(cachedPlayer: Player, currentPlayer: Player) = coroutineScope {
-        eventCallbacks.forEach { (event, callbacks) ->
-            if (event is PlayerEvents) {
+    private suspend fun <T> triggerEvent(cached: T, current: T, eventType: Class<*>) = coroutineScope {
+        eventCallbacks[eventType]
+            ?.forEach { (event, callbacks) ->
                 launch {
-                    callbacks
-                        .filterIsInstance<EventCallback.PlayerCallback>()
-                        .forEach { callback ->
-                            event.fireCallback(cachedPlayer, currentPlayer, callback)
+                    when {
+                        event is PlayerEvents && cached is Player && current is Player -> {
+                            callbacks
+                                .filterIsInstance<Callback<Player, Player, String>>()
+                                .map { event.checkAndFireCallback(cached, current, it) }
                         }
+
+                        event is ClanEvents && cached is Clan && current is Clan -> {
+                            callbacks
+                                .filterIsInstance<Callback<Clan, Clan, ClanMember>>()
+                                .map { event.checkAndFireCallback(cached, current, it) }
+                        }
+                    }
                 }
             }
-        }
     }
 }
