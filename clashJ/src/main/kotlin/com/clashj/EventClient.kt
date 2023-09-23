@@ -31,11 +31,14 @@ import java.util.concurrent.Executors
  * @param nThread The number of threads for the internal coroutine dispatcher.
  */
 class EventClient(
-    requestHandler: RequestHandler,
-    nThread: Int
+    private val requestHandler: RequestHandler,
+    private val nThread: Int,
+    private val pollingInterval: Long = 10_000,
+    private val maintenanceCheckInterval: Long = 60_000
 ) : Client(requestHandler) {
     private val dispatcher = Executors.newFixedThreadPool(nThread).asCoroutineDispatcher()
     private var job: Job? = null
+    private var isApiInMaintenance = false
 
     private val eventCallbacks = ConcurrentHashMap<MonitoredEvent<*, *>, MutableList<EventCallback>>()
 
@@ -65,7 +68,7 @@ class EventClient(
      *
      * @param playerTag The player tag that will be monitored.
      */
-    fun addPlayerToMonitoredEvent(playerTag: String) {
+    fun addPlayerToUpdateQueue(playerTag: String) {
         log.info("Adding a the player tag: $playerTag in the update queue.")
         players.add(adjustTag(playerTag))
     }
@@ -76,7 +79,7 @@ class EventClient(
      *
      * @param playerTag The player tag that will be no longer monitored.
      */
-    fun removePlayerToMonitoredEvent(playerTag: String) {
+    fun removePlayerToUpdateQueue(playerTag: String) {
         log.info("Removing a the player tag: $playerTag from the update queue.")
         players.remove(adjustTag(playerTag))
     }
@@ -113,31 +116,63 @@ class EventClient(
         eventCallbacks.computeIfAbsent(event) { mutableListOf() }.add(eventCallback)
     }
 
-    private suspend fun updaterRunner(updaterFun: suspend () -> Unit) = coroutineScope {
-        while (true) {
-            updaterFun.invoke()
-            delay(10_000)
+    private suspend fun maintenanceCheckRunner() = coroutineScope {
+        launch {
+            while (true) {
+                try {
+                    getPlayer("#2P2RG0ULV").await()
+
+                    if (isApiInMaintenance) {
+                        log.info("API is back online. Resuming updates.")
+                    }
+                } catch (e: MaintenanceException) {
+                    if (!isApiInMaintenance) {
+                        log.info("API is in maintenance. Stopping updates.")
+                        isApiInMaintenance = true // API is in maintenance
+                    }
+                } catch (e: Exception) {
+                    log.error("Error checking API maintenance status: ${e.message}")
+                }
+
+                delay(maintenanceCheckInterval)
+            }
         }
     }
 
-    private suspend fun playerUpdater() = coroutineScope {
-        players.mapIndexed { index, playerTag ->
-            async {
-                delay(2L * index)
-                val currentPlayer: Player = try {
-                    getPlayer(playerTag).await()
-                } catch (e: MaintenanceException) {
-                    println("ERROR: MaintenanceException, $e")
-                    return@async
-                }
 
-                if (cache.containsKey(playerTag)) {
-                    val cachedPlayer = cache.getFromCache(playerTag, Player::class.java)!!
-                    processPlayerEvents(cachedPlayer, currentPlayer)
-                }
-                cache.updateCache(playerTag, currentPlayer)
+    private suspend fun <T> updaterRunner(
+        tags: List<String>,
+        apiCall: suspend (String) -> Deferred<T>,
+        type: Class<T>
+    ) = coroutineScope {
+        while (true) {
+            if (!isApiInMaintenance) {
+                var delayMillis = 100L // Initial delay for exponential backoff
+                tags.map { tag ->
+                    async {
+                        try {
+                            val currentData: T = apiCall(tag).await()
+
+                            if (cache.containsKey(tag)) {
+                                val cachedData = cache.getFromCache(tag, type)!!
+                                processEvents(cachedData, currentData)
+                            }
+                            cache.updateCache(tag, currentData)
+
+                            delayMillis = 100L // Reset delay on successful request
+                        } catch (e: MaintenanceException) {
+                            log.info("API is in maintenance. Stopping updates.")
+                            isApiInMaintenance = true
+                        } catch (e: Exception) {
+                            log.error("Error: ${e.message}")
+                            delay(delayMillis) // Exponential backoff
+                            delayMillis *= 2
+                        }
+                    }
+                }.awaitAll()
             }
-        }.awaitAll()
+            delay(pollingInterval)
+        }
     }
 
     private suspend fun processPlayerEvents(cachedPlayer: Player, currentPlayer: Player) = coroutineScope {
