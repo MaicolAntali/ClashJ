@@ -47,6 +47,7 @@ class EventClient(
 
     private val cache = CacheManager()
     private val players: MutableList<String> = mutableListOf()
+    private val clans: MutableList<String> = mutableListOf()
 
     private companion object {
         private val log = LoggerFactory.getLogger(RequestHandler::class.java)
@@ -63,6 +64,7 @@ class EventClient(
         job = CoroutineScope(dispatcher).launch {
             launch { maintenanceCheckRunner() }
             launch { updaterRunner(players, ::getPlayer, Player::class.java, PlayerEvents::class.java) }
+            launch { updaterRunner(clans, ::getClan, Clan::class.java, ClanEvents::class.java) }
         }
     }
 
@@ -78,6 +80,17 @@ class EventClient(
     }
 
     /**
+     * Adds the clan tag to the update queue.
+     * Once the clan tag is added to the queue, the client starts to monitor it.
+     *
+     * @param clanTag The clan tag that will be monitored.
+     */
+    fun addClanToUpdateQueue(clanTag: String) {
+        log.info("Adding a the clan tag: $clanTag in the update queue.")
+        clans.add(adjustTag(clanTag))
+    }
+
+    /**
      * Removes the player tag from the update queue.
      * Once the player tag is removed from the queue, the client stops to monitor it.
      *
@@ -86,6 +99,17 @@ class EventClient(
     fun removePlayerToUpdateQueue(playerTag: String) {
         log.info("Removing a the player tag: $playerTag from the update queue.")
         players.remove(adjustTag(playerTag))
+    }
+
+    /**
+     * Removes the clan tag from the update queue.
+     * Once the clan tag is removed from the queue, the client stops to monitor it.
+     *
+     * @param clanTag The clan tag that will be no longer monitored.
+     */
+    fun removeClanToUpdateQueue(clanTag: String) {
+        log.info("Removing a the clan tag: $clanTag from the update queue.")
+        players.remove(adjustTag(clanTag))
     }
 
     /**
