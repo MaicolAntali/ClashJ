@@ -208,12 +208,13 @@ class EventClient(
                     async {
                         try {
                             val currentData: T = apiCall(tag).await()
+                            val cacheKeyName = "${type.simpleName}_$tag"
 
-                            if (cache.containsKey(tag)) {
-                                val cachedData = cache.getFromCache(tag, type)!!
+                            if (cache.containsKey(cacheKeyName)) {
+                                val cachedData = cache.getFromCache(cacheKeyName, type)!!
                                 triggerEvent(cachedData, currentData, eventType)
                             }
-                            cache.updateCache(tag, currentData)
+                            cache.updateCache(cacheKeyName, currentData)
 
                             delayMillis = 100L // Reset delay on successful request
                         } catch (e: MaintenanceException) {
