@@ -57,7 +57,7 @@ data class Clan(
     val warLosses: Int,
     val clanPoints: Int,
     val requiredTownhallLevel: Int,
-    val chatLanguage: Language,
+    val chatLanguage: Language?,
     val isFamilyFriendly: Boolean,
     val requiredTrophies: Int,
     val requiredBuilderBaseTrophies: Int,
