@@ -68,7 +68,7 @@ data class Clan(
     val clanCapitalPoints: Int,
     val labels: List<Label>,
     val name: String,
-    val location: Location,
+    val location: Location?,
     val type: ClanType,
     val members: Int,
     val description: String,
