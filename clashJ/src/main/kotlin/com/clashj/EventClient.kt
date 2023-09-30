@@ -140,6 +140,19 @@ class EventClient(
     }
 
     /**
+     * Registers a callback for clan-related events.
+     *
+     * @param event The monitored event for which the callback is registered.
+     * @param callback The callback function to be invoked when the event occurs.
+     */
+    fun registerClanCallback(
+        event: ClanEvents,
+        callback: (Clan, Clan) -> Unit
+    ) {
+        registerCallback(ClanEvents::class.java, event, Callback<Clan, Clan, Nothing>(simple = callback))
+    }
+
+    /**
      * Registers a callback for clan-related events with an iterable callback function.
      *
      * @param event The monitored event for which the callback is registered.
