@@ -33,7 +33,7 @@ class ClientTest {
             val clan = api.getClan("tag").await()
 
             assertThat(clan.tag).isEqualTo("#CVC0QUG0")
-            assertThat(clan.location.countryCode).isEqualTo("LS")
+            assertThat(clan.location?.countryCode).isEqualTo("LS")
             assertThat(clan.type).isEqualTo(ClanType.INVITE_ONLY)
             assertThat(clan.members).isEqualTo(50)
             assertThat(clan.memberList).hasSize(50)
