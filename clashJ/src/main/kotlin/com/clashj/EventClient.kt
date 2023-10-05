@@ -179,6 +179,7 @@ class EventClient(
                     getPlayer("#2P2RG0ULV").await()
 
                     if (isApiInMaintenance) {
+                        isApiInMaintenance = false
                         log.info("API is back online. Resuming updates.")
                     }
                 } catch (e: MaintenanceException) {
