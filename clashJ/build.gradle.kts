@@ -16,7 +16,7 @@ dependencies {
     api("io.ktor:ktor-client-apache5:2.3.5")
     implementation("io.ktor:ktor-client-content-negotiation:2.3.4")
     implementation("io.ktor:ktor-serialization-gson:2.3.4")
-    testImplementation("io.ktor:ktor-client-mock:2.3.4")
+    testImplementation("io.ktor:ktor-client-mock:2.3.5")
 
     implementation("ch.qos.logback:logback-classic:1.4.11")
 
