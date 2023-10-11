@@ -20,10 +20,10 @@ data class ClanWar(
     val teamSize: Int,
     val attacksPerMember: Int,
     val opponent: WarClan,
-    val startTime: String,
+    val startTime: String?,
     val state: WarState,
-    val endTime: String,
-    val preparationStartTime: String
+    val endTime: String?,
+    val preparationStartTime: String?
 ) {
 
     /**

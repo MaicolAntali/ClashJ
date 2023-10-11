@@ -17,8 +17,8 @@ import com.clashj.model.common.Badge
  */
 data class WarClan(
     val destructionPercentage: Float,
-    val tag: String,
-    val name: String,
+    val tag: String?,
+    val name: String?,
     val badgeUrls: Badge,
     val clanLevel: Int,
     val attacks: Int,
