@@ -6,7 +6,7 @@ import com.clashj.model.clan.component.ClanMember
 /**
  * Sealed class representing specific clan-related events.
  */
-sealed class ClanEvents : Event<Clan, ClanMember>() {
+sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
 
     /**
      * Event fires when a member joins the clan.

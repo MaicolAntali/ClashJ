@@ -43,7 +43,7 @@ class EventClient(
     private var job: Job? = null
     private var isApiInMaintenance = false
 
-    private val eventCallbacks = HashMap<Class<*>, HashMap<Event<*, *>, MutableList<Callback<*, *, *>>>>()
+    private val eventCallbacks = HashMap<Class<*>, HashMap<Event<*, *, *, *>, MutableList<Callback<*, *, *>>>>()
 
     private val cache = CacheManager()
     private val players: MutableList<String> = mutableListOf()
@@ -167,11 +167,11 @@ class EventClient(
     }
 
 
-    private fun registerCallback(event: Event<*, *>, callback: Callback<*, *, *>) {
+    private fun registerCallback(event: Event<*, *, *, *>, callback: Callback<*, *, *>) {
         log.info("Adding a new callback for the $event event.")
 
         eventCallbacks
-            .computeIfAbsent(event::class.java) { HashMap() }
+            .computeIfAbsent(event::class.java.superclass) { HashMap() }
             .computeIfAbsent(event) { mutableListOf(callback) }
     }
 
@@ -222,7 +222,7 @@ class EventClient(
 
                             delayMillis = 100L // Reset delay on successful request
                         } catch (e: MaintenanceException) {
-                            log.info("API is in maintenance. Stopping updates.")
+                            log.info("API is in maintenance. Stopping updates (${type.simpleName}: $tag).")
                             isApiInMaintenance = true
                         } catch (e: Exception) {
                             log.error("Error: ${e.message}")
@@ -244,13 +244,13 @@ class EventClient(
                         event is PlayerEvents && cached is Player && current is Player -> {
                             callbacks
                                 .filterIsInstance<Callback<Player, Player, String>>()
-                                .map { event.checkAndFireCallback(cached, current, it) }
+                                .forEach { event.checkAndFireCallback(cached, current, it) }
                         }
 
                         event is ClanEvents && cached is Clan && current is Clan -> {
                             callbacks
                                 .filterIsInstance<Callback<Clan, Clan, ClanMember>>()
-                                .map { event.checkAndFireCallback(cached, current, it) }
+                                .forEach { event.checkAndFireCallback(cached, current, it) }
                         }
                     }
                 }

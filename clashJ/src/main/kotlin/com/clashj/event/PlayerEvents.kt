@@ -5,7 +5,7 @@ import com.clashj.model.player.Player
 /**
  * Sealed class representing specific player-related monitored events.
  */
-sealed class PlayerEvents : Event<Player, String>() {
+sealed class PlayerEvents : Event<Player, Player, Player, String>() {
 
     /**
      * Event fires when a player joins a clan.
@@ -42,11 +42,15 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object LeftClan : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.clan != null && currentData.clan == null) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             } else if (cachedData.clan != null && cachedData.clan != currentData.clan) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -62,9 +66,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object League : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.league != currentData.league) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -80,9 +88,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object BuilderBaseLeague : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.builderBaseLeague != currentData.builderBaseLeague) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -98,9 +110,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object ClanMemberRole : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.role != currentData.role) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -116,9 +132,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object WarPreference : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.warPreference != currentData.warPreference) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -134,9 +154,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object AttackWins : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.attackWins != currentData.attackWins) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -152,9 +176,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object DefenseWins : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.defenseWins != currentData.defenseWins) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -170,9 +198,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object VersusTrophies : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.versusTrophies != currentData.versusTrophies) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -188,9 +220,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object BestVersusTrophies : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.bestVersusTrophies != currentData.bestVersusTrophies) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -206,9 +242,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object TownHallLevel : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.townHallLevel != currentData.townHallLevel) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -224,9 +264,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object TownHallWeaponLevel : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.townHallWeaponLevel != currentData.townHallWeaponLevel) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -242,9 +286,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object VersusBattleWins : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.versusBattleWins != currentData.versusBattleWins) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -260,9 +308,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object LegendStatistics : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.legendStatistics != currentData.legendStatistics) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -280,7 +332,11 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object Troops : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             currentData.troops
                 .filter { it !in cachedData.troops }
                 .forEach { callback.withArg?.invoke(cachedData, currentData, it.name) }
@@ -300,7 +356,11 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object Heroes : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             currentData.heroes
                 .filter { it !in cachedData.heroes }
                 .forEach { callback.withArg?.invoke(cachedData, currentData, it.name) }
@@ -320,7 +380,11 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object Spells : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             currentData.spells
                 .filter { it !in cachedData.spells }
                 .forEach { callback.withArg?.invoke(cachedData, currentData, it.name) }
@@ -338,9 +402,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object Labels : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.labels != currentData.labels) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -356,9 +424,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object Name : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.name != currentData.name) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -374,9 +446,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object ExpLevel : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.expLevel != currentData.expLevel) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -392,9 +468,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object Trophies : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.trophies != currentData.trophies) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -410,9 +490,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object BestTrophies : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.bestTrophies != currentData.bestTrophies) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -428,9 +512,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object Donations : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.donations < currentData.donations) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -446,9 +534,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object DonationsReceive : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.donationsReceived < currentData.donationsReceived) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -464,9 +556,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object BuilderHallLevel : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.builderHallLevel != currentData.builderHallLevel) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -482,9 +578,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object BuilderBaseTrophies : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.builderBaseTrophies != currentData.builderBaseTrophies) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -500,9 +600,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object BestBuilderBaseTrophies : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.bestBuilderBaseTrophies != currentData.bestBuilderBaseTrophies) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -518,9 +622,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object WarStarts : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.warStars != currentData.warStars) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -538,7 +646,11 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object Achievements : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             currentData.achievements
                 .filter { it !in cachedData.achievements }
                 .forEach { callback.withArg?.invoke(cachedData, currentData, it.name) }
@@ -556,9 +668,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object ClanCapitalContributions : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.clanCapitalContributions != currentData.clanCapitalContributions) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
@@ -574,9 +690,13 @@ sealed class PlayerEvents : Event<Player, String>() {
      * ```
      */
     data object PlayerHouse : PlayerEvents() {
-        override suspend fun checkAndFireCallback(cachedData: Player, currentData: Player, callback: Callback<Player, Player, String>) {
+        override suspend fun checkAndFireCallback(
+            cachedData: Player,
+            currentData: Player,
+            callback: Callback<Player, Player, String>
+        ) {
             if (cachedData.playerHouse != currentData.playerHouse) {
-                 callback.simple?.invoke(cachedData, currentData)
+                callback.simple?.invoke(cachedData, currentData)
             }
         }
     }
