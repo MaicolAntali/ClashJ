@@ -1,6 +1,7 @@
 package com.clashj.event.cache
 
 import com.clashj.model.clan.Clan
+import com.clashj.model.clan.ClanWar
 import com.clashj.model.player.Player
 import java.lang.IllegalArgumentException
 import java.util.concurrent.ConcurrentHashMap
@@ -32,6 +33,7 @@ class CacheManager {
         val cacheValue = when (data) {
             is Player -> CacheValue.PlayerType(data)
             is Clan -> CacheValue.ClanType(data)
+            is ClanWar -> CacheValue.ClanWarType(data)
             else -> throw IllegalArgumentException("Unsupported data type")
         }
 
@@ -52,6 +54,7 @@ class CacheManager {
         return when (clazz) {
             Player::class.java -> (cachedValue as? CacheValue.PlayerType)?.value as T
             Clan::class.java -> (cachedValue as? CacheValue.ClanType)?.value as T
+            ClanWar::class.java -> (cachedValue as? CacheValue.ClanWarType)?.value as T
             else -> null
         }
     }

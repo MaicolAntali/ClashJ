@@ -1,6 +1,7 @@
 package com.clashj.event.cache
 
 import com.clashj.model.clan.Clan
+import com.clashj.model.clan.ClanWar
 import com.clashj.model.player.Player
 
 /**
@@ -24,4 +25,11 @@ sealed class CacheValue {
      * @property value The [Clan] object stored in the cache.
      */
     data class ClanType(val value: Clan) : CacheValue()
+
+    /**
+     * Represents a cached war object.
+     *
+     * @property value The [ClanWar] object stored in the cache.
+     */
+    data class ClanWarType(val value: ClanWar) : CacheValue()
 }
