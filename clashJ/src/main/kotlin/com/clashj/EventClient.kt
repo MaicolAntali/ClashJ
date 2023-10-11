@@ -69,47 +69,59 @@ class EventClient(
     }
 
     /**
-     * Adds the player tag to the update queue.
-     * Once the player tag is added to the queue, the client starts to monitor it.
+     * Adds a player's tag to the update queue for monitoring.
+     * Once a player's tag is added to the queue, the client will begin monitoring the player.
      *
-     * @param playerTag The player tag that will be monitored.
+     * This function is used to include a player in the update queue for real-time monitoring
+     * of player-related events and data.
+     *
+     * @param playerTag The player tag that will be monitored and updated.
      */
     fun addPlayerToUpdateQueue(playerTag: String) {
-        log.info("Adding a the player tag: $playerTag in the update queue.")
+        log.info("Adding the player tag: $playerTag to the update queue for monitoring.")
         players.add(adjustTag(playerTag))
     }
 
     /**
-     * Adds the clan tag to the update queue.
-     * Once the clan tag is added to the queue, the client starts to monitor it.
+     * Adds a clan's tag to the update queue for monitoring.
+     * Once a clan's tag is added to the queue, the client will begin monitoring the clan.
      *
-     * @param clanTag The clan tag that will be monitored.
+     * This function is used to include a clan in the update queue for real-time monitoring
+     * of clan-related events and data.
+     *
+     * @param clanTag The clan tag that will be monitored and updated.
      */
     fun addClanToUpdateQueue(clanTag: String) {
-        log.info("Adding a the clan tag: $clanTag in the update queue.")
+        log.info("Adding the clan tag: $clanTag to the update queue for monitoring.")
         clans.add(adjustTag(clanTag))
     }
 
     /**
-     * Removes the player tag from the update queue.
-     * Once the player tag is removed from the queue, the client stops to monitor it.
+     * Removes a player's tag from the update queue.
+     * Once a player's tag is removed from the queue, the client stops monitoring the player.
      *
-     * @param playerTag The player tag that will be no longer monitored.
+     * This function is used to exclude a player from the update queue, thereby stopping real-time
+     * monitoring of player-related events and data.
+     *
+     * @param playerTag The player tag that will no longer be monitored.
      */
     fun removePlayerToUpdateQueue(playerTag: String) {
-        log.info("Removing a the player tag: $playerTag from the update queue.")
+        log.info("Removing the player tag: $playerTag from the update queue.")
         players.remove(adjustTag(playerTag))
     }
 
     /**
-     * Removes the clan tag from the update queue.
-     * Once the clan tag is removed from the queue, the client stops to monitor it.
+     * Removes a clan's tag from the update queue.
+     * Once a clan's tag is removed from the queue, the client stops monitoring the clan.
      *
-     * @param clanTag The clan tag that will be no longer monitored.
+     * This function is used to exclude a clan from the update queue, thereby stopping real-time
+     * monitoring of clan-related events and data.
+     *
+     * @param clanTag The clan tag that will no longer be monitored.
      */
     fun removeClanToUpdateQueue(clanTag: String) {
-        log.info("Removing a the clan tag: $clanTag from the update queue.")
-        players.remove(adjustTag(clanTag))
+        log.info("Removing the clan tag: $clanTag from the update queue.")
+        clans.remove(adjustTag(clanTag))
     }
 
     /**
@@ -118,11 +130,8 @@ class EventClient(
      * @param event The monitored event for which the callback is registered.
      * @param callback The callback function to be invoked when the event occurs.
      */
-    fun registerPlayerCallback(
-        event: PlayerEvents,
-        callback: (Player, Player) -> Unit
-    ) {
-        registerCallback(PlayerEvents::class.java, event, Callback<Player, Player, Nothing>(simple = callback))
+    fun registerPlayerCallback(event: PlayerEvents, callback: (Player, Player) -> Unit) {
+        registerCallback(event, Callback<Player, Player, Nothing>(simple = callback))
     }
 
     /**
@@ -132,11 +141,8 @@ class EventClient(
      * @param callback The callback function to be invoked when the event occurs, taking two [Player] objects
      * and an additional [String] identifier as parameters.
      */
-    fun registerPlayerCallback(
-        event: PlayerEvents,
-        callback: (Player, Player, String) -> Unit
-    ) {
-        registerCallback(PlayerEvents::class.java, event, Callback(withArg = callback))
+    fun registerPlayerCallback(event: PlayerEvents, callback: (Player, Player, String) -> Unit) {
+        registerCallback(event, Callback(withArg = callback))
     }
 
     /**
@@ -145,11 +151,8 @@ class EventClient(
      * @param event The monitored event for which the callback is registered.
      * @param callback The callback function to be invoked when the event occurs.
      */
-    fun registerClanCallback(
-        event: ClanEvents,
-        callback: (Clan, Clan) -> Unit
-    ) {
-        registerCallback(ClanEvents::class.java, event, Callback<Clan, Clan, Nothing>(simple = callback))
+    fun registerClanCallback(event: ClanEvents, callback: (Clan, Clan) -> Unit) {
+        registerCallback(event, Callback<Clan, Clan, Nothing>(simple = callback))
     }
 
     /**
@@ -160,15 +163,15 @@ class EventClient(
      * and an additional [ClanMember] as parameters.
      */
     fun registerClanCallback(event: ClanEvents, callback: (Clan, Clan, ClanMember) -> Unit) {
-        registerCallback(ClanEvents::class.java, event, Callback(withArg = callback))
+        registerCallback(event, Callback(withArg = callback))
     }
 
 
-    private fun registerCallback(eventType: Class<*>, event: Event<*, *>, callback: Callback<*, *, *>) {
+    private fun registerCallback(event: Event<*, *>, callback: Callback<*, *, *>) {
         log.info("Adding a new callback for the $event event.")
 
         eventCallbacks
-            .computeIfAbsent(eventType) { HashMap() }
+            .computeIfAbsent(event::class.java) { HashMap() }
             .computeIfAbsent(event) { mutableListOf(callback) }
     }
 
