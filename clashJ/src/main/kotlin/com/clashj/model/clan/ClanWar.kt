@@ -24,4 +24,21 @@ data class ClanWar(
     val state: WarState,
     val endTime: String,
     val preparationStartTime: String
-)
+) {
+
+    /**
+     * Retrieves a list of clan members participating in the war, sorted by map position.
+     *
+     * @return A list of clan members, sorted by their map positions.
+     */
+    fun getClanMembers() =
+        clan.members.orEmpty().sortedBy { it.mapPosition }
+
+    /**
+     * Retrieves a list of clan attacks during the war, sorted by attack order.
+     *
+     * @return A list of clan attacks, sorted by their order.
+     */
+    fun getClanAttacks() =
+        clan.members.orEmpty().flatMap { it.attacks ?: emptyList() }.sortedBy { it.order }
+}
