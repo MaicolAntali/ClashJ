@@ -130,7 +130,7 @@ class EventClient(
      * @param event The monitored event for which the callback is registered.
      * @param callback The callback function to be invoked when the event occurs.
      */
-    fun registerPlayerCallback(event: PlayerEvents, callback: (Player, Player) -> Unit) {
+    fun registerPlayerCallback(event: PlayerEvents, callback: suspend (Player, Player) -> Unit) {
         registerCallback(event, Callback<Player, Player, Nothing>(simple = callback))
     }
 
@@ -141,7 +141,7 @@ class EventClient(
      * @param callback The callback function to be invoked when the event occurs, taking two [Player] objects
      * and an additional [String] identifier as parameters.
      */
-    fun registerPlayerCallback(event: PlayerEvents, callback: (Player, Player, String) -> Unit) {
+    fun registerPlayerCallback(event: PlayerEvents, callback: suspend (Player, Player, String) -> Unit) {
         registerCallback(event, Callback(withArg = callback))
     }
 
@@ -162,7 +162,7 @@ class EventClient(
      * @param callback The callback function to be invoked when the event occurs, taking two [Clan] objects
      * and an additional [ClanMember] as parameters.
      */
-    fun registerClanCallback(event: ClanEvents, callback: (Clan, Clan, ClanMember) -> Unit) {
+    fun registerClanCallback(event: ClanEvents, callback: suspend (Clan, Clan, ClanMember) -> Unit) {
         registerCallback(event, Callback(withArg = callback))
     }
 
