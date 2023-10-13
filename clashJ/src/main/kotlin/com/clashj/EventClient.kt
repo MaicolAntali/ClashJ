@@ -42,12 +42,15 @@ class EventClient(
     private val pollingInterval: Long = 10_000,
     private val maintenanceCheckInterval: Long = 60_000
 ) : Client(requestHandler) {
+    // Dispatcher & Polling job
     private val dispatcher = Executors.newFixedThreadPool(nThread).asCoroutineDispatcher()
     private var job: Job? = null
     private var isApiInMaintenance = false
 
+    // Callbacks
     private val eventCallbacks = HashMap<Class<*>, HashMap<Event<*, *, *, *>, MutableList<Callback<*, *, *>>>>()
 
+    // Cache & Tags
     private val cache = CacheManager()
     private val players: MutableList<String> = mutableListOf()
     private val clans: MutableList<String> = mutableListOf()
@@ -219,7 +222,6 @@ class EventClient(
     fun registerWarCallback(event: WarEvents, callback: suspend (ClanWar, ClanWarAttack) -> Unit) {
         registerCallback(event, Callback<ClanWar, ClanWarAttack, Nothing>(simple = callback))
     }
-
 
     private fun registerCallback(event: Event<*, *, *, *>, callback: Callback<*, *, *>) {
         log.info("Adding a new callback for the $event event.")
