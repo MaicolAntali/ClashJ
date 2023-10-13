@@ -4,11 +4,14 @@ import com.clashj.event.Callback
 import com.clashj.event.ClanEvents
 import com.clashj.event.Event
 import com.clashj.event.PlayerEvents
+import com.clashj.event.WarEvents
 import com.clashj.event.cache.CacheManager
 import com.clashj.exception.MaintenanceException
 import com.clashj.http.RequestHandler
 import com.clashj.model.clan.Clan
+import com.clashj.model.clan.ClanWar
 import com.clashj.model.clan.component.ClanMember
+import com.clashj.model.clan.component.ClanWarAttack
 import com.clashj.model.player.Player
 import com.clashj.util.adjustTag
 import kotlinx.coroutines.CoroutineScope
@@ -48,6 +51,7 @@ class EventClient(
     private val cache = CacheManager()
     private val players: MutableList<String> = mutableListOf()
     private val clans: MutableList<String> = mutableListOf()
+    private val wars: MutableList<String> = mutableListOf()
 
     private companion object {
         private val log = LoggerFactory.getLogger(RequestHandler::class.java)
@@ -65,6 +69,7 @@ class EventClient(
             launch { maintenanceCheckRunner() }
             launch { updaterRunner(players, ::getPlayer, Player::class.java, PlayerEvents::class.java) }
             launch { updaterRunner(clans, ::getClan, Clan::class.java, ClanEvents::class.java) }
+            launch { updaterRunner(wars, ::getClanCurrentWar, ClanWar::class.java, WarEvents::class.java) }
         }
     }
 
@@ -97,6 +102,20 @@ class EventClient(
     }
 
     /**
+     * Adds a clan's war events to the update queue for monitoring.
+     * Once a clan's war events are added to the queue, the client will start monitoring them.
+     *
+     * This function is used to include a clan's war events, such as clan wars and their details,
+     * in the update queue for real-time monitoring.
+     *
+     * @param clanTag The clan tag for which war events will be monitored and updated.
+     */
+    fun addWarToUpdateQueue(clanTag: String) {
+        log.info("Adding the clan tag: $clanTag to the update queue for monitoring war events.")
+        wars.add(adjustTag(clanTag))
+    }
+
+    /**
      * Removes a player's tag from the update queue.
      * Once a player's tag is removed from the queue, the client stops monitoring the player.
      *
@@ -122,6 +141,20 @@ class EventClient(
     fun removeClanToUpdateQueue(clanTag: String) {
         log.info("Removing the clan tag: $clanTag from the update queue.")
         clans.remove(adjustTag(clanTag))
+    }
+
+    /**
+     * Removes a clan's war events from the update queue.
+     * Once a clan's war events are removed from the queue, the client stops monitoring them.
+     *
+     * This function is used to exclude a clan's war events, such as clan wars and their details,
+     * from the update queue, thereby stopping real-time monitoring of war-related events.
+     *
+     * @param clanTag The clan tag for which war events will no longer be monitored.
+     */
+    fun removeWarToUpdateQueue(clanTag: String) {
+        log.info("Removing the clan tag: $clanTag from the update queue for monitoring war events.")
+        wars.remove(adjustTag(clanTag))
     }
 
     /**
@@ -151,7 +184,7 @@ class EventClient(
      * @param event The monitored event for which the callback is registered.
      * @param callback The callback function to be invoked when the event occurs.
      */
-    fun registerClanCallback(event: ClanEvents, callback: (Clan, Clan) -> Unit) {
+    fun registerClanCallback(event: ClanEvents, callback: suspend (Clan, Clan) -> Unit) {
         registerCallback(event, Callback<Clan, Clan, Nothing>(simple = callback))
     }
 
@@ -164,6 +197,27 @@ class EventClient(
      */
     fun registerClanCallback(event: ClanEvents, callback: suspend (Clan, Clan, ClanMember) -> Unit) {
         registerCallback(event, Callback(withArg = callback))
+    }
+
+    /**
+     * Registers a callback for war-related events.
+     *
+     * @param event The monitored event for which the callback is registered.
+     * @param callback The callback function to be invoked when the event occurs.
+     */
+    fun registerWarCallback(event: WarEvents, callback: suspend (ClanWar) -> Unit) {
+        registerCallback(event, Callback<ClanWar, Nothing, Nothing>(singleArg = callback))
+    }
+
+    /**
+     * Registers a callback for war-related events with an iterable callback function.
+     *
+     * @param event The monitored event for which the callback is registered.
+     * @param callback The callback function to be invoked when the event occurs, taking one [ClanWar] objects
+     * and an additional [ClanWarAttack] as parameters.
+     */
+    fun registerWarCallback(event: WarEvents, callback: suspend (ClanWar, ClanWarAttack) -> Unit) {
+        registerCallback(event, Callback<ClanWar, ClanWarAttack, Nothing>(simple = callback))
     }
 
 
@@ -250,6 +304,12 @@ class EventClient(
                         event is ClanEvents && cached is Clan && current is Clan -> {
                             callbacks
                                 .filterIsInstance<Callback<Clan, Clan, ClanMember>>()
+                                .forEach { event.checkAndFireCallback(cached, current, it) }
+                        }
+
+                        event is WarEvents && cached is ClanWar && current is ClanWar -> {
+                            callbacks
+                                .filterIsInstance<Callback<ClanWar, ClanWarAttack, Nothing>>()
                                 .forEach { event.checkAndFireCallback(cached, current, it) }
                         }
                     }

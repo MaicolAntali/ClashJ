@@ -1,5 +1,6 @@
 package com.clashj.model.clan
 
+import com.clashj.model.clan.component.ClanWarAttack
 import com.clashj.model.clan.component.WarClan
 import com.clashj.model.clan.component.WarState
 
@@ -41,4 +42,13 @@ data class ClanWar(
      */
     fun getClanAttacks() =
         clan.members.orEmpty().flatMap { it.attacks ?: emptyList() }.sortedBy { it.order }
+
+    /**
+     * Retrieves the clan member who launched the specified attack, if found.
+     *
+     * @param attack The clan war attack to look for.
+     * @return The clan member who launched the specified attack, or `null` if not found.
+     */
+    fun getClanMemberByAttack(attack: ClanWarAttack) =
+        clan.members.orEmpty().firstOrNull { it.attacks.orEmpty().contains(attack) }
 }

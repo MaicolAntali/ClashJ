@@ -324,6 +324,16 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         }
     }
 
+    /**
+     * Event fires when the required trophies for joining the clan change.
+     *
+     * Usage Example:
+     * ```kotlin
+     * eventClient.registerClanCallback(MonitoredEvent.ClanEvents.RequiredTrophies) { cachedClan, currentClan ->
+     *     // ...
+     * }
+     * ```
+     */
     data object RequiredTrophies : ClanEvents() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
@@ -556,6 +566,16 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         }
     }
 
+    /**
+     * Event fires when the clan's description changes.
+     *
+     * Usage Example:
+     * ```kotlin
+     * eventClient.registerClanCallback(MonitoredEvent.ClanEvents.Description) { cachedClan, currentClan ->
+     *     // ...
+     * }
+     * ```
+     */
     data object Description : ClanEvents() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
