@@ -3,6 +3,7 @@ package com.clashj
 import com.clashj.event.Callback
 import com.clashj.event.ClanEvents
 import com.clashj.event.Event
+import com.clashj.event.MaintenanceEvents
 import com.clashj.event.PlayerEvents
 import com.clashj.event.WarEvents
 import com.clashj.event.cache.CacheManager
@@ -24,6 +25,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.slf4j.LoggerFactory
+import java.time.LocalDateTime
 import java.util.concurrent.Executors
 
 /**
@@ -35,17 +37,18 @@ import java.util.concurrent.Executors
  *
  * @param requestHandler The request handler used to make API requests.
  * @param nThread The number of threads for the internal coroutine dispatcher.
+ * @param pollingInterval The interval (in milliseconds) at which data should be polled for updates.
+ * @param maintenanceCheckInterval The interval (in milliseconds) at which server maintenance status should be checked.
  */
 class EventClient(
     private val requestHandler: RequestHandler,
     private val nThread: Int,
     private val pollingInterval: Long = 10_000,
-    private val maintenanceCheckInterval: Long = 60_000
+    private val maintenanceCheckInterval: Long = 25_000
 ) : Client(requestHandler) {
     // Dispatcher & Polling job
     private val dispatcher = Executors.newFixedThreadPool(nThread).asCoroutineDispatcher()
     private var job: Job? = null
-    private var isApiInMaintenance = false
 
     // Callbacks
     private val eventCallbacks = HashMap<Class<*>, HashMap<Event<*, *, *, *>, MutableList<Callback<*, *, *>>>>()
@@ -55,6 +58,10 @@ class EventClient(
     private val players: MutableList<String> = mutableListOf()
     private val clans: MutableList<String> = mutableListOf()
     private val wars: MutableList<String> = mutableListOf()
+
+    // Maintenance
+    private var isApiInMaintenance = false
+    private var maintenanceStartTime: LocalDateTime? = null
 
     private companion object {
         private val log = LoggerFactory.getLogger(RequestHandler::class.java)
@@ -223,6 +230,29 @@ class EventClient(
         registerCallback(event, Callback<ClanWar, ClanWarAttack, Nothing>(simple = callback))
     }
 
+    /**
+     * Registers a callback for maintenance-related events.
+     *
+     * @param event The monitored event for which the callback is registered.
+     * @param callback The callback function to be invoked when the event occurs, taking one [LocalDateTime] parameter.
+     */
+    fun registerMaintenanceCallback(event: MaintenanceEvents, callback: suspend (LocalDateTime) -> Unit) {
+        registerCallback(event, Callback<LocalDateTime, Nothing, Nothing>(singleArg = callback))
+    }
+
+    /**
+     * Registers a callback for maintenance-related events with an iterable callback function.
+     *
+     * @param event The monitored event for which the callback is registered.
+     * @param callback The callback function to be invoked when the event occurs, taking two [LocalDateTime] parameters.
+     */
+    fun registerMaintenanceCallback(
+        event: MaintenanceEvents,
+        callback: suspend (LocalDateTime, LocalDateTime) -> Unit
+    ) {
+        registerCallback(event, Callback<LocalDateTime, LocalDateTime, Nothing>(simple = callback))
+    }
+
     private fun registerCallback(event: Event<*, *, *, *>, callback: Callback<*, *, *>) {
         log.info("Adding a new callback for the $event event.")
 
@@ -240,11 +270,18 @@ class EventClient(
                     if (isApiInMaintenance) {
                         isApiInMaintenance = false
                         log.info("API is back online. Resuming updates.")
+
+                        triggerEvent(maintenanceStartTime, LocalDateTime.now(), MaintenanceEvents::class.java)
+                        maintenanceStartTime = null
                     }
                 } catch (e: MaintenanceException) {
                     if (!isApiInMaintenance) {
                         log.info("API is in maintenance. Stopping updates.")
                         isApiInMaintenance = true // API is in maintenance
+                    }
+                    if (maintenanceStartTime == null) {
+                        maintenanceStartTime = LocalDateTime.now()
+                        triggerEvent(maintenanceStartTime, eventType = MaintenanceEvents::class.java)
                     }
                 } catch (e: Exception) {
                     log.error("Error checking API maintenance status: ${e.message}")
@@ -292,7 +329,7 @@ class EventClient(
         }
     }
 
-    private suspend fun <T> triggerEvent(cached: T, current: T, eventType: Class<*>) = coroutineScope {
+    private suspend fun <T> triggerEvent(cached: T, current: T? = null, eventType: Class<*>) = coroutineScope {
         eventCallbacks[eventType]
             ?.forEach { (event, callbacks) ->
                 launch {
@@ -312,6 +349,20 @@ class EventClient(
                         event is WarEvents && cached is ClanWar && current is ClanWar -> {
                             callbacks
                                 .filterIsInstance<Callback<ClanWar, ClanWarAttack, Nothing>>()
+                                .forEach { event.checkAndFireCallback(cached, current, it) }
+                        }
+
+                        // Triggers the MaintenanceStared event
+                        event is MaintenanceEvents && cached is LocalDateTime && current == null -> {
+                            callbacks
+                                .filterIsInstance<Callback<LocalDateTime, LocalDateTime, Nothing>>()
+                                .forEach { event.checkAndFireCallback(cached, cached, it) }
+                        }
+
+                        // Triggers the MaintenanceStared event
+                        event is MaintenanceEvents && cached is LocalDateTime && current is LocalDateTime -> {
+                            callbacks
+                                .filterIsInstance<Callback<LocalDateTime, LocalDateTime, Nothing>>()
                                 .forEach { event.checkAndFireCallback(cached, current, it) }
                         }
                     }
