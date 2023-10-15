@@ -78,7 +78,7 @@ fun main() = runBlocking {
 
 ## 🔗Links
 
-- [clashJ documentation](https://javadoc.jitpack.io/com/github/MaicolAntali/clashJ/main-SNAPSHOT/javadoc/)
+- [📖 Wiki](https://github.com/MaicolAntali/clashJ/wiki)
 
 ## ✅ Contributing
 
