@@ -59,8 +59,7 @@ The library required **Java 17** or higher versions.
 
 ### Usage Example
 
-Simple example of the library usage:
-
+#### Simple Usage Example
 ```kotlin
 fun main() = runBlocking {
     // Build a client with the default option 
@@ -75,6 +74,32 @@ fun main() = runBlocking {
     println("Name: ${clan.name}, Tag: ${clan.tag}")
 }
 ```
+
+#### Event Usage Example
+```kotlin
+fun main() = runBlocking {
+    val eventClient = ClientBuilder("email", "password").buildEventClient()
+
+    // Add player and clan to monitored events
+    eventClient.addPlayerToMonitoredEvent("#playerTag")
+    eventClient.addClanToMonitoredEvent("#clanTag")
+
+    // Register a callback for the "JoinClan" event
+    eventClient.registerPlayerCallback(MonitoredEvent.PlayerEvents.JoinClan) { _, current ->
+        println("${current.name} has joined a clan.")
+    }
+
+    // Register a callback for the "MemberJoin" event
+    eventClient.registerClanCallback(MonitoredEvent.ClanEvents.MemberJoin) { _, current, member ->
+        println("${member.name} has joined the clan ${current.name}.")
+    }
+
+    // Login and start polling for events
+    eventClient.login()
+    eventClient.startPolling()
+}
+```
+
 
 ## 🔗Links
 
