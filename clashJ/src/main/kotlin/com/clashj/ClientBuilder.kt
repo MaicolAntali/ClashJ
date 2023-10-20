@@ -10,43 +10,36 @@ import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.apache5.Apache5
 
 /**
- * Builder class for constructing instances of the [Client] class with customizable options.
+ * Builder class for constructing instances of the [Client] or [EventClient] class with customizable options.
  *
- * To construct a [Client] instance, first, create a [ClientBuilder] with the required login credentials,
- * and then use the provided methods to customize other options. Finally, call the [build] function
- * to obtain the configured [Client] instance.
+ * To construct a client instance, first, create a [ClientBuilder] with the required login credentials,
+ * and then use the provided methods to customize other options.
+ * Finally, call the [buildClient] function to obtain the configured [Client] instance or,
+ * [buildEventClient] function to obtain the configured [EventClient]
  * ```
- * val client = ClientBuilder("email", "pwd").keyName("fooBar").build()
+ * val client = ClientBuilder("email", "pwd").keyName("fooBar").buildClient()
+ * val eventClient = ClientBuilder("email", "pwd").keyName("fooBar").buildEventClient()
  * ```
  *
  * @property email The email associated with the Clash of Clans API developer account.
  * @property password The password associated with the Clash of Clans API developer account.
- * @property keyName The default name for the API key. Defaults to `clashJKey`.
- * @property keyDescription The optional description for the API key.
- * @property keyCount The number of API keys to be generated. Defaults to `1`.
- * @property engine The HttpClientEngine to be used for HTTP requests. Defaults to `Apache5.create()`.
- * @property connectionTimeout The connection timeout for HTTP requests in milliseconds. Defaults to `15000`ms (15 seconds).
- * @property requestTimeout The request timeout for HTTP requests in milliseconds. Defaults to `15000`ms (15 seconds).
- * @property throttler The `BaseThrottler` instance responsible for controlling the rate of API requests. Defaults to [BatchThrottler].
  */
-data class ClientBuilder(
-    val email: String,
-    val password: String,
-
+class ClientBuilder(
+    private val email: String,
+    private val password: String,
+) {
     // Key options
-    var keyName: String = "clashJKey",
-    var keyDescription: String? = null,
-    var keyCount: Int = 1,
+    private var keyName: String = "clashJKey"
+    private var keyDescription: String? = null
+    private var keyCount: Int = 1
 
     // Engine & engine options
-    var engine: HttpClientEngine = Apache5.create(),
-    var connectionTimeout: Long = 15_000,
-    var requestTimeout: Long = 15_000,
+    private var engine: HttpClientEngine = Apache5.create()
+    private var connectionTimeout: Long = 15_000
+    private var requestTimeout: Long = 15_000
 
     // Throttler
-    var throttler: BaseThrottler = BatchThrottler()
-
-) {
+    private var throttler: BaseThrottler = BatchThrottler()
 
     /**
      * Sets the name for the generated API key.
@@ -112,7 +105,7 @@ data class ClientBuilder(
      *
      * @return The constructed [Client] instance.
      */
-    fun build(): Client {
+    fun buildClient(): Client {
         return Client(
             RequestHandler(
                 Credential(this.email, this.password),
@@ -121,6 +114,34 @@ data class ClientBuilder(
                 engine = this.engine,
                 throttler = this.throttler
             )
+        )
+    }
+
+    /**
+     * Builds an [EventClient] instance with the configured options.
+     *
+     * @param nThread The number of threads for event handling (default is 3).
+     * @param pollingInterval The interval between event polling in milliseconds (default is 15,000ms).
+     * @param maintenanceCheckInterval The interval for maintenance event checks in milliseconds (default is 30,000ms).
+     *
+     * @return The constructed [EventClient] instance.
+     */
+    fun buildEventClient(
+        nThread: Int = 3,
+        pollingInterval: Long = 15_000,
+        maintenanceCheckInterval: Long = 30_000
+    ): EventClient {
+        return EventClient(
+            RequestHandler(
+                Credential(this.email, this.password),
+                KeyOptions(this.keyName, this.keyDescription, this.keyCount),
+                EngineOptions(this.connectionTimeout, this.requestTimeout),
+                engine = this.engine,
+                throttler = this.throttler
+            ),
+            nThread,
+            pollingInterval,
+            maintenanceCheckInterval
         )
     }
 }

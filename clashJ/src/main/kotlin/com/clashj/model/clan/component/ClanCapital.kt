@@ -9,7 +9,7 @@ package com.clashj.model.clan.component
  */
 data class ClanCapital(
     val capitalHallLevel: Int,
-    val districts: List<District>
+    val districts: List<District>?
 )
 
 /**

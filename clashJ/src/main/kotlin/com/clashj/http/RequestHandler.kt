@@ -29,6 +29,7 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.post
 import io.ktor.client.request.request
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
@@ -42,6 +43,7 @@ import kotlinx.coroutines.launch
 import org.slf4j.LoggerFactory
 import java.time.LocalDateTime
 import java.util.Base64
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * Handles HTTP requests to and from [DEV_SITE_BASE_URL] and [API_BASE_URL].
@@ -70,6 +72,7 @@ class RequestHandler(
     }
 
     private val keysSet = SafeSet<String>()
+    private val isLoginInProgress = AtomicBoolean(false)
 
     private val httpClient = HttpClient(engine) {
         install(HttpTimeout) {
@@ -97,9 +100,28 @@ class RequestHandler(
 
         keysSet.clear()
 
-        val loginResponse = httpClient.post("$DEV_SITE_BASE_URL/login") {
-            setBody(credential)
+        lateinit var loginResponse: HttpResponse
+        var delayMillis = 100L
+
+        // Retry the login operation up to three times with exponential backoff
+        for (attempt in 1..3) {
+            try {
+                loginResponse = httpClient.post("$DEV_SITE_BASE_URL/login") {
+                    setBody(credential)
+                }
+                break // Success, exit the loop
+            } catch (e: HttpRequestTimeoutException) {
+                if (attempt == 3) {
+                    log.error("Login operation failed. Error ${e.message}")
+                    throw e
+                }
+
+                log.warn("Login operation failed. Retry in $delayMillis ms")
+                delay(delayMillis)
+                delayMillis *= 2 // Exponential backoff
+            }
         }
+
 
         if (loginResponse.status == HttpStatusCode.Forbidden) {
             log.error("The provided credential are incorrect or invalid.")
@@ -114,7 +136,7 @@ class RequestHandler(
 
         log.info("The current IP address has been successfully retrieved. IP address: $ip")
 
-        launch { retriveKeys(ip, loginResponse.headers["set-cookie"]!!) }
+        retriveKeys(ip, loginResponse.headers["set-cookie"]!!)
     }
 
 
@@ -135,7 +157,7 @@ class RequestHandler(
      * @throws NotFoundException if the HTTP response status is [HttpStatusCode.NotFound].
      * @throws BadGatewayException if the HTTP response status is [HttpStatusCode.InternalServerError],¬
      * [HttpStatusCode.BadGateway], or [HttpStatusCode.GatewayTimeout].
-     * @throws ClashJException if the response cannot be handled, or if the maximum retry attempts are reached without a valid response.
+     * @throws ClashJException if the response can't be handled, or if the maximum retry attempts are reached without a valid response.
      */
     internal suspend inline fun <reified T> request(url: String, requestOptions: RequestOptions = RequestOptions()): T {
         if (!requestOptions.ignoreThrottler) {
@@ -159,9 +181,9 @@ class RequestHandler(
      *
      * @throws HttpException If the HTTP request fails with a specific HTTP status code.
      * @throws MaintenanceException If the API is in maintenance.
-     * @throws NotFoundException If the resource was not found (HTTP status code 404).
+     * @throws NotFoundException If the resource wasn't found (HTTP status code 404).
      * @throws BadGatewayException If there was an issue with the API (HTTP status code 500, 502, 504).
-     * @throws ClashJException If there is an issue that cannot be handled specifically.
+     * @throws ClashJException If there is an issue that can't be handled specifically.
      */
     private suspend inline fun <reified T> executeRequest(url: String, requestOptions: RequestOptions): T =
         coroutineScope {
@@ -180,11 +202,19 @@ class RequestHandler(
 
                         HttpStatusCode.Forbidden -> {
                             val responseJson = response.body<JsonObject>()
-                            log.info("Forbidden, resp: $responseJson, reason: ${responseJson.get("reason")}")
 
                             if (responseJson.get("reason").asString == "accessDenied.invalidIp") {
-                                async { login() }.await()
+                                if (!isLoginInProgress.get()) {
+                                    isLoginInProgress.set(true)
+                                    login()
+                                    isLoginInProgress.set(false)
+                                } else {
+                                    delay(engineOptions.requestTimeout * (tries + 1))
+                                }
+
                                 continue
+                            } else {
+                                log.error("Forbidden, resp: $responseJson, reason: ${responseJson.get("reason")}")
                             }
 
                             throw HttpException("Forbidden, resp: $responseJson, reason: ${responseJson.get("reason")}")
@@ -231,7 +261,7 @@ class RequestHandler(
      * Performs the retrieval of keys based on the current IP address.
      *
      * Retrieves the list of keys from the developer site and filters them based on the current IP address.
-     * Revokes keys that do not match the current IP and appends keys that match the current IP to the [keysSet].
+     * Revokes keys that don't match the current IP and appends keys that match the current IP to the [keysSet].
      * Also, creates new keys within the limit of 10 keys per account until the desired keyCount is reached.
      *
      * @param currentIp The current IP address.

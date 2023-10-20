@@ -45,11 +45,11 @@ import com.google.gson.annotations.SerializedName
  * @property playerHouse Information about the player's house elements.
  */
 data class Player(
-    val clan: PlayerClan,
-    val league: League,
+    val clan: PlayerClan?,
+    val league: League?,
     val builderBaseLeague: SimpleLeague,
-    val role: ClanMemberRole,
-    val warPreference: PlayerWarPreference,
+    val role: ClanMemberRole?,
+    val warPreference: PlayerWarPreference?,
     val attackWins: Int,
     val defenseWins: Int,
     val versusTrophies: Int,
@@ -57,7 +57,7 @@ data class Player(
     val townHallLevel: Int,
     val townHallWeaponLevel: Int,
     val versusBattleWins: Int,
-    val legendStatistics: PlayerLegendStatistics,
+    val legendStatistics: PlayerLegendStatistics?,
     val troops: List<PlayerItemLevel>,
     val heroes: List<PlayerItemLevel>,
     val spells: List<PlayerItemLevel>,

@@ -45,7 +45,7 @@ import kotlinx.coroutines.async
  *
  * @param requestHandler The [RequestHandler] instance responsible for handling HTTP requests and responses.
  */
-class Client(
+open class Client(
     private val requestHandler: RequestHandler
 ) {
 
