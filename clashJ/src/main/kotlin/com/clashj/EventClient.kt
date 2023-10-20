@@ -43,8 +43,8 @@ import java.util.concurrent.Executors
 class EventClient(
     private val requestHandler: RequestHandler,
     private val nThread: Int,
-    private val pollingInterval: Long = 10_000,
-    private val maintenanceCheckInterval: Long = 25_000
+    private val pollingInterval: Long,
+    private val maintenanceCheckInterval: Long
 ) : Client(requestHandler) {
     // Dispatcher & Polling job
     private val dispatcher = Executors.newFixedThreadPool(nThread).asCoroutineDispatcher()

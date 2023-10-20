@@ -173,6 +173,6 @@ class ClientTest {
     private fun createApiWithMockEngine(mockEngine: MockEngine): Client {
         return ClientBuilder("email", "pwd")
             .engine(mockEngine)
-            .build()
+            .buildClient()
     }
 }
