@@ -316,16 +316,19 @@ class RequestHandler(
 
         if (keysSet.size() < keyOptions.keyCount && keys.size == 10) {
             log.warn(
-                "Required ${keyOptions.keyCount} keys, but maximum ${keysSet.size()} found/made (limit: 10/acc). Please delete keys or decrease `keyCount`.",
+                "Required ${keyOptions.keyCount} keys, but maximum ${keysSet.size()} found/made (limit: 10/acc). " +
+                    "Please delete keys or decrease `keyCount`.",
             )
         }
 
         if (keysSet.size() == 0) {
             log.error(
-                "${keys.size} existing API keys, none match keyName: ${keyOptions.keyName}. Specify another keyName or delete unused keys at 'https://developer.clashofclans.com'.",
+                "${keys.size} existing API keys, none match keyName: ${keyOptions.keyName}. " +
+                    "Specify another keyName or delete unused keys at 'https://developer.clashofclans.com'.",
             )
             throw ClashJException(
-                "${keys.size} existing API keys, none match keyName: ${keyOptions.keyName}. Specify another keyName or delete unused keys at 'https://developer.clashofclans.com'.",
+                "${keys.size} existing API keys, none match keyName: ${keyOptions.keyName}. " +
+                    "Specify another keyName or delete unused keys at 'https://developer.clashofclans.com'.",
             )
         }
     }

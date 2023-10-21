@@ -24,6 +24,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.io.File
 
 class RequestHandlerTest {
     @Nested
@@ -57,7 +58,7 @@ class RequestHandlerTest {
                         when (request.url.toString()) {
                             "$DEV_SITE_BASE_URL/login" -> {
                                 respond(
-                                    content = """{temporaryAPIToken:".eyAibGltaXRzIjogWyB7ICJ0aWVyIjogImRldmVsb3Blci9icm9uemUiLCAidHlwZSI6ICJ0aHJvdHRsaW5nIiB9LCB7ICJjaWRycyI6IFsgIjEyLjM1LjU2Ny44OS8zMiIgXSwgInR5cGUiOiAiY2xpZW50IiB9LCB7ICJvcmlnaW5zIjogWyAiZGV2ZWxvcGVyLmNsYXNob2ZjbGFucy5jb20iIF0sICJ0eXBlIjogImNvcnMiIH0gXSB9"}""",
+                                    content = File("src/test/resources/json/tooManyKeysLogin.json").readText(),
                                     status = HttpStatusCode.OK,
                                     headers =
                                         headers {
@@ -69,7 +70,7 @@ class RequestHandlerTest {
 
                             "$DEV_SITE_BASE_URL/apikey/list" -> {
                                 respond(
-                                    content = """{"status":{"code":0,"message":"ok","detail":null},"keys":[{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"}]}""",
+                                    content = File("src/test/resources/json/tooManyKeysList.json").readText(),
                                     status = HttpStatusCode.OK,
                                     headers =
                                         headers {
