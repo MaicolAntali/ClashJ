@@ -13,7 +13,7 @@ ClashJ is a fully asynchronous Clash of Clans API wrapper, written in Kotlin.
 - Fully asynchronous library
 - Support the login with the `Email` and `Password`
 - 100% Clash of Clans API
-- Events 🚧 (Not implemented yet)
+- Events
 
 ## ℹ️ Getting started
 
