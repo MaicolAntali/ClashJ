@@ -10,5 +10,5 @@ package com.clashj.model.common
 data class Language(
     val name: String,
     val id: Int,
-    val languageCode: String
+    val languageCode: String,
 )

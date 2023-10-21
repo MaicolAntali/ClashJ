@@ -14,9 +14,8 @@ import kotlinx.coroutines.sync.withLock
  */
 class BatchThrottler(
     private val rateLimit: Int = 10,
-    private val sleepTime: Long = 1000
-): BaseThrottler {
-
+    private val sleepTime: Long = 1000,
+) : BaseThrottler {
     private var executionCount = 0
     private val mutex = Mutex()
 

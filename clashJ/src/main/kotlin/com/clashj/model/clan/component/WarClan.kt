@@ -24,7 +24,7 @@ data class WarClan(
     val attacks: Int,
     val stars: Int,
     val expEarned: Int,
-    val members: List<ClanWarMember>?
+    val members: List<ClanWarMember>?,
 )
 
 /**
@@ -46,7 +46,7 @@ data class ClanWarMember(
     val townhallLevel: Int,
     val opponentAttacks: Int,
     val bestOpponentAttack: ClanWarAttack,
-    val attacks: List<ClanWarAttack>?
+    val attacks: List<ClanWarAttack>?,
 )
 
 /**
@@ -66,6 +66,5 @@ data class ClanWarAttack(
     val defenderTag: String,
     val stars: Int,
     val destructionPercentage: Int,
-    val duration: Int
+    val duration: Int,
 )
-

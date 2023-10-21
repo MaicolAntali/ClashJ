@@ -7,7 +7,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class SafeSetTest {
-
     @Test
     fun `should add 5 elements`() {
         runBlocking {
@@ -81,7 +80,7 @@ class SafeSetTest {
     @Test
     fun `should remove all elements from the set`() {
         runBlocking {
-            val safeSet = SafeSet(setOf(1,2,3))
+            val safeSet = SafeSet(setOf(1, 2, 3))
             assertThat(safeSet.size()).isEqualTo(3)
 
             safeSet.clear()

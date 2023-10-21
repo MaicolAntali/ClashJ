@@ -2,8 +2,8 @@ package com.clashj.model.player
 
 import com.clashj.model.clan.component.ClanMemberRole
 import com.clashj.model.common.Badge
-import com.clashj.model.label.Label
 import com.clashj.model.common.PlayerHouse
+import com.clashj.model.label.Label
 import com.clashj.model.league.League
 import com.clashj.model.league.SimpleLeague
 import com.google.gson.annotations.SerializedName
@@ -75,7 +75,7 @@ data class Player(
     val warStars: Int,
     val achievements: List<PlayerAchievementsProgress>,
     val clanCapitalContributions: Int,
-    val playerHouse: PlayerHouse
+    val playerHouse: PlayerHouse,
 )
 
 /**
@@ -91,7 +91,7 @@ data class PlayerClan(
     val tag: String,
     val clanLevel: Int,
     val name: String,
-    val badgeUrls: Badge
+    val badgeUrls: Badge,
 )
 
 /**
@@ -109,7 +109,7 @@ enum class PlayerWarPreference {
      * The player is not participating in wars.
      */
     @SerializedName("out")
-    OUT
+    OUT,
 }
 
 /**
@@ -133,7 +133,7 @@ data class PlayerLegendStatistics(
     val bestBuilderBaseSeason: PlayerLegendLeagueTournamentSeasonResult,
     val bestVersusSeason: PlayerLegendLeagueTournamentSeasonResult,
     val previousSeason: PlayerLegendLeagueTournamentSeasonResult,
-    val bestSeason: PlayerLegendLeagueTournamentSeasonResult
+    val bestSeason: PlayerLegendLeagueTournamentSeasonResult,
 )
 
 /**
@@ -147,7 +147,7 @@ data class PlayerLegendStatistics(
 data class PlayerLegendLeagueTournamentSeasonResult(
     val trophies: Int,
     val id: String,
-    val rank: Int
+    val rank: Int,
 )
 
 /**
@@ -165,7 +165,7 @@ data class PlayerItemLevel(
     val name: String,
     val maxLevel: Int,
     val village: Village,
-    val superTroopIsActive: Boolean
+    val superTroopIsActive: Boolean,
 )
 
 /**
@@ -205,5 +205,5 @@ enum class Village {
      * The Builder Base.
      */
     @SerializedName("builderBase")
-    BUILDER_BASE
+    BUILDER_BASE,
 }

@@ -11,5 +11,5 @@ import com.clashj.model.common.Paging
  */
 data class LocationList(
     val items: List<Location>,
-    val paging: Paging?
+    val paging: Paging?,
 )

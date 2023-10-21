@@ -11,7 +11,7 @@ import com.clashj.model.common.Paging
  */
 data class ClanRankingList(
     val items: List<ClanRanking>,
-    val paging: Paging?
+    val paging: Paging?,
 )
 
 /**
@@ -35,5 +35,5 @@ data class ClanRanking(
     val tag: String,
     val name: String,
     val rank: Int,
-    val previousRank: Int
+    val previousRank: Int,
 )

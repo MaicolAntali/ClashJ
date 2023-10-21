@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName
  * Represents the *WarState* enum class of the Clash of Clans API.
  */
 enum class WarState {
-
     /**
      * The clan was not found in the war state.
      */
@@ -65,5 +64,5 @@ enum class WarState {
      * The war has ended for the clan.
      */
     @SerializedName("ended")
-    ENDED
+    ENDED,
 }

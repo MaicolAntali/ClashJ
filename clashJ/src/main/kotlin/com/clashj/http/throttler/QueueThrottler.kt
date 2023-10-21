@@ -10,9 +10,8 @@ import kotlinx.coroutines.sync.withLock
  * @param sleepTime The time interval in milliseconds between consecutive executions.
  */
 class QueueThrottler(
-    private val sleepTime: Long = 100
+    private val sleepTime: Long = 100,
 ) : BaseThrottler {
-
     private var lastRun: Long = 0
     private val mutex = Mutex()
 

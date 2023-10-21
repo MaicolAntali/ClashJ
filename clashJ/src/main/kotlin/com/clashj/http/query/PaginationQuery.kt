@@ -17,9 +17,8 @@ package com.clashj.http.query
 class PaginationQuery(
     private val limit: Int = -1,
     private val before: String = "",
-    private val after: String = ""
+    private val after: String = "",
 ) : Query {
-
     override fun createQuery(): String {
         var query = ""
         // Set the limit query
@@ -38,5 +37,4 @@ class PaginationQuery(
         }
         return query
     }
-
 }

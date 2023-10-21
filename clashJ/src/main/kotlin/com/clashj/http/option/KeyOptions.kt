@@ -10,5 +10,5 @@ package com.clashj.http.option
 data class KeyOptions(
     val keyName: String,
     val keyDescription: String?,
-    val keyCount: Int
+    val keyCount: Int,
 )

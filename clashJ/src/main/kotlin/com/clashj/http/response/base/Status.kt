@@ -13,5 +13,5 @@ package com.clashj.http.response.base
 data class Status(
     val code: Int,
     val message: String,
-    val detail: String?
+    val detail: String?,
 )

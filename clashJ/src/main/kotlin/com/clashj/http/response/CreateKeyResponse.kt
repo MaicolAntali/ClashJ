@@ -14,5 +14,5 @@ import com.clashj.http.response.base.Status
  */
 data class CreateKeyResponse(
     val status: Status,
-    val key: Key
+    val key: Key,
 )

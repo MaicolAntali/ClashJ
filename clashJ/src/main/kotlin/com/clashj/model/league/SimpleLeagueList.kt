@@ -11,5 +11,5 @@ import com.clashj.model.common.Paging
  */
 data class SimpleLeagueList(
     val items: List<SimpleLeague>,
-    val paging: Paging?
+    val paging: Paging?,
 )

@@ -3,6 +3,7 @@ import org.jetbrains.dokka.gradle.DokkaTask
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.9.10"
     id("org.jetbrains.dokka") version "1.9.10"
+    id("org.jmailen.kotlinter") version "4.0.0"
 }
 
 repositories {

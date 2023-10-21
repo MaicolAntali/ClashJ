@@ -46,9 +46,8 @@ import kotlinx.coroutines.async
  * @param requestHandler The [RequestHandler] instance responsible for handling HTTP requests and responses.
  */
 open class Client(
-    private val requestHandler: RequestHandler
+    private val requestHandler: RequestHandler,
 ) {
-
     /**
      * Performs login into the Clash of Clans developer website using the provided credentials.
      *
@@ -153,7 +152,7 @@ open class Client(
      */
     suspend fun getClanWarLog(
         clanTag: String,
-        pagination: PaginationQuery = PaginationQuery()
+        pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<ClanWarLog> {
         return CoroutineScope(Dispatchers.IO).async {
             requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/warlog?${pagination.createQuery()}")
@@ -173,7 +172,7 @@ open class Client(
      */
     suspend fun getClanMembers(
         clanTag: String,
-        pagination: PaginationQuery = PaginationQuery()
+        pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<ClanMemberList> {
         return CoroutineScope(Dispatchers.IO).async {
             requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/members?${pagination.createQuery()}")
@@ -193,7 +192,7 @@ open class Client(
      */
     suspend fun getClanCapitalRaidSeasons(
         clanTag: String,
-        pagination: PaginationQuery = PaginationQuery()
+        pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<ClanCapitalRaidSeasons> {
         return CoroutineScope(Dispatchers.IO).async {
             requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/capitalraidseasons?${pagination.createQuery()}")
@@ -244,7 +243,7 @@ open class Client(
      */
     suspend fun getCapitalLeague(
         leagueId: String,
-        pagination: PaginationQuery = PaginationQuery()
+        pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<SimpleLeague> {
         return CoroutineScope(Dispatchers.IO).async {
             requestHandler.request("$API_BASE_URL/capitalleagues/$leagueId?${pagination.createQuery()}")
@@ -277,7 +276,10 @@ open class Client(
      * @throws NotFoundException If the requested league is not found.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getLeague(leagueId: String, pagination: PaginationQuery = PaginationQuery()): Deferred<League> {
+    suspend fun getLeague(
+        leagueId: String,
+        pagination: PaginationQuery = PaginationQuery(),
+    ): Deferred<League> {
         return CoroutineScope(Dispatchers.IO).async {
             requestHandler.request("$API_BASE_URL/leagues/$leagueId?${pagination.createQuery()}")
         }
@@ -296,7 +298,7 @@ open class Client(
      */
     suspend fun getLeagueSeasons(
         leagueId: String,
-        pagination: PaginationQuery = PaginationQuery()
+        pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<LeagueSeasonList> {
         return CoroutineScope(Dispatchers.IO).async {
             requestHandler.request("$API_BASE_URL/leagues/$leagueId/seasons?${pagination.createQuery()}")
@@ -318,7 +320,7 @@ open class Client(
     suspend fun getLeagueSeasonRanking(
         leagueId: String,
         seasonId: String,
-        pagination: PaginationQuery = PaginationQuery()
+        pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<PlayerRankingList> {
         return CoroutineScope(Dispatchers.IO).async {
             requestHandler.request("$API_BASE_URL/leagues/$leagueId/seasons/$seasonId?${pagination.createQuery()}")
@@ -353,7 +355,7 @@ open class Client(
      */
     suspend fun getBuilderBaseLeague(
         leagueId: Int,
-        pagination: PaginationQuery = PaginationQuery()
+        pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<SimpleLeague> {
         return CoroutineScope(Dispatchers.IO).async {
             requestHandler.request("$API_BASE_URL/builderbaseleagues/$leagueId?${pagination.createQuery()}")
@@ -386,7 +388,10 @@ open class Client(
      * @throws NotFoundException If the requested league is not found.
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
-    suspend fun getWarLeague(leagueId: Int, pagination: PaginationQuery = PaginationQuery()): Deferred<SimpleLeague> {
+    suspend fun getWarLeague(
+        leagueId: Int,
+        pagination: PaginationQuery = PaginationQuery(),
+    ): Deferred<SimpleLeague> {
         return CoroutineScope(Dispatchers.IO).async {
             requestHandler.request("$API_BASE_URL/warleagues/$leagueId?${pagination.createQuery()}")
         }
@@ -436,9 +441,8 @@ open class Client(
      */
     suspend fun getLocationClanRanking(
         locationId: String,
-        pagination: PaginationQuery = PaginationQuery()
+        pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<ClanRankingList> {
-
         return CoroutineScope(Dispatchers.IO).async {
             requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/clans?${pagination.createQuery()}")
         }
@@ -457,7 +461,7 @@ open class Client(
      */
     suspend fun getLocationPlayerRanking(
         locationId: String,
-        pagination: PaginationQuery = PaginationQuery()
+        pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<PlayerRankingList> {
         return CoroutineScope(Dispatchers.IO).async {
             requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/players?${pagination.createQuery()}")
@@ -479,7 +483,7 @@ open class Client(
      */
     suspend fun getLocationClanBuilderBaseRanking(
         locationId: String,
-        pagination: PaginationQuery = PaginationQuery()
+        pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<ClanBuilderBaseRankingList> {
         return CoroutineScope(Dispatchers.IO).async {
             requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/clans-builder-base?${pagination.createQuery()}")
@@ -502,7 +506,7 @@ open class Client(
 
     suspend fun getLocationPlayerBuilderBaseRanking(
         locationId: String,
-        pagination: PaginationQuery = PaginationQuery()
+        pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<PlayerBuilderBaseRankingList> {
         return CoroutineScope(Dispatchers.IO).async {
             requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/players-builder-base?${pagination.createQuery()}")
@@ -523,7 +527,7 @@ open class Client(
      */
     suspend fun getLocationCapitalRanking(
         locationId: String,
-        pagination: PaginationQuery = PaginationQuery()
+        pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<ClanCapitalRankingList> {
         return CoroutineScope(Dispatchers.IO).async {
             requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/capitals?${pagination.createQuery()}")

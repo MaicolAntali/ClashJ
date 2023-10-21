@@ -1,8 +1,8 @@
 package com.clashj.model.clan
 
-import com.clashj.model.common.Paging
 import com.clashj.model.clan.component.WarClan
 import com.clashj.model.clan.component.WarResult
+import com.clashj.model.common.Paging
 
 /**
  * Represents the *ClanWarLog* model of the Clash of Clans API.
@@ -12,7 +12,7 @@ import com.clashj.model.clan.component.WarResult
  */
 data class ClanWarLog(
     val items: List<ClanWarLogEntry>,
-    val paging: Paging?
+    val paging: Paging?,
 )
 
 /**

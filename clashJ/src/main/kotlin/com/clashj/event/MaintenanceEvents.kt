@@ -1,13 +1,11 @@
 package com.clashj.event
 
-
 import java.time.LocalDateTime
 
 /**
  * Sealed class representing specific maintenance-related monitored events.
  */
 sealed class MaintenanceEvents : Event<LocalDateTime, LocalDateTime, LocalDateTime, Nothing>() {
-
     /**
      * Event fires when server maintenance begins.
      *
@@ -22,7 +20,7 @@ sealed class MaintenanceEvents : Event<LocalDateTime, LocalDateTime, LocalDateTi
         override suspend fun checkAndFireCallback(
             cachedData: LocalDateTime,
             currentData: LocalDateTime,
-            callback: Callback<LocalDateTime, LocalDateTime, Nothing>
+            callback: Callback<LocalDateTime, LocalDateTime, Nothing>,
         ) {
             if (cachedData.isEqual(currentData)) {
                 callback.singleArg?.invoke(cachedData)
@@ -44,7 +42,7 @@ sealed class MaintenanceEvents : Event<LocalDateTime, LocalDateTime, LocalDateTi
         override suspend fun checkAndFireCallback(
             cachedData: LocalDateTime,
             currentData: LocalDateTime,
-            callback: Callback<LocalDateTime, LocalDateTime, Nothing>
+            callback: Callback<LocalDateTime, LocalDateTime, Nothing>,
         ) {
             if (!cachedData.isEqual(currentData)) {
                 callback.simple?.invoke(cachedData, currentData)

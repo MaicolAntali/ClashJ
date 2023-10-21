@@ -12,5 +12,5 @@ import com.clashj.model.common.Icon
 data class League(
     val name: String,
     val id: Int,
-    val iconUrls: Icon
+    val iconUrls: Icon,
 )

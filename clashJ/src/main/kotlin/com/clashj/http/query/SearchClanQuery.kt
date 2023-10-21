@@ -38,9 +38,8 @@ class SearchClanQuery(
     private val minClanPoints: Int = -1,
     private val minClanLevel: Int = -1,
     private val paginationQuery: PaginationQuery = PaginationQuery(),
-    private val labelIds: String = ""
+    private val labelIds: String = "",
 ) : Query {
-
     /**
      * Generates a formatted query string based on the provided query parameters.
      *
@@ -85,5 +84,4 @@ class SearchClanQuery(
 
         return query
     }
-
 }

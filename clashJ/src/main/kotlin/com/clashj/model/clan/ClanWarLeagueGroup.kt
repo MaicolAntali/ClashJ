@@ -17,7 +17,7 @@ data class ClanWarLeagueGroup(
     val state: ClanWarLeagueGroupState,
     val season: String,
     val clans: List<ClanWarLeagueClan>,
-    val rounds: List<ClanWarLeagueRound>
+    val rounds: List<ClanWarLeagueRound>,
 )
 
 /**
@@ -52,9 +52,8 @@ enum class ClanWarLeagueGroupState {
      * The clan war league group war has ended.
      */
     @SerializedName("ended")
-    ENDED
+    ENDED,
 }
-
 
 /**
  * Represents the *ClanWarLeagueClan* model of the Clash of Clans API.
@@ -71,7 +70,7 @@ data class ClanWarLeagueClan(
     val clanLevel: Int,
     val name: String,
     val members: List<ClanWarLeagueClanMember>,
-    val badgeUrls: Badge
+    val badgeUrls: Badge,
 )
 
 /**
@@ -86,7 +85,7 @@ data class ClanWarLeagueClan(
 data class ClanWarLeagueClanMember(
     val tag: String,
     val townHallLevel: Int,
-    val name: String
+    val name: String,
 )
 
 /**
@@ -96,5 +95,5 @@ data class ClanWarLeagueClanMember(
  * @property warTags A list of unique tags representing the wars in the round.
  */
 data class ClanWarLeagueRound(
-    val warTags: List<String>
+    val warTags: List<String>,
 )

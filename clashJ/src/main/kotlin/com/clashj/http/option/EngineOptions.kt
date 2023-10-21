@@ -8,5 +8,5 @@ package com.clashj.http.option
  */
 data class EngineOptions(
     val connectionTimeout: Long = 15_000,
-    val requestTimeout: Long = 15_000
+    val requestTimeout: Long = 15_000,
 )

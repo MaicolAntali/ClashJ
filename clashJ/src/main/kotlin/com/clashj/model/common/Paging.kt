@@ -7,7 +7,7 @@ package com.clashj.model.common
  * It provides navigation to the previous and next pages of results.
  */
 data class Paging(
-    val cursors: Cursors
+    val cursors: Cursors,
 )
 
 /**
@@ -21,5 +21,5 @@ data class Paging(
  */
 data class Cursors(
     val before: String?,
-    val after: String?
+    val after: String?,
 )

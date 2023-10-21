@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class TagUtilsTest {
-
     @Nested
     inner class AdjustTag {
         @Test
@@ -41,5 +40,4 @@ class TagUtilsTest {
             assertThat(encoded).doesNotContainAnyWhitespaces()
         }
     }
-
 }

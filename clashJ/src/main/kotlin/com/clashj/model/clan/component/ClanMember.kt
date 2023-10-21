@@ -1,7 +1,7 @@
 package com.clashj.model.clan.component
 
-import com.clashj.model.league.League
 import com.clashj.model.common.PlayerHouse
+import com.clashj.model.league.League
 import com.clashj.model.league.SimpleLeague
 
 /**
@@ -36,5 +36,5 @@ data class ClanMember(
     val donations: Int,
     val donationsReceived: Int,
     val trophies: Int,
-    val builderBaseTrophies: Int
+    val builderBaseTrophies: Int,
 )

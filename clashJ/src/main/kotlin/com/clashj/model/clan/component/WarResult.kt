@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName
  * Represents the *WarResult* enum class of the Clash of Clans API.
  */
 enum class WarResult {
-
     /**
      * The clan lost the war.
      */
@@ -23,5 +22,5 @@ enum class WarResult {
      * The war resulted in a tie.
      */
     @SerializedName("tie")
-    TIE;
+    TIE,
 }

@@ -112,8 +112,8 @@ class ClientBuilder(
                 KeyOptions(this.keyName, this.keyDescription, this.keyCount),
                 EngineOptions(this.connectionTimeout, this.requestTimeout),
                 engine = this.engine,
-                throttler = this.throttler
-            )
+                throttler = this.throttler,
+            ),
         )
     }
 
@@ -129,7 +129,7 @@ class ClientBuilder(
     fun buildEventClient(
         nThread: Int = 3,
         pollingInterval: Long = 15_000,
-        maintenanceCheckInterval: Long = 30_000
+        maintenanceCheckInterval: Long = 30_000,
     ): EventClient {
         return EventClient(
             RequestHandler(
@@ -137,11 +137,11 @@ class ClientBuilder(
                 KeyOptions(this.keyName, this.keyDescription, this.keyCount),
                 EngineOptions(this.connectionTimeout, this.requestTimeout),
                 engine = this.engine,
-                throttler = this.throttler
+                throttler = this.throttler,
             ),
             nThread,
             pollingInterval,
-            maintenanceCheckInterval
+            maintenanceCheckInterval,
         )
     }
 }

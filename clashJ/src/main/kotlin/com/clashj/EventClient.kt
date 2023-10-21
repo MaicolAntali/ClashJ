@@ -44,7 +44,7 @@ class EventClient(
     private val requestHandler: RequestHandler,
     private val nThread: Int,
     private val pollingInterval: Long,
-    private val maintenanceCheckInterval: Long
+    private val maintenanceCheckInterval: Long,
 ) : Client(requestHandler) {
     // Dispatcher & Polling job
     private val dispatcher = Executors.newFixedThreadPool(nThread).asCoroutineDispatcher()
@@ -75,12 +75,13 @@ class EventClient(
      */
     fun startPolling() {
         job?.cancel()
-        job = CoroutineScope(dispatcher).launch {
-            launch { maintenanceCheckRunner() }
-            launch { updaterRunner(players, ::getPlayer, Player::class.java, PlayerEvents::class.java) }
-            launch { updaterRunner(clans, ::getClan, Clan::class.java, ClanEvents::class.java) }
-            launch { updaterRunner(wars, ::getClanCurrentWar, ClanWar::class.java, WarEvents::class.java) }
-        }
+        job =
+            CoroutineScope(dispatcher).launch {
+                launch { maintenanceCheckRunner() }
+                launch { updaterRunner(players, ::getPlayer, Player::class.java, PlayerEvents::class.java) }
+                launch { updaterRunner(clans, ::getClan, Clan::class.java, ClanEvents::class.java) }
+                launch { updaterRunner(wars, ::getClanCurrentWar, ClanWar::class.java, WarEvents::class.java) }
+            }
     }
 
     /**
@@ -173,7 +174,10 @@ class EventClient(
      * @param event The monitored event for which the callback is registered.
      * @param callback The callback function to be invoked when the event occurs.
      */
-    fun registerPlayerCallback(event: PlayerEvents, callback: suspend (Player, Player) -> Unit) {
+    fun registerPlayerCallback(
+        event: PlayerEvents,
+        callback: suspend (Player, Player) -> Unit,
+    ) {
         registerCallback(event, Callback<Player, Player, Nothing>(simple = callback))
     }
 
@@ -184,7 +188,10 @@ class EventClient(
      * @param callback The callback function to be invoked when the event occurs, taking two [Player] objects
      * and an additional [String] identifier as parameters.
      */
-    fun registerPlayerCallback(event: PlayerEvents, callback: suspend (Player, Player, String) -> Unit) {
+    fun registerPlayerCallback(
+        event: PlayerEvents,
+        callback: suspend (Player, Player, String) -> Unit,
+    ) {
         registerCallback(event, Callback(withArg = callback))
     }
 
@@ -194,7 +201,10 @@ class EventClient(
      * @param event The monitored event for which the callback is registered.
      * @param callback The callback function to be invoked when the event occurs.
      */
-    fun registerClanCallback(event: ClanEvents, callback: suspend (Clan, Clan) -> Unit) {
+    fun registerClanCallback(
+        event: ClanEvents,
+        callback: suspend (Clan, Clan) -> Unit,
+    ) {
         registerCallback(event, Callback<Clan, Clan, Nothing>(simple = callback))
     }
 
@@ -205,7 +215,10 @@ class EventClient(
      * @param callback The callback function to be invoked when the event occurs, taking two [Clan] objects
      * and an additional [ClanMember] as parameters.
      */
-    fun registerClanCallback(event: ClanEvents, callback: suspend (Clan, Clan, ClanMember) -> Unit) {
+    fun registerClanCallback(
+        event: ClanEvents,
+        callback: suspend (Clan, Clan, ClanMember) -> Unit,
+    ) {
         registerCallback(event, Callback(withArg = callback))
     }
 
@@ -215,7 +228,10 @@ class EventClient(
      * @param event The monitored event for which the callback is registered.
      * @param callback The callback function to be invoked when the event occurs.
      */
-    fun registerWarCallback(event: WarEvents, callback: suspend (ClanWar) -> Unit) {
+    fun registerWarCallback(
+        event: WarEvents,
+        callback: suspend (ClanWar) -> Unit,
+    ) {
         registerCallback(event, Callback<ClanWar, Nothing, Nothing>(singleArg = callback))
     }
 
@@ -226,7 +242,10 @@ class EventClient(
      * @param callback The callback function to be invoked when the event occurs, taking one [ClanWar] objects
      * and an additional [ClanWarAttack] as parameters.
      */
-    fun registerWarCallback(event: WarEvents, callback: suspend (ClanWar, ClanWarAttack) -> Unit) {
+    fun registerWarCallback(
+        event: WarEvents,
+        callback: suspend (ClanWar, ClanWarAttack) -> Unit,
+    ) {
         registerCallback(event, Callback<ClanWar, ClanWarAttack, Nothing>(simple = callback))
     }
 
@@ -236,7 +255,10 @@ class EventClient(
      * @param event The monitored event for which the callback is registered.
      * @param callback The callback function to be invoked when the event occurs, taking one [LocalDateTime] parameter.
      */
-    fun registerMaintenanceCallback(event: MaintenanceEvents, callback: suspend (LocalDateTime) -> Unit) {
+    fun registerMaintenanceCallback(
+        event: MaintenanceEvents,
+        callback: suspend (LocalDateTime) -> Unit,
+    ) {
         registerCallback(event, Callback<LocalDateTime, Nothing, Nothing>(singleArg = callback))
     }
 
@@ -248,12 +270,15 @@ class EventClient(
      */
     fun registerMaintenanceCallback(
         event: MaintenanceEvents,
-        callback: suspend (LocalDateTime, LocalDateTime) -> Unit
+        callback: suspend (LocalDateTime, LocalDateTime) -> Unit,
     ) {
         registerCallback(event, Callback<LocalDateTime, LocalDateTime, Nothing>(simple = callback))
     }
 
-    private fun registerCallback(event: Event<*, *, *, *>, callback: Callback<*, *, *>) {
+    private fun registerCallback(
+        event: Event<*, *, *, *>,
+        callback: Callback<*, *, *>,
+    ) {
         log.info("Adding a new callback for the $event event.")
 
         eventCallbacks
@@ -261,42 +286,43 @@ class EventClient(
             .computeIfAbsent(event) { mutableListOf(callback) }
     }
 
-    private suspend fun maintenanceCheckRunner() = coroutineScope {
-        launch {
-            while (true) {
-                try {
-                    getPlayer("#2P2RG0ULV").await()
+    private suspend fun maintenanceCheckRunner() =
+        coroutineScope {
+            launch {
+                while (true) {
+                    try {
+                        getPlayer("#2P2RG0ULV").await()
 
-                    if (isApiInMaintenance) {
-                        isApiInMaintenance = false
-                        log.info("API is back online. Resuming updates.")
+                        if (isApiInMaintenance) {
+                            isApiInMaintenance = false
+                            log.info("API is back online. Resuming updates.")
 
-                        triggerEvent(maintenanceStartTime, LocalDateTime.now(), MaintenanceEvents::class.java)
-                        maintenanceStartTime = null
+                            triggerEvent(maintenanceStartTime, LocalDateTime.now(), MaintenanceEvents::class.java)
+                            maintenanceStartTime = null
+                        }
+                    } catch (e: MaintenanceException) {
+                        if (!isApiInMaintenance) {
+                            log.info("API is in maintenance. Stopping updates.")
+                            isApiInMaintenance = true // API is in maintenance
+                        }
+                        if (maintenanceStartTime == null) {
+                            maintenanceStartTime = LocalDateTime.now()
+                            triggerEvent(maintenanceStartTime, eventType = MaintenanceEvents::class.java)
+                        }
+                    } catch (e: Exception) {
+                        log.error("Error checking API maintenance status: ${e.message}")
                     }
-                } catch (e: MaintenanceException) {
-                    if (!isApiInMaintenance) {
-                        log.info("API is in maintenance. Stopping updates.")
-                        isApiInMaintenance = true // API is in maintenance
-                    }
-                    if (maintenanceStartTime == null) {
-                        maintenanceStartTime = LocalDateTime.now()
-                        triggerEvent(maintenanceStartTime, eventType = MaintenanceEvents::class.java)
-                    }
-                } catch (e: Exception) {
-                    log.error("Error checking API maintenance status: ${e.message}")
+
+                    delay(maintenanceCheckInterval)
                 }
-
-                delay(maintenanceCheckInterval)
             }
         }
-    }
 
     private suspend fun <T> updaterRunner(
         tags: List<String>,
         apiCall: suspend (String) -> Deferred<T>,
         type: Class<T>,
-        eventType: Class<*>
+        eventType: Class<*>,
     ) = coroutineScope {
         while (true) {
             if (!isApiInMaintenance) {
@@ -329,7 +355,11 @@ class EventClient(
         }
     }
 
-    private suspend fun <T> triggerEvent(cached: T, current: T? = null, eventType: Class<*>) = coroutineScope {
+    private suspend fun <T> triggerEvent(
+        cached: T,
+        current: T? = null,
+        eventType: Class<*>,
+    ) = coroutineScope {
         eventCallbacks[eventType]
             ?.forEach { (event, callbacks) ->
                 launch {

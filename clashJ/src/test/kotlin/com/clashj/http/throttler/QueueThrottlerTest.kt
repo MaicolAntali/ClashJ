@@ -6,15 +6,15 @@ import org.junit.jupiter.api.Test
 import kotlin.system.measureTimeMillis
 
 class QueueThrottlerTest {
-
     @Test
     fun `should sleep for 0 millis`() {
         runBlocking {
             val throttler = QueueThrottler(1000)
 
-            val elapsed = measureTimeMillis {
-                throttler.wait()
-            }
+            val elapsed =
+                measureTimeMillis {
+                    throttler.wait()
+                }
 
             assertThat(elapsed).isLessThan(100)
         }

@@ -46,5 +46,5 @@ enum class WarFrequency {
      * The war frequency can be any or is not restricted.
      */
     @SerializedName("any")
-    ANY
+    ANY,
 }

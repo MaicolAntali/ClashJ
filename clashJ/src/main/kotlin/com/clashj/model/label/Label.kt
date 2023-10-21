@@ -12,5 +12,5 @@ import com.clashj.model.common.Icon
 data class Label(
     val name: String,
     val id: Int,
-    val iconUrls: Icon
+    val iconUrls: Icon,
 )
