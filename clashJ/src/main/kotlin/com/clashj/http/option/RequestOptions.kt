@@ -22,5 +22,5 @@ data class RequestOptions(
     val method: HttpMethod = HttpMethod.Get,
     val body: String? = null,
     val maxRetryAttempts: Int = 4,
-    val ignoreThrottler: Boolean = false
+    val ignoreThrottler: Boolean = false,
 )

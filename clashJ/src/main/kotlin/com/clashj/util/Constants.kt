@@ -1,6 +1,5 @@
 package com.clashj.util
 
-
 /**
  * The base clash of clans api URL
  */

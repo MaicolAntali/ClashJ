@@ -8,7 +8,6 @@ import com.clashj.model.clan.component.WarState
  * Sealed class representing specific war-related monitored events.
  */
 sealed class WarEvents : Event<ClanWar, ClanWar, ClanWarAttack, Nothing>() {
-
     /**
      * Event fires when a clan war is in the preparation state.
      *
@@ -21,7 +20,9 @@ sealed class WarEvents : Event<ClanWar, ClanWar, ClanWarAttack, Nothing>() {
      */
     data object WarInPreparation : WarEvents() {
         override suspend fun checkAndFireCallback(
-            cachedData: ClanWar, currentData: ClanWar, callback: Callback<ClanWar, ClanWarAttack, Nothing>
+            cachedData: ClanWar,
+            currentData: ClanWar,
+            callback: Callback<ClanWar, ClanWarAttack, Nothing>,
         ) {
             if (currentData.state == WarState.PREPARATION && currentData.state != cachedData.state) {
                 callback.singleArg?.invoke(cachedData)
@@ -41,7 +42,9 @@ sealed class WarEvents : Event<ClanWar, ClanWar, ClanWarAttack, Nothing>() {
      */
     data object WarStarted : WarEvents() {
         override suspend fun checkAndFireCallback(
-            cachedData: ClanWar, currentData: ClanWar, callback: Callback<ClanWar, ClanWarAttack, Nothing>
+            cachedData: ClanWar,
+            currentData: ClanWar,
+            callback: Callback<ClanWar, ClanWarAttack, Nothing>,
         ) {
             if (currentData.state == WarState.IN_WAR && currentData.state != cachedData.state) {
                 callback.singleArg?.invoke(cachedData)
@@ -61,7 +64,9 @@ sealed class WarEvents : Event<ClanWar, ClanWar, ClanWarAttack, Nothing>() {
      */
     data object WarEnded : WarEvents() {
         override suspend fun checkAndFireCallback(
-            cachedData: ClanWar, currentData: ClanWar, callback: Callback<ClanWar, ClanWarAttack, Nothing>
+            cachedData: ClanWar,
+            currentData: ClanWar,
+            callback: Callback<ClanWar, ClanWarAttack, Nothing>,
         ) {
             if (currentData.state == WarState.ENDED && currentData.state != cachedData.state) {
                 callback.singleArg?.invoke(cachedData)
@@ -81,7 +86,9 @@ sealed class WarEvents : Event<ClanWar, ClanWar, ClanWarAttack, Nothing>() {
      */
     data object NewClanAttack : WarEvents() {
         override suspend fun checkAndFireCallback(
-            cachedData: ClanWar, currentData: ClanWar, callback: Callback<ClanWar, ClanWarAttack, Nothing>
+            cachedData: ClanWar,
+            currentData: ClanWar,
+            callback: Callback<ClanWar, ClanWarAttack, Nothing>,
         ) {
             if (cachedData.getClanAttacks().isNotEmpty() && currentData.getClanAttacks().isNotEmpty()) {
                 currentData.getClanAttacks()

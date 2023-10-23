@@ -10,7 +10,7 @@ import com.clashj.model.common.Paging
  */
 data class ClanBuilderBaseRankingList(
     val items: List<ClanBuilderBaseRanking>,
-    val paging: Paging?
+    val paging: Paging?,
 )
 
 /**
@@ -24,5 +24,5 @@ data class ClanBuilderBaseRankingList(
 data class ClanBuilderBaseRanking(
     val clanPoints: Int,
     val clanBuilderBasePoints: Int,
-    val clanVersusPoints: Int
+    val clanVersusPoints: Int,
 )

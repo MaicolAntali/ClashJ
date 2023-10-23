@@ -21,12 +21,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.io.File
 
-
 class ClientTest {
-
     @Nested
     inner class GetClan {
-
         private lateinit var clan: Clan
 
         @BeforeEach
@@ -62,7 +59,6 @@ class ClientTest {
 
     @Nested
     inner class GetCurrentWar {
-
         private lateinit var war: ClanWar
 
         @BeforeEach
@@ -114,7 +110,6 @@ class ClientTest {
 
     @Nested
     inner class GetPlayer {
-
         private lateinit var player: Player
 
         @BeforeEach
@@ -150,9 +145,10 @@ class ClientTest {
     @Test
     fun `searchClan should throw ClashJException`() {
         runBlocking {
-            val mockEngine = MockEngine { _ ->
-                respondBadRequest()
-            }
+            val mockEngine =
+                MockEngine { _ ->
+                    respondBadRequest()
+                }
 
             val api = createApiWithMockEngine(mockEngine)
 
@@ -165,7 +161,7 @@ class ClientTest {
         return MockEngine { _ ->
             respond(
                 File(responseFilePath).readText(),
-                headers = headers { append(HttpHeaders.ContentType, "application/json") }
+                headers = headers { append(HttpHeaders.ContentType, "application/json") },
             )
         }
     }

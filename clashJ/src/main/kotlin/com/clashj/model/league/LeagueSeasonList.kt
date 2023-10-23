@@ -10,7 +10,7 @@ import com.clashj.model.common.Paging
  */
 data class LeagueSeasonList(
     val items: List<LeagueSeason>,
-    val paging: Paging?
+    val paging: Paging?,
 )
 
 /**
@@ -19,5 +19,5 @@ data class LeagueSeasonList(
  * @property id The unique identifier of the league season.
  */
 data class LeagueSeason(
-    val id: String
+    val id: String,
 )

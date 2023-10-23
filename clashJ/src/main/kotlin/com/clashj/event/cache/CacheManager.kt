@@ -15,7 +15,6 @@ import java.util.concurrent.ConcurrentHashMap
  * The internal cache using a [ConcurrentHashMap] to store data.
  */
 class CacheManager {
-
     private val cache = ConcurrentHashMap<String, CacheValue>()
 
     /**
@@ -29,13 +28,17 @@ class CacheManager {
      *
      * @throws IllegalArgumentException if an unsupported data type is provided.
      */
-    fun <T> updateCache(key: String, data: T) {
-        val cacheValue = when (data) {
-            is Player -> CacheValue.PlayerType(data)
-            is Clan -> CacheValue.ClanType(data)
-            is ClanWar -> CacheValue.ClanWarType(data)
-            else -> throw IllegalArgumentException("Unsupported data type")
-        }
+    fun <T> updateCache(
+        key: String,
+        data: T,
+    ) {
+        val cacheValue =
+            when (data) {
+                is Player -> CacheValue.PlayerType(data)
+                is Clan -> CacheValue.ClanType(data)
+                is ClanWar -> CacheValue.ClanWarType(data)
+                else -> throw IllegalArgumentException("Unsupported data type")
+            }
 
         cache[key] = cacheValue
     }
@@ -48,7 +51,10 @@ class CacheManager {
      * @return The cached data of the specified type or `null` if not found or if the data type is unsupported.
      */
     @Suppress("UNCHECKED_CAST")
-    fun <T> getFromCache(key: String, clazz: Class<T>): T? {
+    fun <T> getFromCache(
+        key: String,
+        clazz: Class<T>,
+    ): T? {
         val cachedValue = cache[key] ?: return null
 
         return when (clazz) {

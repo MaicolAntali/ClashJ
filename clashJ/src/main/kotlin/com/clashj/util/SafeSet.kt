@@ -14,7 +14,7 @@ import kotlinx.coroutines.sync.withLock
  * @param T The type of elements in the set.
  */
 class SafeSet<T>(
-    c: Collection<T> = emptySet()
+    c: Collection<T> = emptySet(),
 ) {
     private val set: HashSet<T> = HashSet(c)
     private val mutex: Mutex = Mutex()

@@ -10,5 +10,5 @@ import com.clashj.model.common.Paging
  */
 data class LabelList(
     val items: List<Label>,
-    val paging: Paging?
+    val paging: Paging?,
 )

@@ -15,5 +15,5 @@ data class Key(
     val id: String,
     val name: String,
     val cidrRanges: List<String>,
-    val key: String
+    val key: String,
 )

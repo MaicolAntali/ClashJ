@@ -7,7 +7,6 @@ import com.clashj.model.clan.component.ClanMember
  * Sealed class representing specific clan-related events.
  */
 sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
-
     /**
      * Event fires when a member joins the clan.
      *
@@ -22,7 +21,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             val cachedMemberTags = cachedData.memberList.map { it.tag }.toSet()
 
@@ -48,7 +47,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             val currentMemberTags = currentData.memberList.map { it.tag }.toSet()
 
@@ -74,7 +73,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.warLeague != currentData.warLeague) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -96,7 +95,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.capitalLeague != currentData.capitalLeague) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -118,7 +117,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.warFrequency != currentData.warFrequency) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -140,7 +139,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.clanLevel != currentData.clanLevel) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -162,7 +161,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.warWinStreak != currentData.warWinStreak) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -184,7 +183,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.warWins != currentData.warWins) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -206,7 +205,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.warTies != currentData.warTies) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -228,7 +227,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.warLosses != currentData.warLosses) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -250,7 +249,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.clanPoints != currentData.clanPoints) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -272,7 +271,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.requiredTownhallLevel != currentData.requiredTownhallLevel) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -294,7 +293,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.chatLanguage != currentData.chatLanguage) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -316,7 +315,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.isFamilyFriendly != currentData.isFamilyFriendly) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -338,7 +337,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.requiredTrophies != currentData.requiredTrophies) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -360,7 +359,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.requiredBuilderBaseTrophies != currentData.requiredBuilderBaseTrophies) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -382,7 +381,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.requiredVersusTrophies != currentData.requiredVersusTrophies) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -404,7 +403,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.isWarLogPublic != currentData.isWarLogPublic) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -426,7 +425,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.clanBuilderBasePoints != currentData.clanBuilderBasePoints) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -448,7 +447,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.clanVersusPoints != currentData.clanVersusPoints) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -470,7 +469,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.clanCapitalPoints != currentData.clanCapitalPoints) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -492,7 +491,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.labels != currentData.labels) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -514,7 +513,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.location != currentData.location) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -536,7 +535,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.type != currentData.type) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -558,7 +557,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.members != currentData.members) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -580,7 +579,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.description != currentData.description) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -602,7 +601,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.clanCapital != currentData.clanCapital) {
                 callback.simple?.invoke(cachedData, currentData)
@@ -624,7 +623,7 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
         override suspend fun checkAndFireCallback(
             cachedData: Clan,
             currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>
+            callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.badgeUrls != currentData.badgeUrls) {
                 callback.simple?.invoke(cachedData, currentData)

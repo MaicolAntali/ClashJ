@@ -8,5 +8,5 @@ package com.clashj.model.league
  */
 data class SimpleLeague(
     val name: String,
-    val id: Int
+    val id: Int,
 )

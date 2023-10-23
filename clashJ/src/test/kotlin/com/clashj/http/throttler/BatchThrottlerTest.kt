@@ -11,9 +11,10 @@ class BatchThrottlerTest {
         runBlocking {
             val throttler = BatchThrottler()
 
-            val elapsed = measureTimeMillis {
-                throttler.wait()
-            }
+            val elapsed =
+                measureTimeMillis {
+                    throttler.wait()
+                }
 
             Assertions.assertThat(elapsed).isLessThan(100)
         }

@@ -14,5 +14,5 @@ data class Location(
     val name: String,
     val isCountry: Boolean,
     val countryCode: String,
-    val localizedName: String
+    val localizedName: String,
 )

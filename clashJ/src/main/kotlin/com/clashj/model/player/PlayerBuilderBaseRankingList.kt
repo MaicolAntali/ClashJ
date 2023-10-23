@@ -12,7 +12,7 @@ import com.clashj.model.league.SimpleLeague
  */
 data class PlayerBuilderBaseRankingList(
     val items: List<PlayerBuilderBaseRanking>,
-    val paging: Paging?
+    val paging: Paging?,
 )
 
 /**

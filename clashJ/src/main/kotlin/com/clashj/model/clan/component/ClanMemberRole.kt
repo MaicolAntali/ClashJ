@@ -34,5 +34,5 @@ enum class ClanMemberRole {
      * The player is the leader of the clan.
      */
     @SerializedName("leader")
-    LEADER;
+    LEADER,
 }

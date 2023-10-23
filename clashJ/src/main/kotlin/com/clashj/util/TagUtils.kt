@@ -15,10 +15,14 @@ package com.clashj.util
  * @param prefix The optional prefix to be added to the adjusted tag. Default is "#."
  * @return The adjusted tag with the prefix.
  */
-fun adjustTag(tag: String, prefix: String = "#"): String {
-    return prefix + Regex("[^A-Z0-9]+")
-        .replace(tag.uppercase(), "")
-        .replace('O', '0')
+fun adjustTag(
+    tag: String,
+    prefix: String = "#",
+): String {
+    return prefix +
+        Regex("[^A-Z0-9]+")
+            .replace(tag.uppercase(), "")
+            .replace('O', '0')
 }
 
 /**

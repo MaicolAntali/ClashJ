@@ -6,7 +6,7 @@ package com.clashj.model.common
  * @property elements A list of [HouseElements][HouseElement] that make up the player's house.
  */
 data class PlayerHouse(
-    val elements: List<HouseElement>
+    val elements: List<HouseElement>,
 )
 
 /**
@@ -18,5 +18,5 @@ data class PlayerHouse(
  */
 data class HouseElement(
     val type: String,
-    val id: Int
+    val id: Int,
 )

@@ -12,7 +12,7 @@ import com.clashj.model.common.Paging
  */
 data class ClanCapitalRaidSeasons(
     val items: List<ClanCapitalRaidSeason>,
-    val paging: Paging?
+    val paging: Paging?,
 )
 
 /**
@@ -44,7 +44,7 @@ data class ClanCapitalRaidSeason(
     val enemyDistrictsDestroyed: Int,
     val offensiveReward: Int,
     val defensiveReward: Int,
-    val members: List<ClanCapitalRaidSeasonMember>
+    val members: List<ClanCapitalRaidSeasonMember>,
 )
 
 /**
@@ -62,7 +62,7 @@ data class ClanCapitalRaidSeasonAttackLogEntry(
     val attackCount: Int,
     val districtCount: Int,
     val districtsDestroyed: Int,
-    val districts: List<ClanCapitalRaidSeasonDistrict>
+    val districts: List<ClanCapitalRaidSeasonDistrict>,
 )
 
 /**
@@ -80,7 +80,7 @@ data class ClanCapitalRaidSeasonDefenceLogEntry(
     val attackCount: Int,
     val districtCount: Int,
     val districtsDestroyed: Int,
-    val districts: List<ClanCapitalRaidSeasonDistrict>
+    val districts: List<ClanCapitalRaidSeasonDistrict>,
 )
 
 /**
@@ -121,7 +121,7 @@ data class ClanCapitalRaidSeasonDistrict(
     val attackCount: Int,
     val totalLooted: Int,
     val attacks: List<ClanCapitalRaidSeasonAttack>,
-    val districtHallLevel: Int
+    val districtHallLevel: Int,
 )
 
 /**
@@ -134,7 +134,7 @@ data class ClanCapitalRaidSeasonDistrict(
 data class ClanCapitalRaidSeasonAttack(
     val attacker: ClanCapitalRaidSeasonAttacker,
     val destructionPercent: Int,
-    val stars: Int
+    val stars: Int,
 )
 
 /**
@@ -147,7 +147,7 @@ data class ClanCapitalRaidSeasonAttack(
  */
 data class ClanCapitalRaidSeasonAttacker(
     val tag: String,
-    val name: String
+    val name: String,
 )
 
 /**
@@ -168,6 +168,5 @@ data class ClanCapitalRaidSeasonMember(
     val attacks: Int,
     val attackLimit: Int,
     val bonusAttackLimit: Int,
-    val capitalResourcesLooted: Int
+    val capitalResourcesLooted: Int,
 )
-

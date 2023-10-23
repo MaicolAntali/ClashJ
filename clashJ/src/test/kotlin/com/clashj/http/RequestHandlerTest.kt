@@ -24,25 +24,27 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.io.File
 
 class RequestHandlerTest {
-
     @Nested
     inner class Login {
         @Test
         fun `should throw an InvalidCredentialException`() {
             runBlocking {
-                val mockEngine = MockEngine { _ ->
-                    respondError(HttpStatusCode.Forbidden)
-                }
+                val mockEngine =
+                    MockEngine { _ ->
+                        respondError(HttpStatusCode.Forbidden)
+                    }
 
-                val requestHandler = RequestHandler(
-                    Credential("email", "password"),
-                    KeyOptions("name", null, 0),
-                    EngineOptions(),
-                    mockEngine,
-                    BatchThrottler()
-                )
+                val requestHandler =
+                    RequestHandler(
+                        Credential("email", "password"),
+                        KeyOptions("name", null, 0),
+                        EngineOptions(),
+                        mockEngine,
+                        BatchThrottler(),
+                    )
 
                 assertThrows<InvalidCredentialException> { requestHandler.login() }
             }
@@ -51,43 +53,46 @@ class RequestHandlerTest {
         @Test
         fun `should throw an ClashJException - Exist too many keys`() {
             runBlocking {
-                val mockEngine = MockEngine { request ->
-                    when (request.url.toString()) {
-                        "$DEV_SITE_BASE_URL/login" -> {
-                            respond(
-                                content = """{temporaryAPIToken:".eyAibGltaXRzIjogWyB7ICJ0aWVyIjogImRldmVsb3Blci9icm9uemUiLCAidHlwZSI6ICJ0aHJvdHRsaW5nIiB9LCB7ICJjaWRycyI6IFsgIjEyLjM1LjU2Ny44OS8zMiIgXSwgInR5cGUiOiAiY2xpZW50IiB9LCB7ICJvcmlnaW5zIjogWyAiZGV2ZWxvcGVyLmNsYXNob2ZjbGFucy5jb20iIF0sICJ0eXBlIjogImNvcnMiIH0gXSB9"}""",
-                                status = HttpStatusCode.OK,
-                                headers = headers {
-                                    append("set-cookie", "{session=123}")
-                                    append(HttpHeaders.ContentType, "application/json")
-                                }
-                            )
-                        }
+                val mockEngine =
+                    MockEngine { request ->
+                        when (request.url.toString()) {
+                            "$DEV_SITE_BASE_URL/login" -> {
+                                respond(
+                                    content = File("src/test/resources/json/tooManyKeysLogin.json").readText(),
+                                    status = HttpStatusCode.OK,
+                                    headers =
+                                        headers {
+                                            append("set-cookie", "{session=123}")
+                                            append(HttpHeaders.ContentType, "application/json")
+                                        },
+                                )
+                            }
 
-                        "$DEV_SITE_BASE_URL/apikey/list" -> {
-                            respond(
-                                content = """{"status":{"code":0,"message":"ok","detail":null},"keys":[{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"},{"id":"e4a528aa-0c84-41e4-8fbc-f82df421b3b7","name":"mockedKeyName","description":"mockedKeyDesc","cidrRanges":["123.45.56.89"],"key":"123key456"}]}""",
-                                status = HttpStatusCode.OK,
-                                headers = headers {
-                                    append(HttpHeaders.ContentType, "application/json")
-                                }
-                            )
-                        }
+                            "$DEV_SITE_BASE_URL/apikey/list" -> {
+                                respond(
+                                    content = File("src/test/resources/json/tooManyKeysList.json").readText(),
+                                    status = HttpStatusCode.OK,
+                                    headers =
+                                        headers {
+                                            append(HttpHeaders.ContentType, "application/json")
+                                        },
+                                )
+                            }
 
-
-                        else -> {
-                            respondBadRequest()
+                            else -> {
+                                respondBadRequest()
+                            }
                         }
                     }
-                }
 
-                val requestHandler = RequestHandler(
-                    Credential("email", "password"),
-                    KeyOptions("name", null, 0),
-                    EngineOptions(),
-                    mockEngine,
-                    BatchThrottler()
-                )
+                val requestHandler =
+                    RequestHandler(
+                        Credential("email", "password"),
+                        KeyOptions("name", null, 0),
+                        EngineOptions(),
+                        mockEngine,
+                        BatchThrottler(),
+                    )
 
                 assertThrows<ClashJException> { requestHandler.login() }
             }
@@ -99,18 +104,20 @@ class RequestHandlerTest {
         @Test
         fun `should throw an ClashJException`() {
             runBlocking {
-                val mockEngine = MockEngine { _ ->
-                    // Http error didn't handle by the `request` fun
-                    respondError(HttpStatusCode.NotImplemented)
-                }
+                val mockEngine =
+                    MockEngine { _ ->
+                        // Http error didn't handle by the `request` fun
+                        respondError(HttpStatusCode.NotImplemented)
+                    }
 
-                val requestHandler = RequestHandler(
-                    Credential("email", "password"),
-                    KeyOptions("name", null, 0),
-                    EngineOptions(),
-                    mockEngine,
-                    BatchThrottler()
-                )
+                val requestHandler =
+                    RequestHandler(
+                        Credential("email", "password"),
+                        KeyOptions("name", null, 0),
+                        EngineOptions(),
+                        mockEngine,
+                        BatchThrottler(),
+                    )
 
                 val e = assertThrows<ClashJException> { requestHandler.request<String>("url", RequestOptions()) }
                 assertThat(e).hasMessageContaining("Not able to handle this response")
@@ -120,17 +127,19 @@ class RequestHandlerTest {
         @Test
         fun `should throw a BadGatewayException - Caused by RequestTimeoutException`() {
             runBlocking {
-                val mockEngine = MockEngine { _ ->
-                    throw HttpRequestTimeoutException("url", 1000)
-                }
+                val mockEngine =
+                    MockEngine { _ ->
+                        throw HttpRequestTimeoutException("url", 1000)
+                    }
 
-                val requestHandler = RequestHandler(
-                    Credential("email", "password"),
-                    KeyOptions("name", null, 0),
-                    EngineOptions(requestTimeout = 1000),
-                    mockEngine,
-                    BatchThrottler()
-                )
+                val requestHandler =
+                    RequestHandler(
+                        Credential("email", "password"),
+                        KeyOptions("name", null, 0),
+                        EngineOptions(requestTimeout = 1000),
+                        mockEngine,
+                        BatchThrottler(),
+                    )
 
                 val e = assertThrows<BadGatewayException> { requestHandler.request<String>("url", RequestOptions()) }
                 assertThat(e).hasMessageContaining("The API timed out waiting for the request")
@@ -140,17 +149,19 @@ class RequestHandlerTest {
         @Test
         fun `should throw a HttpException - Caused by TooManyRequests`() {
             runBlocking {
-                val mockEngine = MockEngine { _ ->
-                    respondError(HttpStatusCode.TooManyRequests)
-                }
+                val mockEngine =
+                    MockEngine { _ ->
+                        respondError(HttpStatusCode.TooManyRequests)
+                    }
 
-                val requestHandler = RequestHandler(
-                    Credential("email", "password"),
-                    KeyOptions("name", null, 0),
-                    EngineOptions(),
-                    mockEngine,
-                    BatchThrottler()
-                )
+                val requestHandler =
+                    RequestHandler(
+                        Credential("email", "password"),
+                        KeyOptions("name", null, 0),
+                        EngineOptions(),
+                        mockEngine,
+                        BatchThrottler(),
+                    )
 
                 val e = assertThrows<HttpException> { requestHandler.request<String>("url", RequestOptions()) }
                 assertThat(e).hasMessageContaining("Reached the maximum rate-limits by the API")
@@ -160,17 +171,19 @@ class RequestHandlerTest {
         @Test
         fun `should throw a MaintenanceException`() {
             runBlocking {
-                val mockEngine = MockEngine { _ ->
-                    respondError(HttpStatusCode.ServiceUnavailable)
-                }
+                val mockEngine =
+                    MockEngine { _ ->
+                        respondError(HttpStatusCode.ServiceUnavailable)
+                    }
 
-                val requestHandler = RequestHandler(
-                    Credential("email", "password"),
-                    KeyOptions("name", null, 0),
-                    EngineOptions(),
-                    mockEngine,
-                    BatchThrottler()
-                )
+                val requestHandler =
+                    RequestHandler(
+                        Credential("email", "password"),
+                        KeyOptions("name", null, 0),
+                        EngineOptions(),
+                        mockEngine,
+                        BatchThrottler(),
+                    )
 
                 val e = assertThrows<MaintenanceException> { requestHandler.request<String>("url", RequestOptions()) }
                 assertThat(e).hasMessageContaining("The API is in maintenance")

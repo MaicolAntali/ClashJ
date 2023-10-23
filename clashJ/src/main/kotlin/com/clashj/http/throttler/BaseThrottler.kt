@@ -6,7 +6,6 @@ package com.clashj.http.throttler
  * Define a method for implementing throttling behavior ([wait]).
  */
 interface BaseThrottler {
-
     /**
      * Suspend the execution until the throttling conditions are met.
      *

@@ -1,14 +1,14 @@
 package com.clashj.model.clan
 
-import com.clashj.model.common.Badge
-import com.clashj.model.label.Label
-import com.clashj.model.common.Language
-import com.clashj.model.common.Location
-import com.clashj.model.clan.component.ClanType
-import com.clashj.model.league.SimpleLeague
 import com.clashj.model.clan.component.ClanCapital
 import com.clashj.model.clan.component.ClanMember
+import com.clashj.model.clan.component.ClanType
 import com.clashj.model.clan.component.WarFrequency
+import com.clashj.model.common.Badge
+import com.clashj.model.common.Language
+import com.clashj.model.common.Location
+import com.clashj.model.label.Label
+import com.clashj.model.league.SimpleLeague
 
 /**
  * Represents the *Clan* model of the Clash of Clans API.
@@ -73,5 +73,5 @@ data class Clan(
     val members: Int,
     val description: String,
     val clanCapital: ClanCapital,
-    val badgeUrls: Badge
+    val badgeUrls: Badge,
 )

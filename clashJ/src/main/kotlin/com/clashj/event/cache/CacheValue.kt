@@ -11,7 +11,6 @@ import com.clashj.model.player.Player
  * - [ClanType]
  */
 sealed class CacheValue {
-
     /**
      * Represents a cached player object.
      *

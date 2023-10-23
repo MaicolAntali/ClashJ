@@ -19,6 +19,6 @@ sealed class Event<DataType : Any, CallbackT1 : Any, CallbackT2 : Any, CallbackT
     abstract suspend fun checkAndFireCallback(
         cachedData: DataType,
         currentData: DataType,
-        callback: Callback<CallbackT1, CallbackT2, CallbackT3>
+        callback: Callback<CallbackT1, CallbackT2, CallbackT3>,
     )
 }

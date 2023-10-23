@@ -1,7 +1,7 @@
 package com.clashj.model.clan
 
-import com.clashj.model.common.Paging
 import com.clashj.model.clan.component.ClanMember
+import com.clashj.model.common.Paging
 
 /**
  * Represents the *ClanMemberList* model of the Clash of Clans API.
@@ -11,6 +11,5 @@ import com.clashj.model.clan.component.ClanMember
  */
 data class ClanMemberList(
     val items: List<ClanMember>,
-    val paging: Paging?
+    val paging: Paging?,
 )
-

@@ -14,5 +14,5 @@ import com.clashj.http.response.base.Status
  */
 data class KeyListResponse(
     val status: Status,
-    val keys: List<Key>
+    val keys: List<Key>,
 )
