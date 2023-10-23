@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: "🛎️ Checkout"
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
 
       - name: "⚙️ Set up JDK-17"
         uses: actions/setup-java@v3
