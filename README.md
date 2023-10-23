@@ -1,10 +1,12 @@
 # ClashJ
 
-![GitHub top language](https://img.shields.io/github/languages/top/MaicolAntali/clashJ?style=flat-square&logo=kotlin&logoColor=%23FFFFFF)
+[![Release](https://jitpack.io/v/MaicolAntali/clashJ.svg?style=flat-square)](https://jitpack.io/#MaicolAntali/clashJ)
+[![KDocs](https://img.shields.io/static/v1?label=Dokka&message=KDocs&color=blue&logo=kotlin)](https://maicolantali.github.io/clashJ/)
+
 [![License](https://img.shields.io/github/license/MaicolAntali/ClashJ?style=flat-square&color=%23009E60)](https://github.com/MaicolAntali/clashJ/blob/main/LICENSE.txt)
 [![Build](https://img.shields.io/github/actions/workflow/status/MaicolAntali/clashJ/gradle-build.yml?style=flat-square&logo=githubactions&logoColor=%23FFFFFF&)](https://github.com/MaicolAntali/clashJ/actions/workflows/gradle-build.yml)
 [![Validation](https://img.shields.io/github/actions/workflow/status/MaicolAntali/clashJ/gradle-wrapper-validation.yml?style=flat-square&logo=githubactions&logoColor=%23FFFFFF&label=Validation)](https://github.com/MaicolAntali/clashJ/actions/workflows/gradle-wrapper-validation.yml)
-[![Release](https://jitpack.io/v/MaicolAntali/clashJ.svg?style=flat-square)](https://jitpack.io/#MaicolAntali/clashJ)
+
 
 ClashJ is a fully asynchronous Clash of Clans API wrapper, written in Kotlin.
 
@@ -60,6 +62,7 @@ The library required **Java 17** or higher versions.
 ### Usage Example
 
 #### Simple Usage Example
+
 ```kotlin
 fun main() = runBlocking {
     // Build a client with the default option 
@@ -76,6 +79,7 @@ fun main() = runBlocking {
 ```
 
 #### Event Usage Example
+
 ```kotlin
 fun main() = runBlocking {
     val eventClient = ClientBuilder("email", "password").buildEventClient()
@@ -100,9 +104,9 @@ fun main() = runBlocking {
 }
 ```
 
-
 ## 🔗Links
 
+- [📜 Docs](https://maicolantali.github.io/clashJ/)
 - [📖 Wiki](https://github.com/MaicolAntali/clashJ/wiki)
 
 ## ✅ Contributing

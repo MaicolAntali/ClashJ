@@ -16,9 +16,5 @@ changelog:
       labels:
         - action
     - title: ℹ️ Other
-      exclude:
-        labels:
-          - enhancement
-          - documentation
-          - dependencies
-          - action
+      labels:
+        - "*"
