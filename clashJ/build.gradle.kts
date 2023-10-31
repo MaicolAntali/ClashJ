@@ -22,7 +22,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-gson:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.10")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.20")
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.10.0")
 
