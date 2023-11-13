@@ -10,23 +10,22 @@ repositories {
     mavenCentral()
 }
 
-val ktorVersion= "2.3.6"
-
 dependencies {
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    api("ch.qos.logback:logback-classic:1.4.11")
+    api(libs.kotlin.coroutines)
 
-    implementation("io.ktor:ktor-client-core:$ktorVersion")
-    implementation("io.ktor:ktor-client-apache5:$ktorVersion")
-    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-    implementation("io.ktor:ktor-serialization-gson:$ktorVersion")
-    testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.apache5)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.gson)
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.20")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.10.1")
+    api(libs.logback.classic)
 
-    testImplementation("org.assertj:assertj-core:3.24.2")
+    testImplementation(libs.ktor.client.mock)
+    testImplementation(libs.kotlin.test.junit5)
+    testImplementation(libs.junit.juniper)
+    testImplementation(libs.assertj.core)
+
 }
 
 java {
