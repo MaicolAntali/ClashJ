@@ -10,7 +10,7 @@ repositories {
     mavenCentral()
 }
 
-val ktorVersion= "2.3.5"
+val ktorVersion= "2.3.6"
 
 dependencies {
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
