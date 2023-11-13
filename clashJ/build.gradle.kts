@@ -24,7 +24,7 @@ dependencies {
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.20")
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.10.0")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.10.1")
 
     testImplementation("org.assertj:assertj-core:3.24.2")
 }
