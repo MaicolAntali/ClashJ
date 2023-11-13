@@ -32,10 +32,15 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
     withSourcesJar()
+    withJavadocJar()
 }
 
 tasks.named<Test>("test") {
     useJUnitPlatform()
+}
+
+tasks.named<Jar>("javadocJar") {
+    from(tasks.named("javadocJar"))
 }
 
 tasks.withType<DokkaTask>().configureEach {
