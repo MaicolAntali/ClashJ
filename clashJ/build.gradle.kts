@@ -50,17 +50,10 @@ tasks.withType<DokkaTask>().configureEach {
     }
 }
 
-tasks.register<Jar>("dokkaHtmlJar") {
-    dependsOn(tasks.dokkaHtml)
-    from(tasks.dokkaHtml.flatMap { it.outputDirectory })
-    archiveClassifier.set("javadoc")
-}
-
 publishing {
     publications {
         create<MavenPublication>("clashJ") {
             from(components["java"])
-            artifact(tasks.named<Jar>("dokkaHtmlJar"))
 
             pom {
                 name.set("clashJ")
