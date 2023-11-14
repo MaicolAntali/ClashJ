@@ -4,6 +4,8 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.9.20"
     id("org.jetbrains.dokka") version "1.9.10"
     id("org.jmailen.kotlinter") version "4.0.0"
+    `java-library`
+    `maven-publish`
 }
 
 repositories {
@@ -60,8 +62,12 @@ publishing {
         create<MavenPublication>("clashJ") {
             from(components["java"])
 
+            groupId = project.group.toString()
+            artifactId = project.name
+            version = project.version.toString()
+
             pom {
-                name.set("clashJ")
+                name.set(artifactId)
                 description.set("Kotlin library designed as an asynchronous API wrapper for Clash of Clans.")
                 url.set("https://github.com/MaicolAntali/clashJ")
 
