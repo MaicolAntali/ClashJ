@@ -42,7 +42,7 @@ tasks.named<Test>("test") {
 }
 
 tasks.named<Jar>("javadocJar") {
-    from(tasks.named("javadocJar"))
+    from(tasks.named("dokkaJavadocJar"))
 }
 
 tasks.withType<DokkaTask>().configureEach {
