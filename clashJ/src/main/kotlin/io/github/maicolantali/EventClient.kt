@@ -45,7 +45,7 @@ class EventClient(
     private val nThread: Int,
     private val pollingInterval: Long,
     private val maintenanceCheckInterval: Long,
-) : io.github.maicolantali.Client(requestHandler) {
+) : Client(requestHandler) {
     // Dispatcher & Polling job
     private val dispatcher = Executors.newFixedThreadPool(nThread).asCoroutineDispatcher()
     private var job: Job? = null

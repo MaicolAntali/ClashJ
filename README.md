@@ -67,6 +67,9 @@ The library required **Java 17** or higher versions.
 fun main() = runBlocking {
     // Build a client with the default option 
     val client = ClientBuilder("email", "password").build()
+   
+   // Login into the Clash of Clans developer website
+   client.login()
 
     // Retrive player info
     val player = client.getPlayer("#tag").await()
