@@ -8,6 +8,8 @@ plugins {
     `maven-publish`
 }
 
+group = "io.github.maicolantali"
+
 repositories {
     mavenCentral()
 }
