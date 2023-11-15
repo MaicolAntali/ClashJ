@@ -8,6 +8,7 @@ plugins {
     `maven-publish`
 }
 
+version = "1.0.0"
 group = "io.github.maicolantali"
 
 repositories {
