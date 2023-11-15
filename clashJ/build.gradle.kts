@@ -40,6 +40,12 @@ java {
     withJavadocJar()
 }
 
+tasks.named<Jar>("jar") {
+    manifest {
+        attributes(mapOf("Implementation-Title" to project.name, "Implementation-Version" to project.version))
+    }
+}
+
 tasks.named<Test>("test") {
     useJUnitPlatform()
 }
