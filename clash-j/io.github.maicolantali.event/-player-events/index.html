@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>PlayerEvents</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                            clashJ
+                    </a>
+            </div>
+            <div class="library-version">
+            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":clashJ:dokkaHtml/main">jvm</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="clashJ::io.github.maicolantali.event/PlayerEvents///PointingToDeclaration//-681682652">
+  <div class="breadcrumbs"><a href="../../../index.html">clashJ</a><span class="delimiter">/</span><a href="../index.html">io.github.maicolantali.event</a><span class="delimiter">/</span><span class="current">PlayerEvents</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Player</span><wbr></wbr><span><span>Events</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">sealed </span><span class="token keyword">class </span><a href="index.html">PlayerEvents</a> : <a href="../-event/index.html">Event</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../io.github.maicolantali.model.player/-player/index.html">Player</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="../../io.github.maicolantali.model.player/-player/index.html">Player</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="../../io.github.maicolantali.model.player/-player/index.html">Player</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt; </span></div><p class="paragraph">Sealed class representing specific player-related monitored events.</p><h4 class="">Inheritors</h4><div class="table"><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-join-clan/index.html">JoinClan</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-left-clan/index.html">LeftClan</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-league/index.html">League</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-builder-base-league/index.html">BuilderBaseLeague</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-clan-member-role/index.html">ClanMemberRole</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-war-preference/index.html">WarPreference</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-attack-wins/index.html">AttackWins</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-defense-wins/index.html">DefenseWins</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-versus-trophies/index.html">VersusTrophies</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-best-versus-trophies/index.html">BestVersusTrophies</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-town-hall-level/index.html">TownHallLevel</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-town-hall-weapon-level/index.html">TownHallWeaponLevel</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-versus-battle-wins/index.html">VersusBattleWins</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-legend-statistics/index.html">LegendStatistics</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-troops/index.html">Troops</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-heroes/index.html">Heroes</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-spells/index.html">Spells</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-labels/index.html">Labels</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-name/index.html">Name</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-exp-level/index.html">ExpLevel</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-trophies/index.html">Trophies</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-best-trophies/index.html">BestTrophies</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-donations/index.html">Donations</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-donations-receive/index.html">DonationsReceive</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-builder-hall-level/index.html">BuilderHallLevel</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-builder-base-trophies/index.html">BuilderBaseTrophies</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-best-builder-base-trophies/index.html">BestBuilderBaseTrophies</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-war-starts/index.html">WarStarts</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-achievements/index.html">Achievements</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-clan-capital-contributions/index.html">ClanCapitalContributions</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-player-house/index.html">PlayerHouse</a></div></span></div><div></div></div></div></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="-1302920745%2FClasslikes%2F-681682652" anchor-label="Achievements" id="-1302920745%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-achievements/index.html"><span><span>Achievements</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1302920745%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-achievements/index.html">Achievements</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player achieves a new achievement.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1743576740%2FClasslikes%2F-681682652" anchor-label="AttackWins" id="-1743576740%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-attack-wins/index.html"><span>Attack</span><wbr></wbr><span><span>Wins</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1743576740%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-attack-wins/index.html">AttackWins</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's number of attacks wins changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1622304015%2FClasslikes%2F-681682652" anchor-label="BestBuilderBaseTrophies" id="-1622304015%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-best-builder-base-trophies/index.html"><span>Best</span><wbr></wbr><span>Builder</span><wbr></wbr><span>Base</span><wbr></wbr><span><span>Trophies</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1622304015%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-best-builder-base-trophies/index.html">BestBuilderBaseTrophies</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's best Builder Base trophies change.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2102319081%2FClasslikes%2F-681682652" anchor-label="BestTrophies" id="2102319081%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-best-trophies/index.html"><span>Best</span><wbr></wbr><span><span>Trophies</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2102319081%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-best-trophies/index.html">BestTrophies</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's best trophy count changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1188287173%2FClasslikes%2F-681682652" anchor-label="BestVersusTrophies" id="-1188287173%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-best-versus-trophies/index.html"><span>Best</span><wbr></wbr><span>Versus</span><wbr></wbr><span><span>Trophies</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1188287173%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-best-versus-trophies/index.html">BestVersusTrophies</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's number of attacks wins changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1647631316%2FClasslikes%2F-681682652" anchor-label="BuilderBaseLeague" id="-1647631316%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-builder-base-league/index.html"><span>Builder</span><wbr></wbr><span>Base</span><wbr></wbr><span><span>League</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1647631316%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-builder-base-league/index.html">BuilderBaseLeague</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's Builder Base league changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1218388461%2FClasslikes%2F-681682652" anchor-label="BuilderBaseTrophies" id="1218388461%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-builder-base-trophies/index.html"><span>Builder</span><wbr></wbr><span>Base</span><wbr></wbr><span><span>Trophies</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1218388461%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-builder-base-trophies/index.html">BuilderBaseTrophies</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's Builder Base trophies change.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="681958411%2FClasslikes%2F-681682652" anchor-label="BuilderHallLevel" id="681958411%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-builder-hall-level/index.html"><span>Builder</span><wbr></wbr><span>Hall</span><wbr></wbr><span><span>Level</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="681958411%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-builder-hall-level/index.html">BuilderHallLevel</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's Builder Hall level changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1198027082%2FClasslikes%2F-681682652" anchor-label="ClanCapitalContributions" id="1198027082%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-clan-capital-contributions/index.html"><span>Clan</span><wbr></wbr><span>Capital</span><wbr></wbr><span><span>Contributions</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1198027082%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-clan-capital-contributions/index.html">ClanCapitalContributions</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's clan capital contributions change.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="275359637%2FClasslikes%2F-681682652" anchor-label="ClanMemberRole" id="275359637%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-clan-member-role/index.html"><span>Clan</span><wbr></wbr><span>Member</span><wbr></wbr><span><span>Role</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="275359637%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-clan-member-role/index.html">ClanMemberRole</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's role within a clan changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="732546064%2FClasslikes%2F-681682652" anchor-label="DefenseWins" id="732546064%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-defense-wins/index.html"><span>Defense</span><wbr></wbr><span><span>Wins</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="732546064%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-defense-wins/index.html">DefenseWins</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's number of attacks wins changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1489945638%2FClasslikes%2F-681682652" anchor-label="Donations" id="1489945638%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-donations/index.html"><span><span>Donations</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1489945638%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-donations/index.html">Donations</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player donates troops.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-410009287%2FClasslikes%2F-681682652" anchor-label="DonationsReceive" id="-410009287%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-donations-receive/index.html"><span>Donations</span><wbr></wbr><span><span>Receive</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-410009287%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-donations-receive/index.html">DonationsReceive</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player receives troops.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-335125516%2FClasslikes%2F-681682652" anchor-label="ExpLevel" id="-335125516%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-exp-level/index.html"><span>Exp</span><wbr></wbr><span><span>Level</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-335125516%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-exp-level/index.html">ExpLevel</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when the player's experience level changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2080391469%2FClasslikes%2F-681682652" anchor-label="Heroes" id="-2080391469%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-heroes/index.html"><span><span>Heroes</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2080391469%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-heroes/index.html">Heroes</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when new heroes become available or existing heroes level up in a player's profile.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1438900955%2FClasslikes%2F-681682652" anchor-label="JoinClan" id="1438900955%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-join-clan/index.html"><span>Join</span><wbr></wbr><span><span>Clan</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1438900955%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-join-clan/index.html">JoinClan</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player joins a clan.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1761547484%2FClasslikes%2F-681682652" anchor-label="Labels" id="1761547484%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-labels/index.html"><span><span>Labels</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1761547484%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-labels/index.html">Labels</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when player labels change in a player's profile.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="234551468%2FClasslikes%2F-681682652" anchor-label="League" id="234551468%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-league/index.html"><span><span>League</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="234551468%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-league/index.html">League</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's league changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-991786722%2FClasslikes%2F-681682652" anchor-label="LeftClan" id="-991786722%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-left-clan/index.html"><span>Left</span><wbr></wbr><span><span>Clan</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-991786722%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-left-clan/index.html">LeftClan</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player leaves a clan.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1069531243%2FClasslikes%2F-681682652" anchor-label="LegendStatistics" id="1069531243%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-legend-statistics/index.html"><span>Legend</span><wbr></wbr><span><span>Statistics</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1069531243%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-legend-statistics/index.html">LegendStatistics</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's Legend statistics change.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1307351632%2FClasslikes%2F-681682652" anchor-label="Name" id="1307351632%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-name/index.html"><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1307351632%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-name/index.html">Name</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when the player's name changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1302042312%2FClasslikes%2F-681682652" anchor-label="PlayerHouse" id="1302042312%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-player-house/index.html"><span>Player</span><wbr></wbr><span><span>House</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1302042312%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-player-house/index.html">PlayerHouse</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's player house changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="388070928%2FClasslikes%2F-681682652" anchor-label="Spells" id="388070928%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-spells/index.html"><span><span>Spells</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="388070928%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-spells/index.html">Spells</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when new spells become available or existing spells level up in a player's profile.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="492204782%2FClasslikes%2F-681682652" anchor-label="TownHallLevel" id="492204782%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-town-hall-level/index.html"><span>Town</span><wbr></wbr><span>Hall</span><wbr></wbr><span><span>Level</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="492204782%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-town-hall-level/index.html">TownHallLevel</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's Town Hall level changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-175139990%2FClasslikes%2F-681682652" anchor-label="TownHallWeaponLevel" id="-175139990%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-town-hall-weapon-level/index.html"><span>Town</span><wbr></wbr><span>Hall</span><wbr></wbr><span>Weapon</span><wbr></wbr><span><span>Level</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-175139990%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-town-hall-weapon-level/index.html">TownHallWeaponLevel</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's Town Hall weapon level changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2110135366%2FClasslikes%2F-681682652" anchor-label="Troops" id="-2110135366%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-troops/index.html"><span><span>Troops</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2110135366%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-troops/index.html">Troops</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when new troops become available or existing spells level up in a player's profile.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1814812269%2FClasslikes%2F-681682652" anchor-label="Trophies" id="1814812269%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-trophies/index.html"><span><span>Trophies</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1814812269%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-trophies/index.html">Trophies</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when the player's trophy count changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="64367294%2FClasslikes%2F-681682652" anchor-label="VersusBattleWins" id="64367294%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-versus-battle-wins/index.html"><span>Versus</span><wbr></wbr><span>Battle</span><wbr></wbr><span><span>Wins</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="64367294%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-versus-battle-wins/index.html">VersusBattleWins</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's number of Versus Battles wins changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-930531137%2FClasslikes%2F-681682652" anchor-label="VersusTrophies" id="-930531137%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-versus-trophies/index.html"><span>Versus</span><wbr></wbr><span><span>Trophies</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-930531137%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-versus-trophies/index.html">VersusTrophies</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's number of attacks wins changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="706355364%2FClasslikes%2F-681682652" anchor-label="WarPreference" id="706355364%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-war-preference/index.html"><span>War</span><wbr></wbr><span><span>Preference</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="706355364%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-war-preference/index.html">WarPreference</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's war preference changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-599888658%2FClasslikes%2F-681682652" anchor-label="WarStarts" id="-599888658%2FClasslikes%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-war-starts/index.html"><span>War</span><wbr></wbr><span><span>Starts</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-599888658%2FClasslikes%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-war-starts/index.html">WarStarts</a> : <a href="index.html">PlayerEvents</a></div><div class="brief "><p class="paragraph">Event fires when a player's war stars change.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="2129803976%2FFunctions%2F-681682652" anchor-label="checkAndFireCallback" id="2129803976%2FFunctions%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#2129803976%2FFunctions%2F-681682652"><span>check</span><wbr></wbr><span>And</span><wbr></wbr><span>Fire</span><wbr></wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2129803976%2FFunctions%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="index.html#2129803976%2FFunctions%2F-681682652"><span class="token function">checkAndFireCallback</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">cachedData<span class="token operator">: </span><a href="../../io.github.maicolantali.model.player/-player/index.html">Player</a><span class="token punctuation">, </span></span><span class="parameter ">currentData<span class="token operator">: </span><a href="../../io.github.maicolantali.model.player/-player/index.html">Player</a><span class="token punctuation">, </span></span><span class="parameter ">callback<span class="token operator">: </span><a href="../-callback/index.html">Callback</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../io.github.maicolantali.model.player/-player/index.html">Player</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="../../io.github.maicolantali.model.player/-player/index.html">Player</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Abstract function to check and trigger a callback based on the provided data and callback.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

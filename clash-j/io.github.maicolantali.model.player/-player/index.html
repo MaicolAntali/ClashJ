@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Player</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                            clashJ
+                    </a>
+            </div>
+            <div class="library-version">
+            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":clashJ:dokkaHtml/main">jvm</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="clashJ::io.github.maicolantali.model.player/Player///PointingToDeclaration//-681682652">
+  <div class="breadcrumbs"><a href="../../../index.html">clashJ</a><span class="delimiter">/</span><a href="../index.html">io.github.maicolantali.model.player</a><span class="delimiter">/</span><span class="current">Player</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Player</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="index.html">Player</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>clan<span class="token operator">: </span><a href="../-player-clan/index.html">PlayerClan</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>league<span class="token operator">: </span><a href="../../io.github.maicolantali.model.league/-league/index.html">League</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>builderBaseLeague<span class="token operator">: </span><a href="../../io.github.maicolantali.model.league/-simple-league/index.html">SimpleLeague</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>role<span class="token operator">: </span><a href="../../io.github.maicolantali.model.clan.component/-clan-member-role/index.html">ClanMemberRole</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>warPreference<span class="token operator">: </span><a href="../-player-war-preference/index.html">PlayerWarPreference</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>attackWins<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>defenseWins<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>versusTrophies<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>bestVersusTrophies<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>townHallLevel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>townHallWeaponLevel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>versusBattleWins<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>legendStatistics<span class="token operator">: </span><a href="../-player-legend-statistics/index.html">PlayerLegendStatistics</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>troops<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-item-level/index.html">PlayerItemLevel</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>heroes<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-item-level/index.html">PlayerItemLevel</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>spells<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-item-level/index.html">PlayerItemLevel</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>labels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../io.github.maicolantali.model.label/-label/index.html">Label</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>tag<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>name<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>expLevel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>trophies<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>bestTrophies<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>donations<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>donationsReceived<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>builderHallLevel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>builderBaseTrophies<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>bestBuilderBaseTrophies<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>warStars<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>achievements<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-achievements-progress/index.html">PlayerAchievementsProgress</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>clanCapitalContributions<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>playerHouse<span class="token operator">: </span><a href="../../io.github.maicolantali.model.common/-player-house/index.html">PlayerHouse</a></span></span><span class="token punctuation">)</span></div><p class="paragraph">Represents the <i>Player</i> model of the Clash of Clans API. The Player data class stores comprehensive information about a player in the game.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="-622263703%2FConstructors%2F-681682652" anchor-label="Player" id="-622263703%2FConstructors%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-player.html"><span><span>Player</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-622263703%2FConstructors%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clan<span class="token operator">: </span><a href="../-player-clan/index.html">PlayerClan</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">league<span class="token operator">: </span><a href="../../io.github.maicolantali.model.league/-league/index.html">League</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">builderBaseLeague<span class="token operator">: </span><a href="../../io.github.maicolantali.model.league/-simple-league/index.html">SimpleLeague</a><span class="token punctuation">, </span></span><span class="parameter ">role<span class="token operator">: </span><a href="../../io.github.maicolantali.model.clan.component/-clan-member-role/index.html">ClanMemberRole</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">warPreference<span class="token operator">: </span><a href="../-player-war-preference/index.html">PlayerWarPreference</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">attackWins<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">defenseWins<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">versusTrophies<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">bestVersusTrophies<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">townHallLevel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">townHallWeaponLevel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">versusBattleWins<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">legendStatistics<span class="token operator">: </span><a href="../-player-legend-statistics/index.html">PlayerLegendStatistics</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">troops<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-item-level/index.html">PlayerItemLevel</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">heroes<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-item-level/index.html">PlayerItemLevel</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">spells<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-item-level/index.html">PlayerItemLevel</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">labels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../io.github.maicolantali.model.label/-label/index.html">Label</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">tag<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">expLevel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">trophies<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">bestTrophies<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">donations<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">donationsReceived<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">builderHallLevel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">builderBaseTrophies<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">bestBuilderBaseTrophies<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">warStars<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">achievements<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-achievements-progress/index.html">PlayerAchievementsProgress</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">clanCapitalContributions<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">playerHouse<span class="token operator">: </span><a href="../../io.github.maicolantali.model.common/-player-house/index.html">PlayerHouse</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="814950283%2FProperties%2F-681682652" anchor-label="achievements" id="814950283%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="achievements.html"><span><span>achievements</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="814950283%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="achievements.html">achievements</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-achievements-progress/index.html">PlayerAchievementsProgress</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">A list of player's achievements and their progress.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2029465872%2FProperties%2F-681682652" anchor-label="attackWins" id="2029465872%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="attack-wins.html"><span>attack</span><wbr></wbr><span><span>Wins</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2029465872%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="attack-wins.html">attackWins</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The total number of attack wins achieved by the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="997648213%2FProperties%2F-681682652" anchor-label="bestBuilderBaseTrophies" id="997648213%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="best-builder-base-trophies.html"><span>best</span><wbr></wbr><span>Builder</span><wbr></wbr><span>Base</span><wbr></wbr><span><span>Trophies</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="997648213%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="best-builder-base-trophies.html">bestBuilderBaseTrophies</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The highest number of builder base trophies earned by the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-74777187%2FProperties%2F-681682652" anchor-label="bestTrophies" id="-74777187%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="best-trophies.html"><span>best</span><wbr></wbr><span><span>Trophies</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-74777187%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="best-trophies.html">bestTrophies</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The highest number of trophies ever earned by the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1256166639%2FProperties%2F-681682652" anchor-label="bestVersusTrophies" id="1256166639%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="best-versus-trophies.html"><span>best</span><wbr></wbr><span>Versus</span><wbr></wbr><span><span>Trophies</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1256166639%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="best-versus-trophies.html">bestVersusTrophies</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The highest number of versus trophies earned by the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="456290960%2FProperties%2F-681682652" anchor-label="builderBaseLeague" id="456290960%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="builder-base-league.html"><span>builder</span><wbr></wbr><span>Base</span><wbr></wbr><span><span>League</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="456290960%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="builder-base-league.html">builderBaseLeague</a><span class="token operator">: </span><a href="../../io.github.maicolantali.model.league/-simple-league/index.html">SimpleLeague</a></div><div class="brief "><p class="paragraph">Information about the player's builder base league.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1334418001%2FProperties%2F-681682652" anchor-label="builderBaseTrophies" id="1334418001%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="builder-base-trophies.html"><span>builder</span><wbr></wbr><span>Base</span><wbr></wbr><span><span>Trophies</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1334418001%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="builder-base-trophies.html">builderBaseTrophies</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The current number of builder base trophies earned by the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1242976833%2FProperties%2F-681682652" anchor-label="builderHallLevel" id="-1242976833%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="builder-hall-level.html"><span>builder</span><wbr></wbr><span>Hall</span><wbr></wbr><span><span>Level</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1242976833%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="builder-hall-level.html">builderHallLevel</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The level of the player's builder hall.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-900003175%2FProperties%2F-681682652" anchor-label="clan" id="-900003175%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clan.html"><span><span>clan</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-900003175%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="clan.html">clan</a><span class="token operator">: </span><a href="../-player-clan/index.html">PlayerClan</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Information about the player's clan.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1835427074%2FProperties%2F-681682652" anchor-label="clanCapitalContributions" id="-1835427074%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clan-capital-contributions.html"><span>clan</span><wbr></wbr><span>Capital</span><wbr></wbr><span><span>Contributions</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1835427074%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="clan-capital-contributions.html">clanCapitalContributions</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The total number of contributions made by the player to the clan capital.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-914844556%2FProperties%2F-681682652" anchor-label="defenseWins" id="-914844556%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="defense-wins.html"><span>defense</span><wbr></wbr><span><span>Wins</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-914844556%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="defense-wins.html">defenseWins</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The total number of defense wins achieved by the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="173042314%2FProperties%2F-681682652" anchor-label="donations" id="173042314%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="donations.html"><span><span>donations</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="173042314%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="donations.html">donations</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The total number of troops donated by the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1732121257%2FProperties%2F-681682652" anchor-label="donationsReceived" id="1732121257%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="donations-received.html"><span>donations</span><wbr></wbr><span><span>Received</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1732121257%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="donations-received.html">donationsReceived</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The total number of troops received by the player as donations.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1400578648%2FProperties%2F-681682652" anchor-label="expLevel" id="-1400578648%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="exp-level.html"><span>exp</span><wbr></wbr><span><span>Level</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1400578648%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="exp-level.html">expLevel</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The experience level of the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1001071239%2FProperties%2F-681682652" anchor-label="heroes" id="1001071239%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="heroes.html"><span><span>heroes</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1001071239%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="heroes.html">heroes</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-item-level/index.html">PlayerItemLevel</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">A list of player's heroes and their levels.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="548042896%2FProperties%2F-681682652" anchor-label="labels" id="548042896%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="labels.html"><span><span>labels</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="548042896%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="labels.html">labels</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../io.github.maicolantali.model.label/-label/index.html">Label</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">A list of labels associated with the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-978953120%2FProperties%2F-681682652" anchor-label="league" id="-978953120%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="league.html"><span><span>league</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-978953120%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="league.html">league</a><span class="token operator">: </span><a href="../../io.github.maicolantali.model.league/-league/index.html">League</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Information about the player's league.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-855404001%2FProperties%2F-681682652" anchor-label="legendStatistics" id="-855404001%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="legend-statistics.html"><span>legend</span><wbr></wbr><span><span>Statistics</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-855404001%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="legend-statistics.html">legendStatistics</a><span class="token operator">: </span><a href="../-player-legend-statistics/index.html">PlayerLegendStatistics</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Information about the player's legend league statistics.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-688429052%2FProperties%2F-681682652" anchor-label="name" id="-688429052%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="name.html"><span><span>name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-688429052%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="name.html">name</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The name of the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-345348308%2FProperties%2F-681682652" anchor-label="playerHouse" id="-345348308%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="player-house.html"><span>player</span><wbr></wbr><span><span>House</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-345348308%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="player-house.html">playerHouse</a><span class="token operator">: </span><a href="../../io.github.maicolantali.model.common/-player-house/index.html">PlayerHouse</a></div><div class="brief "><p class="paragraph">Information about the player's house elements.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1851019385%2FProperties%2F-681682652" anchor-label="role" id="1851019385%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="role.html"><span><span>role</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1851019385%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="role.html">role</a><span class="token operator">: </span><a href="../../io.github.maicolantali.model.clan.component/-clan-member-role/index.html">ClanMemberRole</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">The role of the player in their clan (e.g., Member, Leader, etc.).</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-825433660%2FProperties%2F-681682652" anchor-label="spells" id="-825433660%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="spells.html"><span><span>spells</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-825433660%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="spells.html">spells</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-item-level/index.html">PlayerItemLevel</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">A list of player's spells and their levels.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-941976911%2FProperties%2F-681682652" anchor-label="tag" id="-941976911%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="tag.html"><span><span>tag</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-941976911%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="tag.html">tag</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The tag of the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-925897390%2FProperties%2F-681682652" anchor-label="townHallLevel" id="-925897390%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="town-hall-level.html"><span>town</span><wbr></wbr><span>Hall</span><wbr></wbr><span><span>Level</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-925897390%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="town-hall-level.html">townHallLevel</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The level of the player's town hall.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-59110450%2FProperties%2F-681682652" anchor-label="townHallWeaponLevel" id="-59110450%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="town-hall-weapon-level.html"><span>town</span><wbr></wbr><span>Hall</span><wbr></wbr><span>Weapon</span><wbr></wbr><span><span>Level</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-59110450%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="town-hall-weapon-level.html">townHallWeaponLevel</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The level of the player's town hall weapon (if available).</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="971327342%2FProperties%2F-681682652" anchor-label="troops" id="971327342%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="troops.html"><span><span>troops</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="971327342%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="troops.html">troops</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-item-level/index.html">PlayerItemLevel</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">A list of player's troops and their levels.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="749359137%2FProperties%2F-681682652" anchor-label="trophies" id="749359137%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="trophies.html"><span><span>trophies</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="749359137%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="trophies.html">trophies</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The current number of trophies earned by the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1860567950%2FProperties%2F-681682652" anchor-label="versusBattleWins" id="-1860567950%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="versus-battle-wins.html"><span>versus</span><wbr></wbr><span>Battle</span><wbr></wbr><span><span>Wins</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1860567950%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="versus-battle-wins.html">versusBattleWins</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The total number of versus battle wins achieved by the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-294652813%2FProperties%2F-681682652" anchor-label="versusTrophies" id="-294652813%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="versus-trophies.html"><span>versus</span><wbr></wbr><span><span>Trophies</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-294652813%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="versus-trophies.html">versusTrophies</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The current number of versus trophies earned by the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-711746808%2FProperties%2F-681682652" anchor-label="warPreference" id="-711746808%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="war-preference.html"><span>war</span><wbr></wbr><span><span>Preference</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-711746808%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="war-preference.html">warPreference</a><span class="token operator">: </span><a href="../-player-war-preference/index.html">PlayerWarPreference</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">The war preference status of the player (In or Out).</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="410813174%2FProperties%2F-681682652" anchor-label="warStars" id="410813174%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="war-stars.html"><span>war</span><wbr></wbr><span><span>Stars</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="410813174%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="war-stars.html">warStars</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The total number of war stars earned by the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
