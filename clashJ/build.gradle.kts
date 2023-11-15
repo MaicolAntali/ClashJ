@@ -8,6 +8,7 @@ plugins {
     `maven-publish`
 }
 
+version = "1.0.0"
 group = "io.github.maicolantali"
 
 repositories {
@@ -37,6 +38,12 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
     withSourcesJar()
     withJavadocJar()
+}
+
+tasks.named<Jar>("jar") {
+    manifest {
+        attributes(mapOf("Implementation-Title" to project.name, "Implementation-Version" to project.version))
+    }
 }
 
 tasks.named<Test>("test") {
