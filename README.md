@@ -34,7 +34,7 @@ The library required **Java 17** or higher versions.
 2. Add the dependency
    ```gradle
    dependencies {
-      implementation 'com.github.MaicolAntali:clashJ:main-SNAPSHOT'
+      implementation 'com.github.MaicolAntali:clashJ:1.0.1'
    }
    ```
 
@@ -55,7 +55,7 @@ The library required **Java 17** or higher versions.
    <dependency>
        <groupId>com.github.MaicolAntali</groupId>
        <artifactId>clashJ</artifactId>
-       <version>main-SNAPSHOT</version>
+       <version>1.0.1</version>
    </dependency>
    ```
 
