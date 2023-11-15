@@ -73,7 +73,7 @@ class ClientBuilder(
      * @param engine The HttpClientEngine to be used.
      * @return This [ClientBuilder] instance.
      */
-    fun engine(engine: HttpClientEngine): io.github.maicolantali.ClientBuilder = apply { this.engine = engine }
+    fun engine(engine: HttpClientEngine): ClientBuilder = apply { this.engine = engine }
 
     /**
      * Sets the connection timeout for HTTP requests in milliseconds.
@@ -105,8 +105,8 @@ class ClientBuilder(
      *
      * @return The constructed [Client] instance.
      */
-    fun buildClient(): io.github.maicolantali.Client {
-        return io.github.maicolantali.Client(
+    fun buildClient(): Client {
+        return Client(
             RequestHandler(
                 Credential(this.email, this.password),
                 KeyOptions(this.keyName, this.keyDescription, this.keyCount),
@@ -130,8 +130,8 @@ class ClientBuilder(
         nThread: Int = 3,
         pollingInterval: Long = 15_000,
         maintenanceCheckInterval: Long = 30_000,
-    ): io.github.maicolantali.EventClient {
-        return io.github.maicolantali.EventClient(
+    ): EventClient {
+        return EventClient(
             RequestHandler(
                 Credential(this.email, this.password),
                 KeyOptions(this.keyName, this.keyDescription, this.keyCount),

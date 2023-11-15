@@ -166,8 +166,8 @@ class ClientTest {
         }
     }
 
-    private fun createApiWithMockEngine(mockEngine: MockEngine): io.github.maicolantali.Client {
-        return io.github.maicolantali.ClientBuilder("email", "pwd")
+    private fun createApiWithMockEngine(mockEngine: MockEngine): Client {
+        return ClientBuilder("email", "pwd")
             .engine(mockEngine)
             .buildClient()
     }
