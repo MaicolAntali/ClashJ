@@ -4,7 +4,6 @@ import io.github.maicolantali.exception.BadGatewayException
 import io.github.maicolantali.exception.InvalidCredentialException
 import io.github.maicolantali.exception.MaintenanceException
 import io.github.maicolantali.exception.NotFoundException
-import io.github.maicolantali.http.RequestHandler
 import io.github.maicolantali.http.query.PaginationQuery
 import io.github.maicolantali.http.query.SearchClanQuery
 import io.github.maicolantali.model.clan.Clan
@@ -29,8 +28,10 @@ import io.github.maicolantali.model.location.LocationList
 import io.github.maicolantali.model.player.Player
 import io.github.maicolantali.model.player.PlayerBuilderBaseRankingList
 import io.github.maicolantali.model.player.PlayerRankingList
+import io.github.maicolantali.types.internal.configuration.ClientConfiguration
 import io.github.maicolantali.util.API_BASE_URL
 import io.github.maicolantali.util.encodeTag
+import io.github.maicolantali.util.getConfiguredRequestHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -43,11 +44,19 @@ import kotlinx.coroutines.async
  * by making HTTP requests using the provided [requestHandler].
  * It encapsulates the logic for making specific API calls and handling the response data.
  *
- * @param requestHandler The [RequestHandler] instance responsible for handling HTTP requests and responses.
+ * @param email The email used for authentication.
+ * @param password The password used for authentication.
+ * @param clientConfiguration The configuration for the client.
  */
 open class Client(
-    private val requestHandler: RequestHandler,
+    internal open val email: String,
+    internal open val password: String,
+    clientConfiguration: ClientConfiguration.() -> Unit = {},
 ) {
+    internal val config = ClientConfiguration().apply(clientConfiguration)
+
+    private val requestHandler by lazy { getConfiguredRequestHandler() }
+
     /**
      * Performs login into the Clash of Clans developer website using the provided credentials.
      *

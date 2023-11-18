@@ -14,6 +14,7 @@ import io.github.maicolantali.model.clan.ClanWar
 import io.github.maicolantali.model.clan.component.ClanMember
 import io.github.maicolantali.model.clan.component.ClanWarAttack
 import io.github.maicolantali.model.player.Player
+import io.github.maicolantali.types.internal.configuration.ClientConfiguration
 import io.github.maicolantali.util.adjustTag
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
@@ -35,19 +36,17 @@ import java.util.concurrent.Executors
  * update player data to detect changes. It uses a coroutine-based approach for asynchronous
  * event handling.
  *
- * @param requestHandler The request handler used to make API requests.
- * @param nThread The number of threads for the internal coroutine dispatcher.
- * @param pollingInterval The interval (in milliseconds) at which data should be polled for updates.
- * @param maintenanceCheckInterval The interval (in milliseconds) at which server maintenance status should be checked.
+ * @param email The email associated with the Clash of Clans API account.
+ * @param password The password associated with the Clash of Clans API account.
+ * @param clientConfiguration The configuration for the client.You can customize the client using the [ClientConfiguration] DSL.
  */
 class EventClient(
-    private val requestHandler: RequestHandler,
-    private val nThread: Int,
-    private val pollingInterval: Long,
-    private val maintenanceCheckInterval: Long,
-) : Client(requestHandler) {
+    override val email: String,
+    override val password: String,
+    clientConfiguration: ClientConfiguration.() -> Unit = {},
+) : Client(email, password, clientConfiguration) {
     // Dispatcher & Polling job
-    private val dispatcher = Executors.newFixedThreadPool(nThread).asCoroutineDispatcher()
+    private val dispatcher = Executors.newFixedThreadPool(config.event.nThread).asCoroutineDispatcher()
     private var job: Job? = null
 
     // Callbacks
@@ -313,7 +312,7 @@ class EventClient(
                         log.error("Error checking API maintenance status: ${e.message}")
                     }
 
-                    delay(maintenanceCheckInterval)
+                    delay(config.event.maintenanceCheckInterval)
                 }
             }
         }
@@ -351,7 +350,7 @@ class EventClient(
                     }
                 }.awaitAll()
             }
-            delay(pollingInterval)
+            delay(config.event.pollingInterval)
         }
     }
 
