@@ -732,6 +732,27 @@ $dokka.location:io.github.maicolantali.model.player/Village///PointingToDeclarat
 $dokka.location:io.github.maicolantali.model.player/Village/entries/#/PointingToDeclaration/clash-j/io.github.maicolantali.model.player/-village/entries.html
 $dokka.location:io.github.maicolantali.model.player/Village/valueOf/#kotlin.String/PointingToDeclaration/clash-j/io.github.maicolantali.model.player/-village/value-of.html
 $dokka.location:io.github.maicolantali.model.player/Village/values/#/PointingToDeclaration/clash-j/io.github.maicolantali.model.player/-village/values.html
+$dokka.location:io.github.maicolantali.types.internal.configuration////PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/index.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/ClientConfiguration///PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-client-configuration/index.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/ClientConfiguration/ClientConfiguration/#io.github.maicolantali.types.internal.configuration.KeyConfiguration#io.github.maicolantali.types.internal.configuration.HttpConfiguration#io.github.maicolantali.types.internal.configuration.EventConfiguration#io.github.maicolantali.http.throttler.BaseThrottler/PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-client-configuration/-client-configuration.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/ClientConfiguration/event/#kotlin.Function1[io.github.maicolantali.types.internal.configuration.EventConfiguration,kotlin.Unit]/PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-client-configuration/event.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/ClientConfiguration/httpClient/#kotlin.Function1[io.github.maicolantali.types.internal.configuration.HttpConfiguration,kotlin.Unit]/PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-client-configuration/http-client.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/ClientConfiguration/key/#kotlin.Function1[io.github.maicolantali.types.internal.configuration.KeyConfiguration,kotlin.Unit]/PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-client-configuration/key.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/EventConfiguration///PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-event-configuration/index.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/EventConfiguration/EventConfiguration/#kotlin.Int#kotlin.Long#kotlin.Long/PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-event-configuration/-event-configuration.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/EventConfiguration/maintenanceCheckInterval/#/PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-event-configuration/maintenance-check-interval.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/EventConfiguration/nThread/#/PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-event-configuration/n-thread.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/EventConfiguration/pollingInterval/#/PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-event-configuration/polling-interval.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/HttpConfiguration///PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-http-configuration/index.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/HttpConfiguration/HttpConfiguration/#io.ktor.client.engine.HttpClientEngine#kotlin.Long#kotlin.Long/PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-http-configuration/-http-configuration.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/HttpConfiguration/connectionTimeout/#/PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-http-configuration/connection-timeout.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/HttpConfiguration/engine/#/PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-http-configuration/engine.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/HttpConfiguration/requestTimeout/#/PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-http-configuration/request-timeout.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/KeyConfiguration///PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-key-configuration/index.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/KeyConfiguration/KeyConfiguration/#kotlin.String#kotlin.String?#kotlin.Int/PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-key-configuration/-key-configuration.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/KeyConfiguration/keyCount/#/PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-key-configuration/key-count.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/KeyConfiguration/keyDescription/#/PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-key-configuration/key-description.html
+$dokka.location:io.github.maicolantali.types.internal.configuration/KeyConfiguration/keyName/#/PointingToDeclaration/clash-j/io.github.maicolantali.types.internal.configuration/-key-configuration/key-name.html
 $dokka.location:io.github.maicolantali.util////PointingToDeclaration/clash-j/io.github.maicolantali.util/index.html
 $dokka.location:io.github.maicolantali.util//API_BASE_URL/#/PointingToDeclaration/clash-j/io.github.maicolantali.util/-a-p-i_-b-a-s-e_-u-r-l.html
 $dokka.location:io.github.maicolantali.util//DEV_SITE_BASE_URL/#/PointingToDeclaration/clash-j/io.github.maicolantali.util/-d-e-v_-s-i-t-e_-b-a-s-e_-u-r-l.html
@@ -752,7 +773,7 @@ $dokka.location:io.github.maicolantali.util/SafeSet/remove/#TypeParam(bounds=[ko
 $dokka.location:io.github.maicolantali.util/SafeSet/size/#/PointingToDeclaration/clash-j/io.github.maicolantali.util/-safe-set/size.html
 $dokka.location:io.github.maicolantali////PointingToDeclaration/clash-j/io.github.maicolantali/index.html
 $dokka.location:io.github.maicolantali/Client///PointingToDeclaration/clash-j/io.github.maicolantali/-client/index.html
-$dokka.location:io.github.maicolantali/Client/Client/#io.github.maicolantali.http.RequestHandler/PointingToDeclaration/clash-j/io.github.maicolantali/-client/-client.html
+$dokka.location:io.github.maicolantali/Client/Client/#kotlin.String#kotlin.String#kotlin.Function1[io.github.maicolantali.types.internal.configuration.ClientConfiguration,kotlin.Unit]/PointingToDeclaration/clash-j/io.github.maicolantali/-client/-client.html
 $dokka.location:io.github.maicolantali/Client/getBuilderBaseLeague/#kotlin.Int#io.github.maicolantali.http.query.PaginationQuery/PointingToDeclaration/clash-j/io.github.maicolantali/-client/get-builder-base-league.html
 $dokka.location:io.github.maicolantali/Client/getBuilderBaseLeagues/#io.github.maicolantali.http.query.PaginationQuery/PointingToDeclaration/clash-j/io.github.maicolantali/-client/get-builder-base-leagues.html
 $dokka.location:io.github.maicolantali/Client/getCapitalLeague/#kotlin.String#io.github.maicolantali.http.query.PaginationQuery/PointingToDeclaration/clash-j/io.github.maicolantali/-client/get-capital-league.html
@@ -783,19 +804,8 @@ $dokka.location:io.github.maicolantali/Client/getWarLeague/#kotlin.Int#io.github
 $dokka.location:io.github.maicolantali/Client/getWarLeagues/#io.github.maicolantali.http.query.PaginationQuery/PointingToDeclaration/clash-j/io.github.maicolantali/-client/get-war-leagues.html
 $dokka.location:io.github.maicolantali/Client/login/#/PointingToDeclaration/clash-j/io.github.maicolantali/-client/login.html
 $dokka.location:io.github.maicolantali/Client/searchClan/#io.github.maicolantali.http.query.SearchClanQuery/PointingToDeclaration/clash-j/io.github.maicolantali/-client/search-clan.html
-$dokka.location:io.github.maicolantali/ClientBuilder///PointingToDeclaration/clash-j/io.github.maicolantali/-client-builder/index.html
-$dokka.location:io.github.maicolantali/ClientBuilder/ClientBuilder/#kotlin.String#kotlin.String/PointingToDeclaration/clash-j/io.github.maicolantali/-client-builder/-client-builder.html
-$dokka.location:io.github.maicolantali/ClientBuilder/buildClient/#/PointingToDeclaration/clash-j/io.github.maicolantali/-client-builder/build-client.html
-$dokka.location:io.github.maicolantali/ClientBuilder/buildEventClient/#kotlin.Int#kotlin.Long#kotlin.Long/PointingToDeclaration/clash-j/io.github.maicolantali/-client-builder/build-event-client.html
-$dokka.location:io.github.maicolantali/ClientBuilder/connectionTimeout/#kotlin.Long/PointingToDeclaration/clash-j/io.github.maicolantali/-client-builder/connection-timeout.html
-$dokka.location:io.github.maicolantali/ClientBuilder/engine/#io.ktor.client.engine.HttpClientEngine/PointingToDeclaration/clash-j/io.github.maicolantali/-client-builder/engine.html
-$dokka.location:io.github.maicolantali/ClientBuilder/keyCount/#kotlin.Int/PointingToDeclaration/clash-j/io.github.maicolantali/-client-builder/key-count.html
-$dokka.location:io.github.maicolantali/ClientBuilder/keyDescription/#kotlin.String/PointingToDeclaration/clash-j/io.github.maicolantali/-client-builder/key-description.html
-$dokka.location:io.github.maicolantali/ClientBuilder/keyName/#kotlin.String/PointingToDeclaration/clash-j/io.github.maicolantali/-client-builder/key-name.html
-$dokka.location:io.github.maicolantali/ClientBuilder/requestTimeout/#kotlin.Long/PointingToDeclaration/clash-j/io.github.maicolantali/-client-builder/request-timeout.html
-$dokka.location:io.github.maicolantali/ClientBuilder/throttler/#io.github.maicolantali.http.throttler.BaseThrottler/PointingToDeclaration/clash-j/io.github.maicolantali/-client-builder/throttler.html
 $dokka.location:io.github.maicolantali/EventClient///PointingToDeclaration/clash-j/io.github.maicolantali/-event-client/index.html
-$dokka.location:io.github.maicolantali/EventClient/EventClient/#io.github.maicolantali.http.RequestHandler#kotlin.Int#kotlin.Long#kotlin.Long/PointingToDeclaration/clash-j/io.github.maicolantali/-event-client/-event-client.html
+$dokka.location:io.github.maicolantali/EventClient/EventClient/#kotlin.String#kotlin.String#kotlin.Function1[io.github.maicolantali.types.internal.configuration.ClientConfiguration,kotlin.Unit]/PointingToDeclaration/clash-j/io.github.maicolantali/-event-client/-event-client.html
 $dokka.location:io.github.maicolantali/EventClient/addClanToUpdateQueue/#kotlin.String/PointingToDeclaration/clash-j/io.github.maicolantali/-event-client/add-clan-to-update-queue.html
 $dokka.location:io.github.maicolantali/EventClient/addPlayerToUpdateQueue/#kotlin.String/PointingToDeclaration/clash-j/io.github.maicolantali/-event-client/add-player-to-update-queue.html
 $dokka.location:io.github.maicolantali/EventClient/addWarToUpdateQueue/#kotlin.String/PointingToDeclaration/clash-j/io.github.maicolantali/-event-client/add-war-to-update-queue.html
@@ -829,5 +839,6 @@ io.github.maicolantali.model.label
 io.github.maicolantali.model.league
 io.github.maicolantali.model.location
 io.github.maicolantali.model.player
+io.github.maicolantali.types.internal.configuration
 io.github.maicolantali.util
 
