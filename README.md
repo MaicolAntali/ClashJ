@@ -66,7 +66,7 @@ The library required **Java 17** or higher versions.
 ```kotlin
 fun main() = runBlocking {
     // Build a client with the default option 
-    val client = ClientBuilder("email", "password").build()
+    val client = Client("email", "pwd")
    
    // Login into the Clash of Clans developer website
    client.login()
@@ -85,7 +85,7 @@ fun main() = runBlocking {
 
 ```kotlin
 fun main() = runBlocking {
-    val eventClient = ClientBuilder("email", "password").buildEventClient()
+    val eventClient = EventClient("email", "pwd")
 
     // Add player and clan to monitored events
     eventClient.addPlayerToMonitoredEvent("#playerTag")
