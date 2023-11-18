@@ -166,9 +166,8 @@ class ClientTest {
         }
     }
 
-    private fun createApiWithMockEngine(mockEngine: MockEngine): Client {
-        return ClientBuilder("email", "pwd")
-            .engine(mockEngine)
-            .buildClient()
-    }
+    private fun createApiWithMockEngine(mockEngine: MockEngine) =
+        Client("email", "pwd") {
+            httpClient { engine = mockEngine }
+        }
 }
