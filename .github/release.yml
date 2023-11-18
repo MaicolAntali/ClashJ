@@ -3,6 +3,9 @@ changelog:
     - title: 🎉 Features
       labels:
         - enhancement
+    - title: ⚠️Breaking changes
+      labels:
+        - breaking changes
     - title: 📑 Documentations
       labels:
         - documentation
