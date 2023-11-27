@@ -1,10 +1,10 @@
 package io.github.maicolantali.types.api.model.players.player
 
+import io.github.maicolantali.types.api.enums.ClanMemberRole
+import io.github.maicolantali.types.api.enums.PlayerWarPreference
 import io.github.maicolantali.types.api.model.labels.Label
 import io.github.maicolantali.types.api.model.leagues.league.League
 import io.github.maicolantali.types.api.model.leagues.simpleleague.SimpleLeague
-import io.github.maicolantali.types.api.enums.ClanMemberRole
-import io.github.maicolantali.types.api.enums.PlayerWarPreference
 import io.github.maicolantali.types.api.model.players.playerhouse.PlayerHouse
 
 /**

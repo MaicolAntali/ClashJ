@@ -19,4 +19,3 @@ enum class Village {
     @SerializedName("builderBase")
     BUILDER_BASE,
 }
-

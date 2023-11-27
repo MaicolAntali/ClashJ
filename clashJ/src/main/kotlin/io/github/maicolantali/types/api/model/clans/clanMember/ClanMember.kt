@@ -1,9 +1,9 @@
 package io.github.maicolantali.types.api.model.clans.clanMember
 
-import io.github.maicolantali.types.api.model.players.playerhouse.PlayerHouse
+import io.github.maicolantali.types.api.enums.ClanMemberRole
 import io.github.maicolantali.types.api.model.leagues.league.League
 import io.github.maicolantali.types.api.model.leagues.simpleleague.SimpleLeague
-import io.github.maicolantali.types.api.enums.ClanMemberRole
+import io.github.maicolantali.types.api.model.players.playerhouse.PlayerHouse
 
 /**
  * Represents the *ClanMember* model of the Clash of Clans API.

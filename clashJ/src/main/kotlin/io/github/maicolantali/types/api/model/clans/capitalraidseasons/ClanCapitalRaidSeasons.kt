@@ -1,7 +1,7 @@
 package io.github.maicolantali.types.api.model.clans.capitalraidseasons
 
-import io.github.maicolantali.types.api.model.common.paging.Paging
 import io.github.maicolantali.types.api.interfaces.ApiListResponse
+import io.github.maicolantali.types.api.model.common.paging.Paging
 
 /**
  * Represents the *ClanCapitalRaidSeasons* model of the Clash of Clans API.
@@ -14,4 +14,3 @@ data class ClanCapitalRaidSeasons(
     override val items: List<ClanCapitalRaidSeason>,
     override val paging: Paging?,
 ) : ApiListResponse<ClanCapitalRaidSeason>
-

@@ -13,4 +13,3 @@ data class LeagueSeasonList(
     override val items: List<LeagueSeason>,
     override val paging: Paging?,
 ) : ApiListResponse<LeagueSeason>
-

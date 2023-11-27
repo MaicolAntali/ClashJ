@@ -1,7 +1,7 @@
 package io.github.maicolantali.types.api.model.locations.ranking.player
 
-import io.github.maicolantali.types.api.model.common.paging.Paging
 import io.github.maicolantali.types.api.interfaces.ApiListResponse
+import io.github.maicolantali.types.api.model.common.paging.Paging
 
 /**
  * Represents the *PlayerBuilderBaseRankingList* model of the Clash of Clans API.
@@ -14,5 +14,3 @@ data class PlayerBuilderBaseRankingList(
     override val items: List<PlayerBuilderBaseRanking>,
     override val paging: Paging?,
 ) : ApiListResponse<PlayerBuilderBaseRanking>
-
-

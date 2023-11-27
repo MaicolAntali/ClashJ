@@ -1,7 +1,7 @@
 package io.github.maicolantali.types.api.model.clans.clanMember
 
-import io.github.maicolantali.types.api.model.common.paging.Paging
 import io.github.maicolantali.types.api.interfaces.ApiListResponse
+import io.github.maicolantali.types.api.model.common.paging.Paging
 
 /**
  * Represents the *ClanMemberList* model of the Clash of Clans API.

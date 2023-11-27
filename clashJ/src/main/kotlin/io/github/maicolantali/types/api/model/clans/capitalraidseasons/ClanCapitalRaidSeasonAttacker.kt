@@ -12,4 +12,3 @@ data class ClanCapitalRaidSeasonAttacker(
     val tag: String,
     val name: String,
 )
-

@@ -1,8 +1,8 @@
 package io.github.maicolantali.event
 
+import io.github.maicolantali.types.api.enums.WarState
 import io.github.maicolantali.types.api.model.clans.clanwar.ClanWar
 import io.github.maicolantali.types.api.model.clans.clanwar.ClanWarAttack
-import io.github.maicolantali.types.api.enums.WarState
 
 /**
  * Sealed class representing specific war-related monitored events.

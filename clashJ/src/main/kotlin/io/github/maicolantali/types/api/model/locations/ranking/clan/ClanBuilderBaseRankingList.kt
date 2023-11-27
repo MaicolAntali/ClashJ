@@ -13,5 +13,3 @@ data class ClanBuilderBaseRankingList(
     override val items: List<ClanBuilderBaseRanking>,
     override val paging: Paging?,
 ) : ApiListResponse<ClanBuilderBaseRanking>
-
-

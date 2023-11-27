@@ -1,6 +1,5 @@
 package io.github.maicolantali.types.api.model.clans.clanwar
 
-import io.github.maicolantali.types.api.model.clans.clanwar.WarClan
 import io.github.maicolantali.types.api.enums.WarResult
 
 /**

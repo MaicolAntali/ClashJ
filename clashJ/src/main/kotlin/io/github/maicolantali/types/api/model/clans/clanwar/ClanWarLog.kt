@@ -1,7 +1,7 @@
 package io.github.maicolantali.types.api.model.clans.clanwar
 
-import io.github.maicolantali.types.api.model.common.paging.Paging
 import io.github.maicolantali.types.api.interfaces.ApiListResponse
+import io.github.maicolantali.types.api.model.common.paging.Paging
 
 /**
  * Represents the *ClanWarLog* model of the Clash of Clans API.

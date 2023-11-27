@@ -13,4 +13,4 @@ import io.github.maicolantali.types.api.model.common.paging.Paging
 data class PlayerRankingList(
     override val items: List<PlayerRanking>,
     override val paging: Paging?,
-): ApiListResponse<PlayerRanking>
+) : ApiListResponse<PlayerRanking>

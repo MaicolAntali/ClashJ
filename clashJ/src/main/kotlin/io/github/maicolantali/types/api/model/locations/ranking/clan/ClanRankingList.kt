@@ -13,5 +13,3 @@ data class ClanRankingList(
     override val items: List<ClanRanking>,
     override val paging: Paging?,
 ) : ApiListResponse<ClanRanking>
-
-

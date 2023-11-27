@@ -8,4 +8,3 @@ package io.github.maicolantali.types.api.model.players.playerhouse
 data class PlayerHouse(
     val elements: List<HouseElement>,
 )
-

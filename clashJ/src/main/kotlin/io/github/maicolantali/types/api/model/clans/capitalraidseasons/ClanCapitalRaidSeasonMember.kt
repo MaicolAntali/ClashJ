@@ -1,6 +1,5 @@
 package io.github.maicolantali.types.api.model.clans.capitalraidseasons
 
-
 /**
  * Represents the *ClanCapitalRaidSeasonMember* model of the Clash of Clans API.
  * The ClanCapitalRaidSeasonMember data class stores information about a member

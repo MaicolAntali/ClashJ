@@ -9,4 +9,3 @@ package io.github.maicolantali.types.api.model.clans.clanwarleaguegroup
 data class ClanWarLeagueRound(
     val warTags: List<String>,
 )
-

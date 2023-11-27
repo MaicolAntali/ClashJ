@@ -1,9 +1,9 @@
 package io.github.maicolantali.types.api.model.clans.clan
 
-import io.github.maicolantali.types.api.model.clans.clancapital.ClanCapital
-import io.github.maicolantali.types.api.model.clans.clanMember.ClanMember
 import io.github.maicolantali.types.api.enums.ClanType
 import io.github.maicolantali.types.api.enums.WarFrequency
+import io.github.maicolantali.types.api.model.clans.clanMember.ClanMember
+import io.github.maicolantali.types.api.model.clans.clancapital.ClanCapital
 import io.github.maicolantali.types.api.model.common.Badge
 import io.github.maicolantali.types.api.model.common.Language
 import io.github.maicolantali.types.api.model.labels.Label
