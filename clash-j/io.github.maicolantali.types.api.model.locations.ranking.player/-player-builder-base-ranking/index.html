@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>PlayerBuilderBaseRanking</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                            clashJ
+                    </a>
+            </div>
+            <div class="library-version">
+1.0.3            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":clashJ:dokkaHtml/main">jvm</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="clashJ::io.github.maicolantali.types.api.model.locations.ranking.player/PlayerBuilderBaseRanking///PointingToDeclaration//-681682652">
+  <div class="breadcrumbs"><a href="../../../index.html">clashJ</a><span class="delimiter">/</span><a href="../index.html">io.github.maicolantali.types.api.model.locations.ranking.player</a><span class="delimiter">/</span><span class="current">PlayerBuilderBaseRanking</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Player</span><wbr></wbr><span>Builder</span><wbr></wbr><span>Base</span><wbr></wbr><span><span>Ranking</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="index.html">PlayerBuilderBaseRanking</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>clan<span class="token operator">: </span><a href="../-player-ranking-clan/index.html">PlayerRankingClan</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>builderBaseLeague<span class="token operator">: </span><a href="../../io.github.maicolantali.types.api.model.leagues.simpleleague/-simple-league/index.html">SimpleLeague</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>versusTrophies<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>versusBattleWins<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>tag<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>name<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>expLevel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>rank<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>previousRank<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>builderBaseTrophies<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><p class="paragraph">Represents the <i>PlayerBuilderBaseRanking</i> model of the Clash of Clans API. The PlayerBuilderBaseRanking data class stores information about a player's ranking based on their builder base performance.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="1899236276%2FConstructors%2F-681682652" anchor-label="PlayerBuilderBaseRanking" id="1899236276%2FConstructors%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-player-builder-base-ranking.html"><span>Player</span><wbr></wbr><span>Builder</span><wbr></wbr><span>Base</span><wbr></wbr><span><span>Ranking</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1899236276%2FConstructors%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clan<span class="token operator">: </span><a href="../-player-ranking-clan/index.html">PlayerRankingClan</a><span class="token punctuation">, </span></span><span class="parameter ">builderBaseLeague<span class="token operator">: </span><a href="../../io.github.maicolantali.types.api.model.leagues.simpleleague/-simple-league/index.html">SimpleLeague</a><span class="token punctuation">, </span></span><span class="parameter ">versusTrophies<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">versusBattleWins<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">tag<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">expLevel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">rank<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">previousRank<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">builderBaseTrophies<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="1209489111%2FProperties%2F-681682652" anchor-label="builderBaseLeague" id="1209489111%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="builder-base-league.html"><span>builder</span><wbr></wbr><span>Base</span><wbr></wbr><span><span>League</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1209489111%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="builder-base-league.html">builderBaseLeague</a><span class="token operator">: </span><a href="../../io.github.maicolantali.types.api.model.leagues.simpleleague/-simple-league/index.html">SimpleLeague</a></div><div class="brief "><p class="paragraph">Information about the player's builder base league.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-691631912%2FProperties%2F-681682652" anchor-label="builderBaseTrophies" id="-691631912%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="builder-base-trophies.html"><span>builder</span><wbr></wbr><span>Base</span><wbr></wbr><span><span>Trophies</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-691631912%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="builder-base-trophies.html">builderBaseTrophies</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The current number of builder base trophies earned by the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1670758130%2FProperties%2F-681682652" anchor-label="clan" id="1670758130%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clan.html"><span><span>clan</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1670758130%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="clan.html">clan</a><span class="token operator">: </span><a href="../-player-ranking-clan/index.html">PlayerRankingClan</a></div><div class="brief "><p class="paragraph">Information about the player's clan and its ranking.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="103529857%2FProperties%2F-681682652" anchor-label="expLevel" id="103529857%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="exp-level.html"><span>exp</span><wbr></wbr><span><span>Level</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="103529857%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="exp-level.html">expLevel</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The experience level of the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1882332253%2FProperties%2F-681682652" anchor-label="name" id="1882332253%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="name.html"><span><span>name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1882332253%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="name.html">name</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The name of the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1420444453%2FProperties%2F-681682652" anchor-label="previousRank" id="1420444453%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="previous-rank.html"><span>previous</span><wbr></wbr><span><span>Rank</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1420444453%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="previous-rank.html">previousRank</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The previous rank of the player in the builder base rankings.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1507504604%2FProperties%2F-681682652" anchor-label="rank" id="1507504604%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="rank.html"><span><span>rank</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1507504604%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="rank.html">rank</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The current rank of the player in the builder base rankings.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1967427784%2FProperties%2F-681682652" anchor-label="tag" id="-1967427784%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="tag.html"><span><span>tag</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1967427784%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="tag.html">tag</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The tag of the player.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="796128075%2FProperties%2F-681682652" anchor-label="versusBattleWins" id="796128075%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="versus-battle-wins.html"><span>versus</span><wbr></wbr><span>Battle</span><wbr></wbr><span><span>Wins</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="796128075%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="versus-battle-wins.html">versusBattleWins</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The total number of versus battle wins achieved by the player in the builder base.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1482411404%2FProperties%2F-681682652" anchor-label="versusTrophies" id="1482411404%2FProperties%2F-681682652" data-filterable-set=":clashJ:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":clashJ:dokkaHtml/main" data-filterable-set=":clashJ:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="versus-trophies.html"><span>versus</span><wbr></wbr><span><span>Trophies</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1482411404%2FProperties%2F-681682652"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":clashJ:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="versus-trophies.html">versusTrophies</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The current number of versus trophies earned by the player in the builder base.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
