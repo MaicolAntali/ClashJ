@@ -1,6 +1,6 @@
 package io.github.maicolantali.event
 
-import io.github.maicolantali.model.player.Player
+import io.github.maicolantali.types.api.model.players.player.Player
 
 /**
  * Sealed class representing specific player-related monitored events.
