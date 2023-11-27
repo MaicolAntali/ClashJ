@@ -2,12 +2,12 @@ package io.github.maicolantali
 
 import io.github.maicolantali.exception.ClashJException
 import io.github.maicolantali.http.query.SearchClanQuery
-import io.github.maicolantali.model.clan.Clan
-import io.github.maicolantali.model.clan.ClanWar
-import io.github.maicolantali.model.clan.component.ClanMemberRole
-import io.github.maicolantali.model.clan.component.ClanType
-import io.github.maicolantali.model.clan.component.WarState
-import io.github.maicolantali.model.player.Player
+import io.github.maicolantali.types.api.enums.ClanMemberRole
+import io.github.maicolantali.types.api.enums.ClanType
+import io.github.maicolantali.types.api.enums.WarState
+import io.github.maicolantali.types.api.model.clans.clan.Clan
+import io.github.maicolantali.types.api.model.clans.clanwar.ClanWar
+import io.github.maicolantali.types.api.model.players.player.Player
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.engine.mock.respondBadRequest

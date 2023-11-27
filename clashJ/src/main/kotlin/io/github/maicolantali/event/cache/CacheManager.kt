@@ -1,8 +1,8 @@
 package io.github.maicolantali.event.cache
 
-import io.github.maicolantali.model.clan.Clan
-import io.github.maicolantali.model.clan.ClanWar
-import io.github.maicolantali.model.player.Player
+import io.github.maicolantali.types.api.model.clans.clan.Clan
+import io.github.maicolantali.types.api.model.clans.clanwar.ClanWar
+import io.github.maicolantali.types.api.model.players.player.Player
 import java.lang.IllegalArgumentException
 import java.util.concurrent.ConcurrentHashMap
 

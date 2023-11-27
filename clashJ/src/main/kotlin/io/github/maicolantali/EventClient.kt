@@ -9,11 +9,11 @@ import io.github.maicolantali.event.WarEvents
 import io.github.maicolantali.event.cache.CacheManager
 import io.github.maicolantali.exception.MaintenanceException
 import io.github.maicolantali.http.RequestHandler
-import io.github.maicolantali.model.clan.Clan
-import io.github.maicolantali.model.clan.ClanWar
-import io.github.maicolantali.model.clan.component.ClanMember
-import io.github.maicolantali.model.clan.component.ClanWarAttack
-import io.github.maicolantali.model.player.Player
+import io.github.maicolantali.types.api.model.clans.clan.Clan
+import io.github.maicolantali.types.api.model.clans.clanMember.ClanMember
+import io.github.maicolantali.types.api.model.clans.clanwar.ClanWar
+import io.github.maicolantali.types.api.model.clans.clanwar.ClanWarAttack
+import io.github.maicolantali.types.api.model.players.player.Player
 import io.github.maicolantali.types.internal.configuration.ClientConfiguration
 import io.github.maicolantali.util.adjustTag
 import kotlinx.coroutines.CoroutineScope

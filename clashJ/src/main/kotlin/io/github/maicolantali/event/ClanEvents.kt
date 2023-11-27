@@ -1,7 +1,7 @@
 package io.github.maicolantali.event
 
-import io.github.maicolantali.model.clan.Clan
-import io.github.maicolantali.model.clan.component.ClanMember
+import io.github.maicolantali.types.api.model.clans.clan.Clan
+import io.github.maicolantali.types.api.model.clans.clanMember.ClanMember
 
 /**
  * Sealed class representing specific clan-related events.

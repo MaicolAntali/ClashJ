@@ -1,7 +1,7 @@
 package io.github.maicolantali.event
 
 import io.github.maicolantali.event.cache.CacheManager
-import io.github.maicolantali.model.player.Player
+import io.github.maicolantali.types.api.model.players.player.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
