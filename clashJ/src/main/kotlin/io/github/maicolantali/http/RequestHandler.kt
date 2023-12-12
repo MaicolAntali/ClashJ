@@ -40,7 +40,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
-import org.slf4j.LoggerFactory
+import mu.KLogging
 import java.time.LocalDateTime
 import java.util.Base64
 import java.util.concurrent.atomic.AtomicBoolean
@@ -61,9 +61,8 @@ class RequestHandler(
     private val engine: HttpClientEngine,
     private val throttler: BaseThrottler,
 ) {
-    private companion object {
+    private companion object : KLogging() {
         private const val MAX_KEY_COUNT = 10
-        private val log = LoggerFactory.getLogger(RequestHandler::class.java)
     }
 
     private val keysSet = SafeSet<String>()
@@ -93,7 +92,7 @@ class RequestHandler(
      */
     suspend fun login() =
         coroutineScope {
-            log.info("Logging into the developer website.")
+            logger.info("Logging into the developer website.")
 
             keysSet.clear()
 
@@ -110,29 +109,29 @@ class RequestHandler(
                     break // Success, exit the loop
                 } catch (e: HttpRequestTimeoutException) {
                     if (attempt == 3) {
-                        log.error("Login operation failed. Error ${e.message}")
+                        logger.error("Login operation failed. Error ${e.message}")
                         throw e
                     }
 
-                    log.warn("Login operation failed. Retry in $delayMillis ms")
+                    logger.warn("Login operation failed. Retry in $delayMillis ms")
                     delay(delayMillis)
                     delayMillis *= 2 // Exponential backoff
                 }
             }
 
             if (loginResponse.status == HttpStatusCode.Forbidden) {
-                log.error("The provided credential are incorrect or invalid.")
+                logger.error("The provided credential are incorrect or invalid.")
                 closeHttpClient()
                 throw InvalidCredentialException("The provided credential are incorrect or invalid.")
             }
-            log.info("Successfully logged in.")
+            logger.info("Successfully logged in.")
 
             val ip: String =
                 async {
                     getIp(loginResponse.body<JsonObject>().getAsJsonPrimitive("temporaryAPIToken").asString)
                 }.await()
 
-            log.info("The current IP address has been successfully retrieved. IP address: $ip")
+            logger.info("The current IP address has been successfully retrieved. IP address: $ip")
 
             retriveKeys(ip, loginResponse.headers["set-cookie"]!!)
         }
@@ -217,7 +216,7 @@ class RequestHandler(
 
                                 continue
                             } else {
-                                log.error("Forbidden, resp: $responseJson, reason: ${responseJson.get("reason")}")
+                                logger.error("Forbidden, resp: $responseJson, reason: ${responseJson.get("reason")}")
                             }
 
                             throw HttpException("Forbidden, resp: $responseJson, reason: ${responseJson.get("reason")}")
@@ -228,7 +227,7 @@ class RequestHandler(
                         }
 
                         HttpStatusCode.TooManyRequests -> {
-                            log.error("Reached the maximum rate-limits by the API. Consider a new number of request allowed per second.")
+                            logger.error("Reached the maximum rate-limits by the API. Consider a new number of request allowed per second.")
                             throw HttpException(
                                 "Reached the maximum rate-limits by the API. Consider a new number of request allowed per second.",
                             )
@@ -251,13 +250,13 @@ class RequestHandler(
                         throw BadGatewayException("The API timed out waiting for the request.")
                     }
 
-                    log.debug("HttpRequestTimeoutException caught. Retry to execute the request: $url.")
+                    logger.debug("HttpRequestTimeoutException caught. Retry to execute the request: $url.")
                     delay(tries * 3 + 1L)
                     continue
                 }
             }
 
-            log.error("Reached the maxRetryAttempts (${requestOptions.maxRetryAttempts}) without a valid responses.")
+            logger.error("Reached the maxRetryAttempts (${requestOptions.maxRetryAttempts}) without a valid responses.")
             throw ClashJException("Reached the maxRetryAttempts (${requestOptions.maxRetryAttempts}) without a valid responses.")
         }
 
@@ -283,7 +282,7 @@ class RequestHandler(
 
         // Filter key for the specified key name,
         val keys = keyListResponse.keys.toMutableList()
-        log.info("${keys.size} valid keys retrieved from the developer site.")
+        logger.info("${keys.size} valid keys retrieved from the developer site.")
 
         // Revoke keys that have not the current ip
         keys.filter { it.name == keyOptions.keyName }
@@ -315,14 +314,14 @@ class RequestHandler(
         }
 
         if (keysSet.size() < keyOptions.keyCount && keys.size == 10) {
-            log.warn(
+            logger.warn(
                 "Required ${keyOptions.keyCount} keys, but maximum ${keysSet.size()} found/made (limit: 10/acc). " +
                     "Please delete keys or decrease `keyCount`.",
             )
         }
 
         if (keysSet.size() == 0) {
-            log.error(
+            logger.error(
                 "${keys.size} existing API keys, none match keyName: ${keyOptions.keyName}. " +
                     "Specify another keyName or delete unused keys at 'https://developer.clashofclans.com'.",
             )
@@ -356,7 +355,7 @@ class RequestHandler(
                     LocalDateTime.now()
                 }
             }"}"""
-        log.info("Generating a new key based on the data: $keyJson")
+        logger.info("Generating a new key based on the data: $keyJson")
 
         val response: CreateKeyResponse =
             httpClient.post("$DEV_SITE_BASE_URL/apikey/create") {
@@ -365,7 +364,7 @@ class RequestHandler(
             }.body()
 
         if (response.status.message != "ok") {
-            log.error("Failed to create the new API Key. Details: ${response.status.detail}")
+            logger.error("Failed to create the new API Key. Details: ${response.status.detail}")
             closeHttpClient()
             throw HttpException("Failed to create the new API Key. Details: ${response.status.detail}")
         }
@@ -386,7 +385,7 @@ class RequestHandler(
         key: Key,
         cookie: String,
     ): Boolean {
-        log.info("Removing the key named: ${key.name} and IP: ${key.cidrRanges} (as it does not match our current IP address).")
+        logger.info("Removing the key named: ${key.name} and IP: ${key.cidrRanges} (as it does not match our current IP address).")
 
         val response =
             httpClient.post("${DEV_SITE_BASE_URL}/apikey/revoke") {

@@ -8,7 +8,6 @@ import io.github.maicolantali.event.PlayerEvents
 import io.github.maicolantali.event.WarEvents
 import io.github.maicolantali.event.cache.CacheManager
 import io.github.maicolantali.exception.MaintenanceException
-import io.github.maicolantali.http.RequestHandler
 import io.github.maicolantali.types.api.model.clans.clan.Clan
 import io.github.maicolantali.types.api.model.clans.clanMember.ClanMember
 import io.github.maicolantali.types.api.model.clans.clanwar.ClanWar
@@ -25,7 +24,6 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.slf4j.LoggerFactory
 import java.time.LocalDateTime
 import java.util.concurrent.Executors
 
@@ -62,10 +60,6 @@ class EventClient(
     private var isApiInMaintenance = false
     private var maintenanceStartTime: LocalDateTime? = null
 
-    private companion object {
-        private val log = LoggerFactory.getLogger(RequestHandler::class.java)
-    }
-
     /**
      * Starts polling for events and updating player data.
      *
@@ -93,7 +87,7 @@ class EventClient(
      * @param playerTag The player tag that will be monitored and updated.
      */
     fun addPlayerToUpdateQueue(playerTag: String) {
-        log.info("Adding the player tag: $playerTag to the update queue for monitoring.")
+        logger.info("Adding the player tag: $playerTag to the update queue for monitoring.")
         players.add(adjustTag(playerTag))
     }
 
@@ -107,7 +101,7 @@ class EventClient(
      * @param clanTag The clan tag that will be monitored and updated.
      */
     fun addClanToUpdateQueue(clanTag: String) {
-        log.info("Adding the clan tag: $clanTag to the update queue for monitoring.")
+        logger.info("Adding the clan tag: $clanTag to the update queue for monitoring.")
         clans.add(adjustTag(clanTag))
     }
 
@@ -121,7 +115,7 @@ class EventClient(
      * @param clanTag The clan tag for which war events will be monitored and updated.
      */
     fun addWarToUpdateQueue(clanTag: String) {
-        log.info("Adding the clan tag: $clanTag to the update queue for monitoring war events.")
+        logger.info("Adding the clan tag: $clanTag to the update queue for monitoring war events.")
         wars.add(adjustTag(clanTag))
     }
 
@@ -135,7 +129,7 @@ class EventClient(
      * @param playerTag The player tag that will no longer be monitored.
      */
     fun removePlayerToUpdateQueue(playerTag: String) {
-        log.info("Removing the player tag: $playerTag from the update queue.")
+        logger.info("Removing the player tag: $playerTag from the update queue.")
         players.remove(adjustTag(playerTag))
     }
 
@@ -149,7 +143,7 @@ class EventClient(
      * @param clanTag The clan tag that will no longer be monitored.
      */
     fun removeClanToUpdateQueue(clanTag: String) {
-        log.info("Removing the clan tag: $clanTag from the update queue.")
+        logger.info("Removing the clan tag: $clanTag from the update queue.")
         clans.remove(adjustTag(clanTag))
     }
 
@@ -163,7 +157,7 @@ class EventClient(
      * @param clanTag The clan tag for which war events will no longer be monitored.
      */
     fun removeWarToUpdateQueue(clanTag: String) {
-        log.info("Removing the clan tag: $clanTag from the update queue for monitoring war events.")
+        logger.info("Removing the clan tag: $clanTag from the update queue for monitoring war events.")
         wars.remove(adjustTag(clanTag))
     }
 
@@ -278,7 +272,7 @@ class EventClient(
         event: Event<*, *, *, *>,
         callback: Callback<*, *, *>,
     ) {
-        log.info("Adding a new callback for the $event event.")
+        logger.info("Adding a new callback for the $event event.")
 
         eventCallbacks
             .computeIfAbsent(event::class.java.superclass) { HashMap() }
@@ -294,14 +288,14 @@ class EventClient(
 
                         if (isApiInMaintenance) {
                             isApiInMaintenance = false
-                            log.info("API is back online. Resuming updates.")
+                            logger.info("API is back online. Resuming updates.")
 
                             triggerEvent(maintenanceStartTime, LocalDateTime.now(), MaintenanceEvents::class.java)
                             maintenanceStartTime = null
                         }
                     } catch (e: MaintenanceException) {
                         if (!isApiInMaintenance) {
-                            log.info("API is in maintenance. Stopping updates.")
+                            logger.info("API is in maintenance. Stopping updates.")
                             isApiInMaintenance = true // API is in maintenance
                         }
                         if (maintenanceStartTime == null) {
@@ -309,7 +303,7 @@ class EventClient(
                             triggerEvent(maintenanceStartTime, eventType = MaintenanceEvents::class.java)
                         }
                     } catch (e: Exception) {
-                        log.error("Error checking API maintenance status: ${e.message}")
+                        logger.error("Error checking API maintenance status: ${e.message}")
                     }
 
                     delay(config.event.maintenanceCheckInterval)
@@ -340,10 +334,10 @@ class EventClient(
 
                             delayMillis = 100L // Reset delay on successful request
                         } catch (e: MaintenanceException) {
-                            log.info("API is in maintenance. Stopping updates (${type.simpleName}: $tag).")
+                            logger.info("API is in maintenance. Stopping updates (${type.simpleName}: $tag).")
                             isApiInMaintenance = true
                         } catch (e: Exception) {
-                            log.error("Error: ${e.message}")
+                            logger.error("Error: ${e.message}")
                             delay(delayMillis) // Exponential backoff
                             delayMillis *= 2
                         }

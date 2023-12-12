@@ -32,10 +32,12 @@ import io.github.maicolantali.types.internal.configuration.ClientConfiguration
 import io.github.maicolantali.util.API_BASE_URL
 import io.github.maicolantali.util.encodeTag
 import io.github.maicolantali.util.getConfiguredRequestHandler
+import io.github.maicolantali.util.level
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import mu.KLogging
 
 /**
  * Client class is used to interact with the Clash of Clans API.
@@ -53,7 +55,13 @@ open class Client(
     internal open val password: String,
     clientConfiguration: ClientConfiguration.() -> Unit = {},
 ) {
+    internal companion object : KLogging()
+
     internal val config = ClientConfiguration().apply(clientConfiguration)
+
+    init {
+        logger("io.github.maicolantali").level = config.logging.clientLogLevel
+    }
 
     private val requestHandler by lazy { getConfiguredRequestHandler() }
 
