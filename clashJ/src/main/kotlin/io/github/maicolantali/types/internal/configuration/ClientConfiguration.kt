@@ -14,13 +14,12 @@ import io.github.maicolantali.http.throttler.BatchThrottler
 data class ClientConfiguration(
     internal var key: KeyConfiguration = KeyConfiguration(),
     internal var httpClient: HttpConfiguration = HttpConfiguration(),
+    internal var logging: LoggingConfiguration = LoggingConfiguration(),
     internal var event: EventConfiguration = EventConfiguration(),
     internal var throttler: BaseThrottler = BatchThrottler(),
 ) {
     /**
-     * Configures the API key settings for the client.
-     *
-     * @param config Lambda function to configure the [KeyConfiguration].
+     * Configures key using the settings specified in [KeyConfiguration].
      */
     fun key(config: KeyConfiguration.() -> Unit) {
         key.config()
@@ -36,9 +35,14 @@ data class ClientConfiguration(
     }
 
     /**
-     * Configures the event handling settings for the client.
-     *
-     * @param config Lambda function to configure the [EventConfiguration].
+     * Configures logging using the settings specified in [LoggingConfiguration].
+     */
+    fun logging(config: LoggingConfiguration.() -> Unit) {
+        logging.config()
+    }
+
+    /**
+     * Configures events using the settings specified in [EventConfiguration].
      */
     fun event(config: EventConfiguration.() -> Unit) {
         event.config()
