@@ -31,11 +31,11 @@ import io.github.maicolantali.types.api.model.players.player.Player
 import io.github.maicolantali.types.internal.configuration.ClientConfiguration
 import io.github.maicolantali.util.API_BASE_URL
 import io.github.maicolantali.util.encodeTag
+import io.github.maicolantali.util.getConfiguredDispatcher
 import io.github.maicolantali.util.getConfiguredRequestHandler
 import io.github.maicolantali.util.level
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import mu.KLogging
 
@@ -58,6 +58,7 @@ open class Client(
     internal companion object : KLogging()
 
     internal val config = ClientConfiguration().apply(clientConfiguration)
+    internal val dispatcher = getConfiguredDispatcher()
 
     init {
         logger("io.github.maicolantali").level = config.logging.clientLogLevel
@@ -87,7 +88,7 @@ open class Client(
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
     suspend fun searchClan(searchClanQuery: SearchClanQuery): Deferred<ClanList> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/clans?${searchClanQuery.createQuery()}")
         }
     }
@@ -103,7 +104,7 @@ open class Client(
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
     suspend fun getClanWarLeagueGroup(clanTag: String): Deferred<ClanWarLeagueGroup> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/currentwar/leaguegroup")
         }
     }
@@ -119,7 +120,7 @@ open class Client(
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
     suspend fun getClanWarLeagueWar(warTag: String): Deferred<ClanWar> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/clanwarleagues/wars/${encodeTag(warTag)}")
         }
     }
@@ -135,7 +136,7 @@ open class Client(
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
     suspend fun getClanCurrentWar(clanTag: String): Deferred<ClanWar> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/currentwar")
         }
     }
@@ -151,7 +152,7 @@ open class Client(
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
     suspend fun getClan(clanTag: String): Deferred<Clan> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}")
         }
     }
@@ -171,7 +172,7 @@ open class Client(
         clanTag: String,
         pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<ClanWarLog> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/warlog?${pagination.createQuery()}")
         }
     }
@@ -191,7 +192,7 @@ open class Client(
         clanTag: String,
         pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<ClanMemberList> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/members?${pagination.createQuery()}")
         }
     }
@@ -211,7 +212,7 @@ open class Client(
         clanTag: String,
         pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<ClanCapitalRaidSeasons> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/clans/${encodeTag(clanTag)}/capitalraidseasons?${pagination.createQuery()}")
         }
     }
@@ -227,7 +228,7 @@ open class Client(
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
     suspend fun getPlayer(playerTag: String): Deferred<Player> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/players/${encodeTag(playerTag)}")
         }
     }
@@ -242,7 +243,7 @@ open class Client(
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
     suspend fun getCapitalLeagues(pagination: PaginationQuery = PaginationQuery()): Deferred<SimpleLeagueList> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/capitalleagues?${pagination.createQuery()}")
         }
     }
@@ -262,7 +263,7 @@ open class Client(
         leagueId: String,
         pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<SimpleLeague> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/capitalleagues/$leagueId?${pagination.createQuery()}")
         }
     }
@@ -277,7 +278,7 @@ open class Client(
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
     suspend fun getLeagues(pagination: PaginationQuery = PaginationQuery()): Deferred<LeagueList> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/leagues?${pagination.createQuery()}")
         }
     }
@@ -297,7 +298,7 @@ open class Client(
         leagueId: String,
         pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<League> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/leagues/$leagueId?${pagination.createQuery()}")
         }
     }
@@ -317,7 +318,7 @@ open class Client(
         leagueId: String,
         pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<LeagueSeasonList> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/leagues/$leagueId/seasons?${pagination.createQuery()}")
         }
     }
@@ -339,7 +340,7 @@ open class Client(
         seasonId: String,
         pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<PlayerRankingList> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/leagues/$leagueId/seasons/$seasonId?${pagination.createQuery()}")
         }
     }
@@ -354,7 +355,7 @@ open class Client(
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
     suspend fun getBuilderBaseLeagues(pagination: PaginationQuery = PaginationQuery()): Deferred<SimpleLeagueList> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/builderbaseleagues?${pagination.createQuery()}")
         }
     }
@@ -374,7 +375,7 @@ open class Client(
         leagueId: Int,
         pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<SimpleLeague> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/builderbaseleagues/$leagueId?${pagination.createQuery()}")
         }
     }
@@ -389,7 +390,7 @@ open class Client(
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
     suspend fun getWarLeagues(pagination: PaginationQuery = PaginationQuery()): Deferred<SimpleLeagueList> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/warleagues?${pagination.createQuery()}")
         }
     }
@@ -409,7 +410,7 @@ open class Client(
         leagueId: Int,
         pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<SimpleLeague> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/warleagues/$leagueId?${pagination.createQuery()}")
         }
     }
@@ -424,7 +425,7 @@ open class Client(
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
     suspend fun getLocations(pagination: PaginationQuery = PaginationQuery()): Deferred<LocationList> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/locations?${pagination.createQuery()}")
         }
     }
@@ -440,7 +441,7 @@ open class Client(
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
     suspend fun getLocation(locationId: String): Deferred<Location> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/locations/$locationId")
         }
     }
@@ -460,7 +461,7 @@ open class Client(
         locationId: String,
         pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<ClanRankingList> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/clans?${pagination.createQuery()}")
         }
     }
@@ -480,7 +481,7 @@ open class Client(
         locationId: String,
         pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<PlayerRankingList> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/players?${pagination.createQuery()}")
         }
     }
@@ -502,7 +503,7 @@ open class Client(
         locationId: String,
         pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<ClanBuilderBaseRankingList> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/clans-builder-base?${pagination.createQuery()}")
         }
     }
@@ -525,7 +526,7 @@ open class Client(
         locationId: String,
         pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<PlayerBuilderBaseRankingList> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/players-builder-base?${pagination.createQuery()}")
         }
     }
@@ -546,7 +547,7 @@ open class Client(
         locationId: String,
         pagination: PaginationQuery = PaginationQuery(),
     ): Deferred<ClanCapitalRankingList> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/locations/$locationId/rankings/capitals?${pagination.createQuery()}")
         }
     }
@@ -560,7 +561,7 @@ open class Client(
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
     suspend fun getCurrentGoldPass(): Deferred<GoldPassSeason> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/goldpass/seasons/current")
         }
     }
@@ -576,7 +577,7 @@ open class Client(
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
     suspend fun getPlayerLabels(pagination: PaginationQuery = PaginationQuery()): Deferred<LabelList> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/labels/players?$pagination.createQuery()")
         }
     }
@@ -592,7 +593,7 @@ open class Client(
      * @throws BadGatewayException If the API returns an unexpected gateway exception.
      */
     suspend fun getClanLabels(pagination: PaginationQuery = PaginationQuery()): Deferred<LabelList> {
-        return CoroutineScope(Dispatchers.IO).async {
+        return CoroutineScope(dispatcher).async {
             requestHandler.request("$API_BASE_URL/labels/clans?${pagination.createQuery()}")
         }
     }

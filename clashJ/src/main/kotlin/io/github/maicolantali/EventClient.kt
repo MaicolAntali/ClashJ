@@ -18,14 +18,12 @@ import io.github.maicolantali.util.adjustTag
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
-import java.util.concurrent.Executors
 
 /**
  * Client for managing and monitoring events related to players and clans.
@@ -43,8 +41,7 @@ class EventClient(
     override val password: String,
     clientConfiguration: ClientConfiguration.() -> Unit = {},
 ) : Client(email, password, clientConfiguration) {
-    // Dispatcher & Polling job
-    private val dispatcher = Executors.newFixedThreadPool(config.event.nThread).asCoroutineDispatcher()
+    // Polling job
     private var job: Job? = null
 
     // Callbacks

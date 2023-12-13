@@ -8,7 +8,6 @@ package io.github.maicolantali.types.internal.configuration
  * @property maintenanceCheckInterval The interval, in milliseconds, for maintenance checks. Default is 30,000 (30 seconds).
  */
 data class EventConfiguration(
-    var nThread: Int = 4,
     var pollingInterval: Long = 15_000,
     var maintenanceCheckInterval: Long = 30_000,
 )
