@@ -6,6 +6,9 @@ changelog:
     - title: ⚠️Breaking changes
       labels:
         - breaking changes
+    - title: ⚙️ Refactoring
+      labels:
+        - refactoring
     - title: 📑 Documentations
       labels:
         - documentation
