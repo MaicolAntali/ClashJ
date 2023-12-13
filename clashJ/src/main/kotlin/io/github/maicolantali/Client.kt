@@ -31,6 +31,7 @@ import io.github.maicolantali.types.api.model.players.player.Player
 import io.github.maicolantali.types.internal.configuration.ClientConfiguration
 import io.github.maicolantali.util.API_BASE_URL
 import io.github.maicolantali.util.encodeTag
+import io.github.maicolantali.util.getConfiguredDispatcher
 import io.github.maicolantali.util.getConfiguredRequestHandler
 import io.github.maicolantali.util.level
 import kotlinx.coroutines.CoroutineScope
@@ -58,6 +59,7 @@ open class Client(
     internal companion object : KLogging()
 
     internal val config = ClientConfiguration().apply(clientConfiguration)
+    internal val dispatcher = getConfiguredDispatcher()
 
     init {
         logger("io.github.maicolantali").level = config.logging.clientLogLevel
