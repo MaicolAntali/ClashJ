@@ -120,7 +120,7 @@ class RequestHandlerTest {
                     )
 
                 val e = assertThrows<ClashJException> { requestHandler.request<String>("url", RequestOptions()) }
-                assertThat(e).hasMessageContaining("Not able to handle this response")
+                assertThat(e).hasMessageContaining("Unable to handle this response")
             }
         }
 
@@ -164,7 +164,7 @@ class RequestHandlerTest {
                     )
 
                 val e = assertThrows<HttpException> { requestHandler.request<String>("url", RequestOptions()) }
-                assertThat(e).hasMessageContaining("Reached the maximum rate-limits by the API")
+                assertThat(e).hasMessageContaining("Reached maximum rate-limits")
             }
         }
 
