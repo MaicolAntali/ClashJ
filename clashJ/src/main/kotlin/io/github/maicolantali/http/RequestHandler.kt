@@ -1,5 +1,6 @@
 package io.github.maicolantali.http
 
+import ch.qos.logback.classic.Level
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import io.github.maicolantali.exception.BadGatewayException
@@ -19,6 +20,8 @@ import io.github.maicolantali.util.API_BASE_URL
 import io.github.maicolantali.util.Credential
 import io.github.maicolantali.util.DEV_SITE_BASE_URL
 import io.github.maicolantali.util.SafeSet
+import io.github.maicolantali.util.setLevel
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.HttpClientEngine
@@ -40,7 +43,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
-import mu.KLogging
 import java.time.LocalDateTime
 import java.util.Base64
 import java.util.concurrent.atomic.AtomicBoolean
@@ -61,12 +63,17 @@ class RequestHandler(
     private val engine: HttpClientEngine,
     private val throttler: BaseThrottler,
 ) {
-    private companion object : KLogging() {
+    private companion object {
         private const val MAX_KEY_COUNT = 10
     }
 
     private val keysSet = SafeSet<String>()
     private val isLoginInProgress = AtomicBoolean(false)
+    private val logger = KotlinLogging.logger {}
+
+    init {
+        logger.setLevel(Level.TRACE)
+    }
 
     private val httpClient =
         HttpClient(engine) {
@@ -92,7 +99,7 @@ class RequestHandler(
      */
     suspend fun login() =
         coroutineScope {
-            logger.info("Logging into the developer website.")
+            logger.info { "Initiating login process to the developer website." }
 
             keysSet.clear()
 
@@ -109,30 +116,30 @@ class RequestHandler(
                     break // Success, exit the loop
                 } catch (e: HttpRequestTimeoutException) {
                     if (attempt == 3) {
-                        logger.error("Login operation failed. Error ${e.message}")
+                        logger.error(e) { "Login operation failed after multiple attempts. Error: ${e.message}" }
                         throw e
                     }
 
-                    logger.warn("Login operation failed. Retry in $delayMillis ms")
+                    logger.warn { "Login operation failed. Retrying in $delayMillis ms." }
                     delay(delayMillis)
                     delayMillis *= 2 // Exponential backoff
                 }
             }
 
             if (loginResponse.status == HttpStatusCode.Forbidden) {
-                logger.error("The provided credential are incorrect or invalid.")
+                logger.error { "Login failed. The provided credentials are incorrect or invalid." }
                 closeHttpClient()
-                throw InvalidCredentialException("The provided credential are incorrect or invalid.")
+                throw InvalidCredentialException("The provided credentials are incorrect or invalid.")
             }
-            logger.info("Successfully logged in.")
+            logger.info { "Login successful." }
 
             val ip: String =
                 async {
+                    logger.trace { "Retrieving the current IP address." }
                     getIp(loginResponse.body<JsonObject>().getAsJsonPrimitive("temporaryAPIToken").asString)
                 }.await()
 
-            logger.info("The current IP address has been successfully retrieved. IP address: $ip")
-
+            logger.info { "Successfully retrieved the current IP address. IP address: $ip" }
             retriveKeys(ip, loginResponse.headers["set-cookie"]!!)
         }
 
@@ -188,6 +195,8 @@ class RequestHandler(
         requestOptions: RequestOptions,
     ): T =
         coroutineScope {
+            logger.trace { "Executing request to: $url" }
+
             for (tries in 0..requestOptions.maxRetryAttempts) {
                 try {
                     val response =
@@ -199,6 +208,7 @@ class RequestHandler(
 
                     when (response.status) {
                         HttpStatusCode.OK -> {
+                            logger.trace { "Request successful to: $url" }
                             return@coroutineScope response.body<T>()
                         }
 
@@ -216,48 +226,54 @@ class RequestHandler(
 
                                 continue
                             } else {
-                                logger.error("Forbidden, resp: $responseJson, reason: ${responseJson.get("reason")}")
+                                logger.error { "Forbidden for: $url, Response: $responseJson, Reason: ${responseJson.get("reason")}" }
                             }
 
-                            throw HttpException("Forbidden, resp: $responseJson, reason: ${responseJson.get("reason")}")
+                            throw HttpException("Forbidden for: $url, Response: $responseJson, Reason: ${responseJson.get("reason")}")
                         }
 
                         HttpStatusCode.ServiceUnavailable -> {
-                            throw MaintenanceException("The API is in maintenance.")
+                            logger.error { "API is in maintenance for: $url" }
+                            throw MaintenanceException("The API is in maintenance for: $url")
                         }
 
                         HttpStatusCode.TooManyRequests -> {
-                            logger.error("Reached the maximum rate-limits by the API. Consider a new number of request allowed per second.")
-                            throw HttpException(
-                                "Reached the maximum rate-limits by the API. Consider a new number of request allowed per second.",
-                            )
+                            logger.error { "Reached maximum rate-limits for: $url. Consider adjusting the rate limits." }
+                            throw HttpException("Reached maximum rate-limits for: $url. Consider adjusting the rate limits.")
                         }
 
                         HttpStatusCode.NotFound -> {
-                            throw NotFoundException("Not Found (404): ${response.body<String>()}")
+                            val errorMsg = "Not Found (404) for: $url. Response: ${response.body<String>()}"
+                            logger.error { errorMsg }
+                            throw NotFoundException(errorMsg)
                         }
 
                         HttpStatusCode.InternalServerError, HttpStatusCode.BadGateway, HttpStatusCode.GatewayTimeout -> {
-                            throw BadGatewayException("Error (${response.status}): ${response.body<String>()}")
+                            val errorMsg = "Error (${response.status}) for: $url. Response: ${response.body<String>()}"
+                            logger.error { errorMsg }
+                            throw BadGatewayException(errorMsg)
                         }
 
                         else -> {
-                            throw ClashJException("Not able to handle this response: ${response.body<String>()}")
+                            val errorMsg = "Unable to handle this response for: $url. Response: ${response.body<String>()}"
+                            logger.error { errorMsg }
+                            throw ClashJException(errorMsg)
                         }
                     }
                 } catch (e: HttpRequestTimeoutException) {
                     if (tries > 2) {
-                        throw BadGatewayException("The API timed out waiting for the request.")
+                        logger.error(e) { "API timed out waiting for the request: $url" }
+                        throw BadGatewayException("The API timed out waiting for the request: $url")
                     }
 
-                    logger.debug("HttpRequestTimeoutException caught. Retry to execute the request: $url.")
+                    logger.warn(e) { "HttpRequestTimeoutException caught. Retrying to execute the request: $url." }
                     delay(tries * 3 + 1L)
                     continue
                 }
             }
 
-            logger.error("Reached the maxRetryAttempts (${requestOptions.maxRetryAttempts}) without a valid responses.")
-            throw ClashJException("Reached the maxRetryAttempts (${requestOptions.maxRetryAttempts}) without a valid responses.")
+            logger.error { "Reached the maxRetryAttempts (${requestOptions.maxRetryAttempts}) without valid responses for: $url" }
+            throw ClashJException("Reached the maxRetryAttempts (${requestOptions.maxRetryAttempts}) without valid responses for: $url")
         }
 
     /**
@@ -275,16 +291,18 @@ class RequestHandler(
         currentIp: String,
         cookies: String,
     ) = coroutineScope {
+        logger.trace { "Initiating key retrieval process from the developer site." }
+
         val keyListResponse: KeyListResponse =
             httpClient.post("$DEV_SITE_BASE_URL/apikey/list") {
                 headers.append(HttpHeaders.Cookie, cookies)
             }.body()
 
-        // Filter key for the specified key name,
+        // Filter keys for the specified key name,
         val keys = keyListResponse.keys.toMutableList()
-        logger.info("${keys.size} valid keys retrieved from the developer site.")
+        logger.info { "${keys.size} valid keys retrieved from the developer site." }
 
-        // Revoke keys that have not the current ip
+        // Revoke keys that do not have the current IP
         keys.filter { it.name == keyOptions.keyName }
             .filter { !it.cidrRanges.contains(currentIp) }
             .map { key ->
@@ -292,17 +310,19 @@ class RequestHandler(
                     if (revokeKey(key, cookies)) {
                         keysSet.remove(key.id)
                         keys.remove(key)
+                        logger.info { "Revoked key '${key.key}' as it does not match the current IP address." }
                     }
                 }
             }.joinAll()
 
-        // Append keys that have the current ip
+        // Append keys that have the current IP
         keys.filter { it.name == keyOptions.keyName }
             .filter { it.cidrRanges.contains(currentIp) }
             .takeWhile { keysSet.size() < keyOptions.keyCount }
             .map { key ->
                 launch {
                     keysSet.add(key.key)
+                    logger.info { "Added key '${key.key}' to the key set as it matches the current IP address." }
                 }
             }.joinAll()
 
@@ -311,25 +331,25 @@ class RequestHandler(
             val newKey = createKey(currentIp, cookies)
             keysSet.add(newKey.key)
             keys.add(newKey)
+            logger.info { "Created a new key '${newKey.key}' and added it to the key set." }
         }
 
         if (keysSet.size() < keyOptions.keyCount && keys.size == 10) {
-            logger.warn(
+            val warnMsg =
                 "Required ${keyOptions.keyCount} keys, but maximum ${keysSet.size()} found/made (limit: 10/acc). " +
-                    "Please delete keys or decrease `keyCount`.",
-            )
+                    "Please delete keys or decrease `keyCount`."
+            logger.warn { warnMsg }
         }
 
         if (keysSet.size() == 0) {
-            logger.error(
-                "${keys.size} existing API keys, none match keyName: ${keyOptions.keyName}. " +
-                    "Specify another keyName or delete unused keys at 'https://developer.clashofclans.com'.",
-            )
-            throw ClashJException(
-                "${keys.size} existing API keys, none match keyName: ${keyOptions.keyName}. " +
-                    "Specify another keyName or delete unused keys at 'https://developer.clashofclans.com'.",
-            )
+            val errorMessage =
+                "${keys.size} existing API keys, none match keyName: ${keyOptions.keyName} " +
+                    "Specify another keyName or delete unused keys at 'https://developer.clashofclans.com'."
+            logger.error { errorMessage }
+            throw ClashJException(errorMessage)
         }
+
+        logger.trace { "Key retrieval and processing completed successfully." }
     }
 
     /**
@@ -355,7 +375,8 @@ class RequestHandler(
                     LocalDateTime.now()
                 }
             }"}"""
-        logger.info("Generating a new key based on the data: $keyJson")
+
+        logger.info { "Generating a new API key with the following data: $keyJson" }
 
         val response: CreateKeyResponse =
             httpClient.post("$DEV_SITE_BASE_URL/apikey/create") {
@@ -364,11 +385,14 @@ class RequestHandler(
             }.body()
 
         if (response.status.message != "ok") {
-            logger.error("Failed to create the new API Key. Details: ${response.status.detail}")
             closeHttpClient()
-            throw HttpException("Failed to create the new API Key. Details: ${response.status.detail}")
+            val errorMessage = "Failed to create a new API key. Details: ${response.status.detail}"
+            logger.error { errorMessage }
+            throw HttpException(errorMessage)
         }
 
+        logger.info { "Successfully created a new API key: ${response.key.key}" }
+        logger.trace { "API key creation process completed successfully." }
         return response.key
     }
 
@@ -385,7 +409,8 @@ class RequestHandler(
         key: Key,
         cookie: String,
     ): Boolean {
-        logger.info("Removing the key named: ${key.name} and IP: ${key.cidrRanges} (as it does not match our current IP address).")
+        logger.trace { "Initiating revocation process for the key named: ${key.name} with IP: ${key.cidrRanges}" }
+        logger.info { "Revoking the key named: ${key.name} with IP: ${key.cidrRanges} (as it does not match our current IP address)." }
 
         val response =
             httpClient.post("${DEV_SITE_BASE_URL}/apikey/revoke") {
@@ -393,6 +418,13 @@ class RequestHandler(
                 headers.append(HttpHeaders.Cookie, cookie)
             }
 
+        if (response.status == HttpStatusCode.OK) {
+            logger.info { "Successfully revoked the key: ${key.name} with IP: ${key.cidrRanges}." }
+        } else {
+            logger.warn { "Failed to revoke the key: ${key.name} with IP: ${key.cidrRanges}. HTTP Status: ${response.status}" }
+        }
+
+        logger.trace { "Revocation process for the key named: ${key.name} with IP: ${key.cidrRanges} completed." }
         return response.status == HttpStatusCode.OK
     }
 
@@ -406,13 +438,24 @@ class RequestHandler(
      * @return The IP address extracted from the token.
      */
     private fun getIp(token: String): String {
+        logger.trace { "Decoding token and extracting IP address." }
+
         val decodedJson = JsonParser.parseString(String(Base64.getDecoder().decode(token.split('.')[1]))).asJsonObject
 
         val cidrs =
             decodedJson.getAsJsonArray("limits")
-                .find { it.asJsonObject.has("cidrs") }!!.asJsonObject!!.getAsJsonArray("cidrs")
+                .find { it.isJsonObject && it.asJsonObject.has("cidrs") }?.asJsonObject?.getAsJsonArray("cidrs")
 
-        return cidrs.first().asString.split('/').first()
+        val ipAddress = cidrs?.firstOrNull()?.asString?.split('/')?.firstOrNull()
+
+        if (ipAddress != null) {
+            logger.info { "Successfully extracted IP address: $ipAddress from the token." }
+        } else {
+            logger.error { "Failed to extract IP address from the token. CIDRs not found or invalid format." }
+        }
+
+        logger.trace { "Token decoding and IP extraction process completed." }
+        return ipAddress ?: throw IllegalStateException("Failed to extract IP address from the token.")
     }
 
     /**

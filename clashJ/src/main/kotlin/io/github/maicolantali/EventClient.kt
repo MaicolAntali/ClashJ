@@ -84,7 +84,7 @@ class EventClient(
      * @param playerTag The player tag that will be monitored and updated.
      */
     fun addPlayerToUpdateQueue(playerTag: String) {
-        logger.info("Adding the player tag: $playerTag to the update queue for monitoring.")
+        logger.info { "Adding player tag: $playerTag to the update queue for monitoring." }
         players.add(adjustTag(playerTag))
     }
 
@@ -98,7 +98,7 @@ class EventClient(
      * @param clanTag The clan tag that will be monitored and updated.
      */
     fun addClanToUpdateQueue(clanTag: String) {
-        logger.info("Adding the clan tag: $clanTag to the update queue for monitoring.")
+        logger.info { "Adding the clan tag: $clanTag to the update queue for monitoring." }
         clans.add(adjustTag(clanTag))
     }
 
@@ -112,7 +112,7 @@ class EventClient(
      * @param clanTag The clan tag for which war events will be monitored and updated.
      */
     fun addWarToUpdateQueue(clanTag: String) {
-        logger.info("Adding the clan tag: $clanTag to the update queue for monitoring war events.")
+        logger.info { "Adding the clan tag: $clanTag to the update queue for monitoring war events." }
         wars.add(adjustTag(clanTag))
     }
 
@@ -126,7 +126,7 @@ class EventClient(
      * @param playerTag The player tag that will no longer be monitored.
      */
     fun removePlayerToUpdateQueue(playerTag: String) {
-        logger.info("Removing the player tag: $playerTag from the update queue.")
+        logger.info { "Removing the player tag: $playerTag from the update queue." }
         players.remove(adjustTag(playerTag))
     }
 
@@ -140,7 +140,7 @@ class EventClient(
      * @param clanTag The clan tag that will no longer be monitored.
      */
     fun removeClanToUpdateQueue(clanTag: String) {
-        logger.info("Removing the clan tag: $clanTag from the update queue.")
+        logger.info { "Removing the clan tag: $clanTag from the update queue." }
         clans.remove(adjustTag(clanTag))
     }
 
@@ -154,7 +154,7 @@ class EventClient(
      * @param clanTag The clan tag for which war events will no longer be monitored.
      */
     fun removeWarToUpdateQueue(clanTag: String) {
-        logger.info("Removing the clan tag: $clanTag from the update queue for monitoring war events.")
+        logger.info { "Removing the clan tag: $clanTag from the update queue for monitoring war events." }
         wars.remove(adjustTag(clanTag))
     }
 
@@ -269,11 +269,12 @@ class EventClient(
         event: Event<*, *, *, *>,
         callback: Callback<*, *, *>,
     ) {
-        logger.info("Adding a new callback for the $event event.")
-
+        logger.info { "Registering a new callback for the ${event::class.java.simpleName} event." }
         eventCallbacks
             .computeIfAbsent(event::class.java.superclass) { HashMap() }
             .computeIfAbsent(event) { mutableListOf(callback) }
+
+        logger.trace { "Callback registered successfully for ${event::class.java.simpleName} event." }
     }
 
     private suspend fun maintenanceCheckRunner() =
@@ -281,28 +282,34 @@ class EventClient(
             launch {
                 while (true) {
                     try {
+                        logger.trace { "Checking API maintenance status..." }
                         getPlayer("#2P2RG0ULV").await()
 
                         if (isApiInMaintenance) {
                             isApiInMaintenance = false
-                            logger.info("API is back online. Resuming updates.")
+                            logger.info { "API is back online. Resuming updates." }
 
                             triggerEvent(maintenanceStartTime, LocalDateTime.now(), MaintenanceEvents::class.java)
                             maintenanceStartTime = null
                         }
                     } catch (e: MaintenanceException) {
                         if (!isApiInMaintenance) {
-                            logger.info("API is in maintenance. Stopping updates.")
+                            logger.info { "API is now in maintenance mode. Automatic updates temporarily paused." }
                             isApiInMaintenance = true // API is in maintenance
                         }
                         if (maintenanceStartTime == null) {
                             maintenanceStartTime = LocalDateTime.now()
+                            logger.info { "Maintenance started at: $maintenanceStartTime" }
                             triggerEvent(maintenanceStartTime, eventType = MaintenanceEvents::class.java)
                         }
                     } catch (e: Exception) {
-                        logger.error("Error checking API maintenance status: ${e.message}")
+                        logger.error(e) { "Error checking API maintenance status: ${e.message}. Retrying..." }
                     }
 
+                    logger.trace {
+                        "Maintenance check iteration completed. " +
+                            "Next check in ${config.event.maintenanceCheckInterval} milliseconds."
+                    }
                     delay(config.event.maintenanceCheckInterval)
                 }
             }
@@ -314,12 +321,15 @@ class EventClient(
         type: Class<T>,
         eventType: Class<*>,
     ) = coroutineScope {
+        logger.trace { "Updater loop started for ${type.simpleName}." }
+
         while (true) {
             if (!isApiInMaintenance) {
                 var delayMillis = 100L // Initial delay for exponential backoff
                 tags.map { tag ->
                     async {
                         try {
+                            logger.trace { "Updating ${type.simpleName} data for tag: $tag." }
                             val currentData: T = apiCall(tag).await()
                             val cacheKeyName = "${type.simpleName}_$tag"
 
@@ -330,11 +340,12 @@ class EventClient(
                             cache.updateCache(cacheKeyName, currentData)
 
                             delayMillis = 100L // Reset delay on successful request
+                            logger.trace { "Update successful for ${type.simpleName} data: $tag." }
                         } catch (e: MaintenanceException) {
-                            logger.info("API is in maintenance. Stopping updates (${type.simpleName}: $tag).")
+                            logger.info { "API is in maintenance. Stopping updates for ${type.simpleName}: $tag." }
                             isApiInMaintenance = true
                         } catch (e: Exception) {
-                            logger.error("Error: ${e.message}")
+                            logger.error(e) { "Error occurred while updating ${type.simpleName} data for tag: $tag." }
                             delay(delayMillis) // Exponential backoff
                             delayMillis *= 2
                         }

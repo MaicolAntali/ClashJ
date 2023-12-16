@@ -153,7 +153,7 @@ class ClientTest {
             val api = createApiWithMockEngine(mockEngine)
 
             val e = assertThrows<ClashJException> { api.searchClan(SearchClanQuery()).await() }
-            assertThat(e).hasMessageContaining("Not able to handle this response")
+            assertThat(e).hasMessageContaining("Unable to handle this response")
         }
     }
 
