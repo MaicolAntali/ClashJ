@@ -11,7 +11,7 @@ import io.github.oshai.kotlinlogging.KLogger
  * @param level The desired log level.
  */
 internal fun KLogger.setLevel(level: Level) {
-    val underlyingLogger = (this as DelegatingKLogger<Logger>).underlyingLogger
+    val underlyingLogger = (this as DelegatingKLogger<*>).underlyingLogger
 
-    underlyingLogger.level = level
+    (underlyingLogger as Logger).level = level
 }
