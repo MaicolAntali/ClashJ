@@ -5,10 +5,9 @@ import io.github.maicolantali.exception.ClashJException
 import io.github.maicolantali.exception.HttpException
 import io.github.maicolantali.exception.InvalidCredentialException
 import io.github.maicolantali.exception.MaintenanceException
-import io.github.maicolantali.http.option.EngineOptions
-import io.github.maicolantali.http.option.KeyOptions
 import io.github.maicolantali.http.option.RequestOptions
-import io.github.maicolantali.http.throttler.BatchThrottler
+import io.github.maicolantali.types.internal.configuration.ClientConfiguration
+import io.github.maicolantali.types.internal.configuration.HttpConfiguration
 import io.github.maicolantali.util.Credential
 import io.github.maicolantali.util.DEV_SITE_BASE_URL
 import io.ktor.client.engine.mock.MockEngine
@@ -38,13 +37,7 @@ class RequestHandlerTest {
                     }
 
                 val requestHandler =
-                    RequestHandler(
-                        Credential("email", "password"),
-                        KeyOptions("name", null, 0),
-                        EngineOptions(),
-                        mockEngine,
-                        BatchThrottler(),
-                    )
+                    getRequestHandlerMocked(mockEngine)
 
                 assertThrows<InvalidCredentialException> { requestHandler.login() }
             }
@@ -61,10 +54,10 @@ class RequestHandlerTest {
                                     content = File("src/test/resources/json/tooManyKeysLogin.json").readText(),
                                     status = HttpStatusCode.OK,
                                     headers =
-                                        headers {
-                                            append("set-cookie", "{session=123}")
-                                            append(HttpHeaders.ContentType, "application/json")
-                                        },
+                                    headers {
+                                        append("set-cookie", "{session=123}")
+                                        append(HttpHeaders.ContentType, "application/json")
+                                    },
                                 )
                             }
 
@@ -73,9 +66,9 @@ class RequestHandlerTest {
                                     content = File("src/test/resources/json/tooManyKeysList.json").readText(),
                                     status = HttpStatusCode.OK,
                                     headers =
-                                        headers {
-                                            append(HttpHeaders.ContentType, "application/json")
-                                        },
+                                    headers {
+                                        append(HttpHeaders.ContentType, "application/json")
+                                    },
                                 )
                             }
 
@@ -85,14 +78,7 @@ class RequestHandlerTest {
                         }
                     }
 
-                val requestHandler =
-                    RequestHandler(
-                        Credential("email", "password"),
-                        KeyOptions("name", null, 0),
-                        EngineOptions(),
-                        mockEngine,
-                        BatchThrottler(),
-                    )
+                val requestHandler = getRequestHandlerMocked(mockEngine)
 
                 assertThrows<ClashJException> { requestHandler.login() }
             }
@@ -110,14 +96,7 @@ class RequestHandlerTest {
                         respondError(HttpStatusCode.NotImplemented)
                     }
 
-                val requestHandler =
-                    RequestHandler(
-                        Credential("email", "password"),
-                        KeyOptions("name", null, 0),
-                        EngineOptions(),
-                        mockEngine,
-                        BatchThrottler(),
-                    )
+                val requestHandler = getRequestHandlerMocked(mockEngine)
 
                 val e = assertThrows<ClashJException> { requestHandler.request<String>("url", RequestOptions()) }
                 assertThat(e).hasMessageContaining("Unable to handle this response")
@@ -132,14 +111,10 @@ class RequestHandlerTest {
                         throw HttpRequestTimeoutException("url", 1000)
                     }
 
-                val requestHandler =
-                    RequestHandler(
-                        Credential("email", "password"),
-                        KeyOptions("name", null, 0),
-                        EngineOptions(requestTimeout = 1000),
-                        mockEngine,
-                        BatchThrottler(),
-                    )
+                val requestHandler = RequestHandler(
+                    Credential("email", "password"),
+                    ClientConfiguration(httpClient = HttpConfiguration(engine = mockEngine, requestTimeout = 1_000)),
+                )
 
                 val e = assertThrows<BadGatewayException> { requestHandler.request<String>("url", RequestOptions()) }
                 assertThat(e).hasMessageContaining("The API timed out waiting for the request")
@@ -155,13 +130,7 @@ class RequestHandlerTest {
                     }
 
                 val requestHandler =
-                    RequestHandler(
-                        Credential("email", "password"),
-                        KeyOptions("name", null, 0),
-                        EngineOptions(),
-                        mockEngine,
-                        BatchThrottler(),
-                    )
+                    getRequestHandlerMocked(mockEngine)
 
                 val e = assertThrows<HttpException> { requestHandler.request<String>("url", RequestOptions()) }
                 assertThat(e).hasMessageContaining("Reached maximum rate-limits")
@@ -177,17 +146,16 @@ class RequestHandlerTest {
                     }
 
                 val requestHandler =
-                    RequestHandler(
-                        Credential("email", "password"),
-                        KeyOptions("name", null, 0),
-                        EngineOptions(),
-                        mockEngine,
-                        BatchThrottler(),
-                    )
+                    getRequestHandlerMocked(mockEngine)
 
                 val e = assertThrows<MaintenanceException> { requestHandler.request<String>("url", RequestOptions()) }
                 assertThat(e).hasMessageContaining("The API is in maintenance")
             }
         }
     }
+
+    private fun getRequestHandlerMocked(mockEngine: MockEngine) = RequestHandler(
+        Credential("email", "password"),
+        ClientConfiguration(httpClient = HttpConfiguration(engine = mockEngine)),
+    )
 }
