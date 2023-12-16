@@ -1,6 +1,5 @@
 package io.github.maicolantali.http
 
-import ch.qos.logback.classic.Level
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import io.github.maicolantali.exception.BadGatewayException
@@ -9,26 +8,20 @@ import io.github.maicolantali.exception.HttpException
 import io.github.maicolantali.exception.InvalidCredentialException
 import io.github.maicolantali.exception.MaintenanceException
 import io.github.maicolantali.exception.NotFoundException
-import io.github.maicolantali.http.option.EngineOptions
-import io.github.maicolantali.http.option.KeyOptions
 import io.github.maicolantali.http.option.RequestOptions
 import io.github.maicolantali.http.response.CreateKeyResponse
 import io.github.maicolantali.http.response.KeyListResponse
 import io.github.maicolantali.http.response.base.Key
-import io.github.maicolantali.http.throttler.BaseThrottler
+import io.github.maicolantali.types.internal.configuration.ClientConfiguration
 import io.github.maicolantali.util.API_BASE_URL
 import io.github.maicolantali.util.Credential
 import io.github.maicolantali.util.DEV_SITE_BASE_URL
 import io.github.maicolantali.util.SafeSet
+import io.github.maicolantali.util.getConfiguredHttpClient
 import io.github.maicolantali.util.setLevel
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.HttpRequestTimeoutException
-import io.ktor.client.plugins.HttpTimeout
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.post
 import io.ktor.client.request.request
 import io.ktor.client.request.setBody
@@ -37,7 +30,6 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
-import io.ktor.serialization.gson.gson
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
@@ -51,42 +43,30 @@ import java.util.concurrent.atomic.AtomicBoolean
  * Handles HTTP requests to and from [DEV_SITE_BASE_URL] and [API_BASE_URL].
  *
  * @param credential The `Credential` object containing the email and password for authentication.
- * @param keyOptions The `KeyOptions` specifying the key name, optional description, and key count.
- * @param engineOptions The `EngineOptions` specifying the connection timeout and request timeout.
- * @param engine The `HttpClientEngine` to be used for HTTP requests.
- * @param throttler The `BaseThrottler` instance responsible for controlling the rate of API requests.
  */
 class RequestHandler(
     private val credential: Credential,
-    private val keyOptions: KeyOptions,
-    private val engineOptions: EngineOptions,
-    private val engine: HttpClientEngine,
-    private val throttler: BaseThrottler,
+    internal val config: ClientConfiguration,
 ) {
     private companion object {
         private const val MAX_KEY_COUNT = 10
     }
 
-    private val keysSet = SafeSet<String>()
-    private val isLoginInProgress = AtomicBoolean(false)
     private val logger = KotlinLogging.logger {}
+    private val isLoginInProgress = AtomicBoolean(false)
+
+    private val keysSet = SafeSet<String>()
+    private val httpClient by lazy { getConfiguredHttpClient() }
+
+    // Config
+    private val keyName by lazy { config.key.keyName }
+    private val keyDescription by lazy { config.key.keyDescription }
+    private val keyCount by lazy { config.key.keyCount }
+    private val throttler by lazy { config.throttler }
 
     init {
-        logger.setLevel(Level.TRACE)
+        logger.setLevel(config.logging.clientLogLevel)
     }
-
-    private val httpClient =
-        HttpClient(engine) {
-            install(HttpTimeout) {
-                requestTimeoutMillis = engineOptions.requestTimeout
-                connectTimeoutMillis = engineOptions.requestTimeout
-            }
-            install(ContentNegotiation) { gson() }
-            defaultRequest {
-                // Set for all requests the content type to: application/json
-                contentType(ContentType.Application.Json)
-            }
-        }
 
     /**
      * Performs the login to the developer site using the provided email and password.
@@ -112,6 +92,7 @@ class RequestHandler(
                     loginResponse =
                         httpClient.post("$DEV_SITE_BASE_URL/login") {
                             setBody(credential)
+                            contentType(ContentType.Application.Json)
                         }
                     break // Success, exit the loop
                 } catch (e: HttpRequestTimeoutException) {
@@ -203,6 +184,7 @@ class RequestHandler(
                         httpClient.request(url) {
                             method = requestOptions.method
                             setBody(requestOptions.body)
+                            contentType(ContentType.Application.Json)
                             headers.append(HttpHeaders.Authorization, "Bearer ${keysSet.next()}")
                         }
 
@@ -221,7 +203,7 @@ class RequestHandler(
                                     login()
                                     isLoginInProgress.set(false)
                                 } else {
-                                    delay(engineOptions.requestTimeout * (tries + 1))
+                                    delay(config.httpClient.socketTimeoutMillis * (tries + 1))
                                 }
 
                                 continue
@@ -303,7 +285,7 @@ class RequestHandler(
         logger.info { "${keys.size} valid keys retrieved from the developer site." }
 
         // Revoke keys that do not have the current IP
-        keys.filter { it.name == keyOptions.keyName }
+        keys.filter { it.name == keyName }
             .filter { !it.cidrRanges.contains(currentIp) }
             .map { key ->
                 launch {
@@ -316,9 +298,9 @@ class RequestHandler(
             }.joinAll()
 
         // Append keys that have the current IP
-        keys.filter { it.name == keyOptions.keyName }
+        keys.filter { it.name == keyName }
             .filter { it.cidrRanges.contains(currentIp) }
-            .takeWhile { keysSet.size() < keyOptions.keyCount }
+            .takeWhile { keysSet.size() < keyCount }
             .map { key ->
                 launch {
                     keysSet.add(key.key)
@@ -327,23 +309,23 @@ class RequestHandler(
             }.joinAll()
 
         // Create new keys within limits of 10 keys per account
-        while (keysSet.size() < keyOptions.keyCount && keys.size < MAX_KEY_COUNT) {
+        while (keysSet.size() < keyCount && keys.size < MAX_KEY_COUNT) {
             val newKey = createKey(currentIp, cookies)
             keysSet.add(newKey.key)
             keys.add(newKey)
             logger.info { "Created a new key '${newKey.key}' and added it to the key set." }
         }
 
-        if (keysSet.size() < keyOptions.keyCount && keys.size == 10) {
+        if (keysSet.size() < keyCount && keys.size == 10) {
             val warnMsg =
-                "Required ${keyOptions.keyCount} keys, but maximum ${keysSet.size()} found/made (limit: 10/acc). " +
+                "Required $keyCount keys, but maximum ${keysSet.size()} found/made (limit: 10/acc). " +
                     "Please delete keys or decrease `keyCount`."
             logger.warn { warnMsg }
         }
 
         if (keysSet.size() == 0) {
             val errorMessage =
-                "${keys.size} existing API keys, none match keyName: ${keyOptions.keyName} " +
+                "${keys.size} existing API keys, none match keyName: $keyName " +
                     "Specify another keyName or delete unused keys at 'https://developer.clashofclans.com'."
             logger.error { errorMessage }
             throw ClashJException(errorMessage)
@@ -367,20 +349,14 @@ class RequestHandler(
         ip: String,
         cookie: String,
     ): Key {
-        val keyJson =
-            """{"cidrRanges": ["$ip"],"name": "${keyOptions.keyName}","description": "${
-                if (!keyOptions.keyDescription.isNullOrBlank()) {
-                    keyOptions.keyDescription
-                } else {
-                    LocalDateTime.now()
-                }
-            }"}"""
+        val keyJson = """{"cidrRanges": ["$ip"],"name": "$keyName","description": "${keyDescription ?: LocalDateTime.now()}"}"""
 
         logger.info { "Generating a new API key with the following data: $keyJson" }
 
         val response: CreateKeyResponse =
             httpClient.post("$DEV_SITE_BASE_URL/apikey/create") {
                 setBody(keyJson)
+                contentType(ContentType.Application.Json)
                 headers.append(HttpHeaders.Cookie, cookie)
             }.body()
 
@@ -415,6 +391,7 @@ class RequestHandler(
         val response =
             httpClient.post("${DEV_SITE_BASE_URL}/apikey/revoke") {
                 setBody("""{"id": "${key.id}"}""")
+                contentType(ContentType.Application.Json)
                 headers.append(HttpHeaders.Cookie, cookie)
             }
 

@@ -1,19 +1,19 @@
 package io.github.maicolantali.types.internal.configuration
 
 import io.ktor.client.engine.HttpClientEngine
-import io.ktor.client.engine.apache5.Apache5
+import io.ktor.client.engine.cio.CIO
 
 /**
- * Configuration class for HTTP settings.
+ * Configuration data class for HTTP client settings.
  *
- * @property engine The HTTP client engine to be used. Default is Apache5.
- * @property connectionTimeout The maximum time, in milliseconds, to wait for a connection to be established.
- *                             Default is 15,000 (15 seconds).
- * @property requestTimeout The maximum time, in milliseconds, to wait for a request to complete.
- *                          Default is 15,000 (15 seconds).
+ * @property engine The HTTP client engine to use. Defaults to [CIO.create].
+ * @property socketTimeoutMillis The socket timeout in milliseconds. Defaults to 5,000 milliseconds.
+ * @property connectionTimeout The connection timeout in milliseconds. Defaults to 5,000 milliseconds.
+ * @property requestTimeout The request timeout in milliseconds. Defaults to 10,000 milliseconds.
  */
 data class HttpConfiguration(
-    var engine: HttpClientEngine = Apache5.create(),
-    var connectionTimeout: Long = 15_000,
-    var requestTimeout: Long = 15_000,
+    var engine: HttpClientEngine = CIO.create(),
+    var socketTimeoutMillis: Long = 5_000,
+    var connectionTimeout: Long = 5_000,
+    var requestTimeout: Long = 10_000,
 )
