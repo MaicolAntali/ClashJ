@@ -25,7 +25,7 @@ dependencies {
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.gson)
 
-    implementation(libs.mu.logging.jvm)
+    implementation(libs.oshai.logging.jvm)
     api(libs.logback.classic)
 
     testImplementation(libs.ktor.client.mock)

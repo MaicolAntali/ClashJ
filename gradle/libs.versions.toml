@@ -4,7 +4,7 @@ coroutines = "1.7.3"
 ktor = "2.3.7"
 
 logback = "1.4.14"
-mu-logging = "3.0.5"
+oshai-logging = "5.1.0"
 
 kotlin_test = "1.9.21"
 junit = "5.10.1"
@@ -23,7 +23,7 @@ ktor-serialization-gson = { module = "io.ktor:ktor-serialization-gson", version.
 
 # Logging
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
-mu-logging-jvm = { module = "io.github.microutils:kotlin-logging-jvm", version.ref = "mu-logging" }
+oshai-logging-jvm = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "oshai-logging" }
 
 # Testing
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
