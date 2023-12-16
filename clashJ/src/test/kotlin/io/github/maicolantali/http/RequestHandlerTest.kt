@@ -54,10 +54,10 @@ class RequestHandlerTest {
                                     content = File("src/test/resources/json/tooManyKeysLogin.json").readText(),
                                     status = HttpStatusCode.OK,
                                     headers =
-                                    headers {
-                                        append("set-cookie", "{session=123}")
-                                        append(HttpHeaders.ContentType, "application/json")
-                                    },
+                                        headers {
+                                            append("set-cookie", "{session=123}")
+                                            append(HttpHeaders.ContentType, "application/json")
+                                        },
                                 )
                             }
 
@@ -66,9 +66,9 @@ class RequestHandlerTest {
                                     content = File("src/test/resources/json/tooManyKeysList.json").readText(),
                                     status = HttpStatusCode.OK,
                                     headers =
-                                    headers {
-                                        append(HttpHeaders.ContentType, "application/json")
-                                    },
+                                        headers {
+                                            append(HttpHeaders.ContentType, "application/json")
+                                        },
                                 )
                             }
 
@@ -111,10 +111,11 @@ class RequestHandlerTest {
                         throw HttpRequestTimeoutException("url", 1000)
                     }
 
-                val requestHandler = RequestHandler(
-                    Credential("email", "password"),
-                    ClientConfiguration(httpClient = HttpConfiguration(engine = mockEngine, requestTimeout = 1_000)),
-                )
+                val requestHandler =
+                    RequestHandler(
+                        Credential("email", "password"),
+                        ClientConfiguration(httpClient = HttpConfiguration(engine = mockEngine, requestTimeout = 1_000)),
+                    )
 
                 val e = assertThrows<BadGatewayException> { requestHandler.request<String>("url", RequestOptions()) }
                 assertThat(e).hasMessageContaining("The API timed out waiting for the request")
@@ -154,8 +155,9 @@ class RequestHandlerTest {
         }
     }
 
-    private fun getRequestHandlerMocked(mockEngine: MockEngine) = RequestHandler(
-        Credential("email", "password"),
-        ClientConfiguration(httpClient = HttpConfiguration(engine = mockEngine)),
-    )
+    private fun getRequestHandlerMocked(mockEngine: MockEngine) =
+        RequestHandler(
+            Credential("email", "password"),
+            ClientConfiguration(httpClient = HttpConfiguration(engine = mockEngine)),
+        )
 }

@@ -19,17 +19,17 @@ internal fun Client.getConfiguredRequestHandler() = RequestHandler(Credential(em
  */
 internal fun Client.getConfiguredDispatcher() = Executors.newFixedThreadPool(config.nThread).asCoroutineDispatcher()
 
+internal fun RequestHandler.getConfiguredHttpClient() =
+    HttpClient(config.httpClient.engine) {
+        install(Logging) {
+            level = config.logging.httClientLogLevel.toKtorLogLevel()
+        }
 
-internal fun RequestHandler.getConfiguredHttpClient() = HttpClient(config.httpClient.engine) {
-    install(Logging) {
-        level = config.logging.httClientLogLevel.toKtorLogLevel()
+        install(HttpTimeout) {
+            socketTimeoutMillis = config.httpClient.socketTimeoutMillis
+            connectTimeoutMillis = config.httpClient.connectionTimeout
+            requestTimeoutMillis = config.httpClient.requestTimeout
+        }
+
+        install(ContentNegotiation) { gson() }
     }
-
-    install(HttpTimeout) {
-        socketTimeoutMillis = config.httpClient.socketTimeoutMillis
-        connectTimeoutMillis = config.httpClient.connectionTimeout
-        requestTimeoutMillis = config.httpClient.requestTimeout
-    }
-
-    install(ContentNegotiation) { gson() }
-}
