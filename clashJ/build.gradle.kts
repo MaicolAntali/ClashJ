@@ -3,7 +3,7 @@ import org.jetbrains.dokka.gradle.DokkaTask
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.9.22"
     id("org.jetbrains.dokka") version "1.9.10"
-    id("org.jmailen.kotlinter") version "4.1.0"
+    id("org.jmailen.kotlinter") version "4.1.1"
     `java-library`
     `maven-publish`
 }
