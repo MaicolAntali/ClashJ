@@ -368,28 +368,6 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
     }
 
     /**
-     * Event fires when the clan's required Versus Trophies to join the clan change.
-     *
-     * Usage Example:
-     * ```kotlin
-     * eventClient.registerClanCallback(MonitoredEvent.ClanEvents.RequiredVersusTrophies) { cached, current ->
-     *     // ...
-     * }
-     * ```
-     */
-    data object RequiredVersusTrophies : ClanEvents() {
-        override suspend fun checkAndFireCallback(
-            cachedData: Clan,
-            currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>,
-        ) {
-            if (cachedData.requiredVersusTrophies != currentData.requiredVersusTrophies) {
-                callback.simple?.invoke(cachedData, currentData)
-            }
-        }
-    }
-
-    /**
      * Event fires when the clan's war log visibility changes (public or private).
      *
      * Usage Example:
@@ -428,28 +406,6 @@ sealed class ClanEvents : Event<Clan, Clan, Clan, ClanMember>() {
             callback: Callback<Clan, Clan, ClanMember>,
         ) {
             if (cachedData.clanBuilderBasePoints != currentData.clanBuilderBasePoints) {
-                callback.simple?.invoke(cachedData, currentData)
-            }
-        }
-    }
-
-    /**
-     * Event fires when the clan's Versus Points change.
-     *
-     * Usage Example:
-     * ```kotlin
-     * eventClient.registerClanCallback(MonitoredEvent.ClanEvents.ClanVersusPoints) { cached, current ->
-     *     // ...
-     * }
-     * ```
-     */
-    data object ClanVersusPoints : ClanEvents() {
-        override suspend fun checkAndFireCallback(
-            cachedData: Clan,
-            currentData: Clan,
-            callback: Callback<Clan, Clan, ClanMember>,
-        ) {
-            if (cachedData.clanVersusPoints != currentData.clanVersusPoints) {
                 callback.simple?.invoke(cachedData, currentData)
             }
         }
