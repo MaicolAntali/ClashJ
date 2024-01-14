@@ -14,6 +14,7 @@ import io.github.maicolantali.types.api.model.players.playerhouse.PlayerHouse
  * @property tag The tag of the clan member.
  * @property name The name of the clan member.
  * @property role The role of the clan member within the clan.
+ * @property townHallLevel The town hall level of the clan member.
  * @property expLevel The experience level of the clan member.
  * @property clanRank The rank of the clan member within the clan.
  * @property previousClanRank The previous rank of the clan member within the clan.
@@ -29,6 +30,7 @@ data class ClanMember(
     val tag: String,
     val name: String,
     val role: ClanMemberRole,
+    val townHallLevel: Int,
     val expLevel: Int,
     val clanRank: Int,
     val previousClanRank: Int,
