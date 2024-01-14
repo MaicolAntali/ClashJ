@@ -9,7 +9,6 @@ package io.github.maicolantali.types.api.model.players.player
  * @property currentSeason Information about the player's current season performance in the legend league tournament.
  * @property previousVersusSeason Information about the player's performance in the previous versus season in the legend league tournament.
  * @property bestBuilderBaseSeason Information about the player's best performance in a builder base season in the legend league tournament.
- * @property bestVersusSeason Information about the player's best performance in a versus season in the legend league tournament.
  * @property previousSeason Information about the player's performance in the previous season in the legend league tournament.
  * @property bestSeason Information about the player's best performance in a season in the legend league tournament.
  */
@@ -19,7 +18,6 @@ data class PlayerLegendStatistics(
     val currentSeason: PlayerLegendLeagueTournamentSeasonResult,
     val previousVersusSeason: PlayerLegendLeagueTournamentSeasonResult,
     val bestBuilderBaseSeason: PlayerLegendLeagueTournamentSeasonResult,
-    val bestVersusSeason: PlayerLegendLeagueTournamentSeasonResult,
     val previousSeason: PlayerLegendLeagueTournamentSeasonResult,
     val bestSeason: PlayerLegendLeagueTournamentSeasonResult,
 )

@@ -12,7 +12,6 @@ import io.github.maicolantali.types.api.model.players.playerhouse.PlayerHouse
  * @property builderBaseLeague The league information of the clan member in the builder base village.
  * @property playerHouse The player house information of the clan member.
  * @property tag The tag of the clan member.
- * @property versusTrophies The number of versus trophies earned by the clan member.
  * @property name The name of the clan member.
  * @property role The role of the clan member within the clan.
  * @property expLevel The experience level of the clan member.
@@ -28,7 +27,6 @@ data class ClanMember(
     val builderBaseLeague: SimpleLeague,
     val playerHouse: PlayerHouse,
     val tag: String,
-    val versusTrophies: Int,
     val name: String,
     val role: ClanMemberRole,
     val expLevel: Int,
