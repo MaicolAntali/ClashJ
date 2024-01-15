@@ -196,28 +196,6 @@ sealed class PlayerEvents : Event<Player, Player, Player, String>() {
      * }
      * ```
      */
-    data object VersusTrophies : PlayerEvents() {
-        override suspend fun checkAndFireCallback(
-            cachedData: Player,
-            currentData: Player,
-            callback: Callback<Player, Player, String>,
-        ) {
-            if (cachedData.versusTrophies != currentData.versusTrophies) {
-                callback.simple?.invoke(cachedData, currentData)
-            }
-        }
-    }
-
-    /**
-     * Event fires when a player's number of attacks wins changes.
-     *
-     * Usage Example:
-     * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.AttackWins) { cachedData, currentData ->
-     *     // ...
-     * }
-     * ```
-     */
     data object BestVersusTrophies : PlayerEvents() {
         override suspend fun checkAndFireCallback(
             cachedData: Player,
@@ -269,28 +247,6 @@ sealed class PlayerEvents : Event<Player, Player, Player, String>() {
             callback: Callback<Player, Player, String>,
         ) {
             if (cachedData.townHallWeaponLevel != currentData.townHallWeaponLevel) {
-                callback.simple?.invoke(cachedData, currentData)
-            }
-        }
-    }
-
-    /**
-     * Event fires when a player's number of Versus Battles wins changes.
-     *
-     * Usage Example:
-     * ```kotlin
-     * eventClient.registerPlayerCallback(PlayerEvents.VersusBattleWins) { cachedData, currentData ->
-     *     // ...
-     * }
-     * ```
-     */
-    data object VersusBattleWins : PlayerEvents() {
-        override suspend fun checkAndFireCallback(
-            cachedData: Player,
-            currentData: Player,
-            callback: Callback<Player, Player, String>,
-        ) {
-            if (cachedData.versusBattleWins != currentData.versusBattleWins) {
                 callback.simple?.invoke(cachedData, currentData)
             }
         }

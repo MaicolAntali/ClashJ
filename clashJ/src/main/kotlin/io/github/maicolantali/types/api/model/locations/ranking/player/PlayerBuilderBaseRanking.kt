@@ -8,8 +8,6 @@ import io.github.maicolantali.types.api.model.leagues.simpleleague.SimpleLeague
  *
  * @property clan Information about the player's clan and its ranking.
  * @property builderBaseLeague Information about the player's builder base league.
- * @property versusTrophies The current number of versus trophies earned by the player in the builder base.
- * @property versusBattleWins The total number of versus battle wins achieved by the player in the builder base.
  * @property tag The tag of the player.
  * @property name The name of the player.
  * @property expLevel The experience level of the player.
@@ -20,8 +18,6 @@ import io.github.maicolantali.types.api.model.leagues.simpleleague.SimpleLeague
 data class PlayerBuilderBaseRanking(
     val clan: PlayerRankingClan,
     val builderBaseLeague: SimpleLeague,
-    val versusTrophies: Int,
-    val versusBattleWins: Int,
     val tag: String,
     val name: String,
     val expLevel: Int,

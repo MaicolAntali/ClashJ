@@ -18,4 +18,10 @@ enum class Village {
      */
     @SerializedName("builderBase")
     BUILDER_BASE,
+
+    /**
+     * The Clan Capital.
+     */
+    @SerializedName("clanCapital")
+    CLAN_CAPITAL,
 }

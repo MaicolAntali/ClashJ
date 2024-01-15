@@ -18,11 +18,9 @@ import io.github.maicolantali.types.api.model.players.playerhouse.PlayerHouse
  * @property warPreference The war preference status of the player (In or Out).
  * @property attackWins The total number of attack wins achieved by the player.
  * @property defenseWins The total number of defense wins achieved by the player.
- * @property versusTrophies The current number of versus trophies earned by the player.
  * @property bestVersusTrophies The highest number of versus trophies earned by the player.
  * @property townHallLevel The level of the player's town hall.
  * @property townHallWeaponLevel The level of the player's town hall weapon (if available).
- * @property versusBattleWins The total number of versus battle wins achieved by the player.
  * @property legendStatistics Information about the player's legend league statistics.
  * @property troops A list of player's troops and their levels.
  * @property heroes A list of player's heroes and their levels.
@@ -51,11 +49,9 @@ data class Player(
     val warPreference: PlayerWarPreference?,
     val attackWins: Int,
     val defenseWins: Int,
-    val versusTrophies: Int,
     val bestVersusTrophies: Int,
     val townHallLevel: Int,
     val townHallWeaponLevel: Int,
-    val versusBattleWins: Int,
     val legendStatistics: PlayerLegendStatistics?,
     val troops: List<PlayerItemLevel>,
     val heroes: List<PlayerItemLevel>,

@@ -30,10 +30,8 @@ import io.github.maicolantali.types.api.model.locations.location.Location
  * @property isFamilyFriendly A flag indicating if the clan is family-friendly.
  * @property requiredTrophies The minimum required trophies to join the clan.
  * @property requiredBuilderBaseTrophies The minimum required builder base trophies to join the clan.
- * @property requiredVersusTrophies The minimum required versus trophies to join the clan.
  * @property isWarLogPublic A flag indicating if the clan's war log is public.
  * @property clanBuilderBasePoints The builder base points earned by the clan.
- * @property clanVersusPoints The versus points earned by the clan.
  * @property clanCapitalPoints The points earned by the clan's capital.
  * @property labels A list of [Label] objects categorizing the clan.
  * @property name The name of the clan.
@@ -61,10 +59,8 @@ data class Clan(
     val isFamilyFriendly: Boolean,
     val requiredTrophies: Int,
     val requiredBuilderBaseTrophies: Int,
-    val requiredVersusTrophies: Int,
     val isWarLogPublic: Boolean,
     val clanBuilderBasePoints: Int,
-    val clanVersusPoints: Int,
     val clanCapitalPoints: Int,
     val labels: List<Label>,
     val name: String,
