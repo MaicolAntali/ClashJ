@@ -4,7 +4,7 @@ coroutines = "1.8.0"
 ktor = "2.3.9"
 
 logback = "1.5.3"
-oshai-logging = "6.0.3"
+oshai-logging = "6.0.4"
 
 kotlin_test = "1.9.23"
 junit = "5.10.2"
